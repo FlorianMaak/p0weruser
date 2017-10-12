@@ -1,0 +1,9 @@
+// ==UserScript==
+// @name         pr0gramm Framew0rk
+// @namespace    http://pr0gramm.com
+// @version      0.1
+// @description  Enables some additional features and provides plugin-api
+// @author       eWar Development
+// @match        http://pr0gramm.com/*
+// @match        https://pr0gramm.com/*
+// ==/UserScript==
