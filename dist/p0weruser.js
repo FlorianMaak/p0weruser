@@ -1048,17 +1048,21 @@ class WidescreenMode {
             element.addEventListener('mousewheel', (e) => {
                 e.preventDefault();
 
-                this.handleWheelChange(e.deltaY);
+                WidescreenMode.handleWheelChange(e.deltaY);
             });
         });
     }
 
-    handleWheelChange(deltaY) {
+    static handleWheelChange(deltaY) {
+        let el = {};
+
         if(deltaY < 0) {
-            console.log('up');
+            el = document.getElementsByClassName('stream-prev')[0];
         } else {
-            console.log('down');
+            el = document.getElementsByClassName('stream-next')[0];
         }
+
+        el.click();
     }
 
 
