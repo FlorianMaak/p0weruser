@@ -1,4 +1,5 @@
 import SimpleBar from '../../bower_components/simplebar/dist/simplebar.js';
+import Utils from '../Utils';
 
 export default class WidescreenMode {
     constructor() {
@@ -16,6 +17,7 @@ export default class WidescreenMode {
             container: document.getElementById('footer-links')
         };
         WidescreenMode.overrideTemplates();
+        this.addListener();
         this.addNavigation();
     }
 
@@ -37,8 +39,26 @@ export default class WidescreenMode {
 
     addListener() {
         window.addEventListener('commentsLoaded', () => {
-            this.bar = new SimpleBar(document.getElementsByClassName('item-comments')[0]);
+            Utils.waitForElement('.item-comments').then((el) => {
+                this.bar = new SimpleBar(el[0]);
+            });
+
+            // Handle wheel-change
+            let element = document.getElementsByClassName('item-image-wrapper')[0];
+            element.addEventListener('mousewheel', (e) => {
+                e.preventDefault();
+
+                this.handleWheelChange(e.deltaY);
+            });
         });
+    }
+
+    handleWheelChange(deltaY) {
+        if(deltaY < 0) {
+            console.log('up');
+        } else {
+            console.log('down');
+        }
     }
 
 

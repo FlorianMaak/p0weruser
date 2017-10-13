@@ -70,11 +70,27 @@ export default class Settings {
         this.tabs.getElementsByClassName('active')[0].classList.remove('active');
         button.classList.add('active');
 
+        // Add listener to clear-button
+        let clearButton = this.tabContent.getElementsByClassName('clear-settings-button')[0];
+        clearButton.addEventListener('click', () => {
+            if(window.confirm('Einstellungen wirklich zurücksetzen?')) {
+                Settings.clearSettings();
+            }
+        });
+
         // Add save-button
         let saveButton = this.tabContent.querySelectorAll('#save-addon-settings')[0];
         saveButton.addEventListener('click', () => {
             Settings.saveSettings(moduleList);
         })
+    }
+
+    static clearSettings() {
+        // clear module settings
+        window.localStorage.setItem('activated_modules', '[]');
+
+        // Reload pr0gramm
+        p.reload();
     }
 
     static saveSettings(moduleList) {
