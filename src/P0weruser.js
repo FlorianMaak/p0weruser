@@ -1,8 +1,10 @@
-import Dummy from './module/Dummy.js';
+import Settings from './module/Settings.js';
+import EventHandler from './EventHandler.js';
 
 class P0weruser {
     constructor() {
-        this.Dummy = new Dummy();
+        this.eventHandler = new EventHandler();
+        this.settings = new Settings();
     }
 }
 
