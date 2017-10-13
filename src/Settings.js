@@ -1,6 +1,7 @@
-import settingsTpl from '../template/settingsTab.html';
-import settingsStyle from '../style/settings.less';
-import Utils from '../Utils.js';
+import settingsTpl from './template/settingsTab.html';
+import settingsStyle from './style/settings.less';
+import Utils from './Utils';
+import P0weruser from './P0weruser';
 
 export default class Settings {
     constructor(app) {
@@ -14,13 +15,13 @@ export default class Settings {
 
 
     addListeners() {
-        window.addEventListener('settingsLoaded', (e) => {
+        window.addEventListener('settingsLoaded', () => {
             this.addSettingsTab();
         })
     }
 
 
-    addSettingsTab(tabName) {
+    addSettingsTab() {
         this.tabContent = document.querySelectorAll('.pane.form-page')[0];
         this.tabs = document.getElementsByClassName('tab-bar')[0];
 
@@ -50,7 +51,7 @@ export default class Settings {
 
         // Add list of modules
         Object.keys(modules).forEach((key) => {
-            let checked = this.app.getActivatedModules().indexOf(key) !== -1;
+            let checked = P0weruser.getActivatedModules().indexOf(key) !== -1;
 
             // Build module-row
             moduleList.innerHTML += `
@@ -72,11 +73,11 @@ export default class Settings {
         // Add save-button
         let saveButton = this.tabContent.querySelectorAll('#save-addon-settings')[0];
         saveButton.addEventListener('click', () => {
-            this.saveSettings(moduleList);
+            Settings.saveSettings(moduleList);
         })
     }
 
-    saveSettings(moduleList) {
+    static saveSettings(moduleList) {
         let result = [];
         let actives = moduleList.querySelectorAll(':checked');
 
@@ -84,7 +85,7 @@ export default class Settings {
         for (let i = 0; i < actives.length; i++) {
             result.push(actives[i].dataset.module);
         }
-        this.app.saveActivatedModules(result);
+        P0weruser.saveActivatedModules(result);
 
         // Reload pr0gramm
         p.reload();

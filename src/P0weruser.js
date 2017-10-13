@@ -1,9 +1,9 @@
-import Settings from './module/Settings';
+import Settings from './Settings';
 import EventHandler from './EventHandler';
 import WidescreenMode from './module/WidescreenMode';
 import RepostMarker from './module/RepostMarker';
 
-class P0weruser {
+export default class P0weruser {
     constructor() {
         P0weruser.addStyles();
         this.eventHandler = new EventHandler();
@@ -14,6 +14,7 @@ class P0weruser {
         this.loadModules();
     }
 
+
     static addStyles() {
         // FontAwesome (Icons)
         let fa = document.createElement('link');
@@ -23,13 +24,15 @@ class P0weruser {
         document.getElementsByTagName('head')[0].appendChild(fa);
     }
 
+
     loadModules() {
-        let activated = this.getActivatedModules();
+        let activated = P0weruser.getActivatedModules();
 
         for (let i = 0; i < activated.length; i++) {
             this.modules[activated[i]].load();
         }
     }
+
 
     getModules() {
         if (!this.modules) {
@@ -42,19 +45,20 @@ class P0weruser {
         return this.modules;
     }
 
-    getActivatedModules() {
+
+    static getActivatedModules() {
         let modules = window.localStorage.getItem('activated_modules');
 
         if (!modules) {
             window.localStorage.setItem('activated_modules', '[]');
             modules = '[]';
         }
-        
+
         return JSON.parse(modules);
     }
 
 
-    saveActivatedModules(selection) {
+    static saveActivatedModules(selection) {
         window.localStorage.setItem('activated_modules', JSON.stringify(selection));
     }
 }

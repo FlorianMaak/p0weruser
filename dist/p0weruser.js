@@ -70,89 +70,11 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__module_Settings__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__EventHandler__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__module_WidescreenMode__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__module_RepostMarker__ = __webpack_require__(20);
-
-
-
-
-
-class P0weruser {
-    constructor() {
-        P0weruser.addStyles();
-        this.eventHandler = new __WEBPACK_IMPORTED_MODULE_1__EventHandler__["a" /* default */]();
-        this.modules = this.getModules();
-        this.settings = new __WEBPACK_IMPORTED_MODULE_0__module_Settings__["a" /* default */](this);
-
-        // Load activated modules
-        this.loadModules();
-    }
-
-    static addStyles() {
-        // FontAwesome (Icons)
-        let fa = document.createElement('link');
-        fa.type = 'text/css';
-        fa.rel = 'stylesheet';
-        fa.href = 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css';
-        document.getElementsByTagName('head')[0].appendChild(fa);
-    }
-
-    loadModules() {
-        let activated = this.getActivatedModules();
-
-        for (let i = 0; i < activated.length; i++) {
-            this.modules[activated[i]].load();
-        }
-    }
-
-    getModules() {
-        if (!this.modules) {
-            this.modules = {
-                'WidescreenMode': new __WEBPACK_IMPORTED_MODULE_2__module_WidescreenMode__["a" /* default */](),
-                'RepostMarker': new __WEBPACK_IMPORTED_MODULE_3__module_RepostMarker__["a" /* default */]()
-            };
-        }
-
-        return this.modules;
-    }
-
-    getActivatedModules() {
-        let modules = window.localStorage.getItem('activated_modules');
-
-        if (!modules) {
-            window.localStorage.setItem('activated_modules', '[]');
-            modules = '[]';
-        }
-        
-        return JSON.parse(modules);
-    }
-
-
-    saveActivatedModules(selection) {
-        window.localStorage.setItem('activated_modules', JSON.stringify(selection));
-    }
-}
-
-window.p0weruser = new P0weruser();
-
-
-/***/ }),
-/* 1 */,
-/* 2 */,
-/* 3 */,
-/* 4 */,
-/* 5 */
 /***/ (function(module, exports) {
 
 /*
@@ -234,7 +156,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 6 */
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -290,7 +212,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(7);
+var	fixUrls = __webpack_require__(8);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -606,7 +528,314 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Settings__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__EventHandler__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__module_WidescreenMode__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__module_RepostMarker__ = __webpack_require__(13);
+
+
+
+
+
+class P0weruser {
+    constructor() {
+        P0weruser.addStyles();
+        this.eventHandler = new __WEBPACK_IMPORTED_MODULE_1__EventHandler__["a" /* default */]();
+        this.modules = this.getModules();
+        this.settings = new __WEBPACK_IMPORTED_MODULE_0__Settings__["a" /* default */](this);
+
+        // Load activated modules
+        this.loadModules();
+    }
+
+
+    static addStyles() {
+        // FontAwesome (Icons)
+        let fa = document.createElement('link');
+        fa.type = 'text/css';
+        fa.rel = 'stylesheet';
+        fa.href = 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css';
+        document.getElementsByTagName('head')[0].appendChild(fa);
+    }
+
+
+    loadModules() {
+        let activated = P0weruser.getActivatedModules();
+
+        for (let i = 0; i < activated.length; i++) {
+            this.modules[activated[i]].load();
+        }
+    }
+
+
+    getModules() {
+        if (!this.modules) {
+            this.modules = {
+                'WidescreenMode': new __WEBPACK_IMPORTED_MODULE_2__module_WidescreenMode__["a" /* default */](),
+                'RepostMarker': new __WEBPACK_IMPORTED_MODULE_3__module_RepostMarker__["a" /* default */]()
+            };
+        }
+
+        return this.modules;
+    }
+
+
+    static getActivatedModules() {
+        let modules = window.localStorage.getItem('activated_modules');
+
+        if (!modules) {
+            window.localStorage.setItem('activated_modules', '[]');
+            modules = '[]';
+        }
+
+        return JSON.parse(modules);
+    }
+
+
+    static saveActivatedModules(selection) {
+        window.localStorage.setItem('activated_modules', JSON.stringify(selection));
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["default"] = P0weruser;
+
+
+window.p0weruser = new P0weruser();
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class Utils {
+    static waitForElement(selector) {
+        return new Promise((resolve, reject) => {
+            let element = [];
+            let check = () => {
+                if (!element[0]) {
+                    element = document.querySelectorAll(selector);
+
+                    setTimeout(() => {
+                        check();
+                    }, 10);
+                } else {
+                    resolve(element);
+                }
+            };
+
+            check();
+        });
+    }
+
+
+    static changeLocation(newLocation) {
+        p.location = newLocation;
+        window.history.pushState({}, 'pr0gramm.com', newLocation);
+    }
+
+
+    static getUrlParams(url) {
+        let result = {};
+        url = url.split('?');
+        let params = url[1].split('&');
+
+        for (let i = 0; i < params.length; i++) {
+            let param = params[i].split('=');
+            result[param[0]] = param[1];
+        }
+
+        return {
+            url: url[0],
+            params: result
+        };
+    }
+
+
+    static getUrlFromParams(url, params) {
+        let result = url + '?';
+
+        for (let key in params) {
+            if (params.hasOwnProperty(key)) {
+                if (result !== url + '?') {
+                    result += '&';
+                }
+                result += key + '=' + params[key];
+            }
+        }
+
+        return result;
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Utils;
+
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__template_settingsTab_html__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__template_settingsTab_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__template_settingsTab_html__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__style_settings_less__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__style_settings_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__style_settings_less__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Utils__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__P0weruser__ = __webpack_require__(2);
+
+
+
+
+
+class Settings {
+    constructor(app) {
+        this.style = __WEBPACK_IMPORTED_MODULE_1__style_settings_less___default.a;
+        this.app = app;
+        this.tabs = {};
+        this.tabContent = {};
+
+        this.addListeners();
+    }
+
+
+    addListeners() {
+        window.addEventListener('settingsLoaded', () => {
+            this.addSettingsTab();
+        })
+    }
+
+
+    addSettingsTab() {
+        this.tabContent = document.querySelectorAll('.pane.form-page')[0];
+        this.tabs = document.getElementsByClassName('tab-bar')[0];
+
+        // Create button-element
+        let button = document.createElement('a');
+        button.innerText = 'Addons';
+        button.href = '/settings/addons';
+
+        // Add listener
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.toggleSettingsTab(button);
+        });
+
+        // Append element to tab-lsit
+        this.tabs.appendChild(button);
+    }
+
+
+    toggleSettingsTab(button) {
+        __WEBPACK_IMPORTED_MODULE_2__Utils__["a" /* default */].changeLocation('/settings/addons');
+        let moduleList = document.createElement('div');
+        let modules = this.app.modules;
+
+        this.tabContent.innerHTML = __WEBPACK_IMPORTED_MODULE_0__template_settingsTab_html___default.a;
+        let list = this.tabContent.querySelectorAll('#addon-list')[0];
+
+        // Add list of modules
+        Object.keys(modules).forEach((key) => {
+            let checked = __WEBPACK_IMPORTED_MODULE_3__P0weruser__["default"].getActivatedModules().indexOf(key) !== -1;
+
+            // Build module-row
+            moduleList.innerHTML += `
+                <input type="checkbox" 
+                       class="box-from-label"
+                       name="${key}" 
+                       id="${key}" 
+                       data-module="${key}" ${checked ? ' checked="checked"' : ''}>
+                <label for="${key}">
+                    ${modules[key].name}
+                    <span>${modules[key].description}</span>
+                </label>`;
+        });
+
+        list.appendChild(moduleList);
+        this.tabs.getElementsByClassName('active')[0].classList.remove('active');
+        button.classList.add('active');
+
+        // Add save-button
+        let saveButton = this.tabContent.querySelectorAll('#save-addon-settings')[0];
+        saveButton.addEventListener('click', () => {
+            Settings.saveSettings(moduleList);
+        })
+    }
+
+    static saveSettings(moduleList) {
+        let result = [];
+        let actives = moduleList.querySelectorAll(':checked');
+
+        // Get list of checked modules
+        for (let i = 0; i < actives.length; i++) {
+            result.push(actives[i].dataset.module);
+        }
+        __WEBPACK_IMPORTED_MODULE_3__P0weruser__["default"].saveActivatedModules(result);
+
+        // Reload pr0gramm
+        p.reload();
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Settings;
+
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=form-section> <h2>Addon Einstellungen</h2> <div id=addon-list></div> <div class=form-row> <input type=submit id=save-addon-settings value=\"Einstellungen speichern\" class=\"confirm settings-save\"> </div> </div> ";
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(7);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/less-loader/dist/cjs.js!./settings.less", function() {
+			var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/less-loader/dist/cjs.js!./settings.less");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
 /* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "#addon-list label {\n  margin-bottom: 10px;\n}\n#addon-list label span {\n  display: block;\n  color: #888;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 8 */
 /***/ (function(module, exports) {
 
 
@@ -701,229 +930,7 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 8 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-class Utils {
-    static waitForElement(selector) {
-        return new Promise((resolve, reject) => {
-            let element = [];
-            let check = () => {
-                if (!element[0]) {
-                    element = document.querySelectorAll(selector);
-
-                    setTimeout(() => {
-                        check();
-                    }, 10);
-                } else {
-                    resolve(element);
-                }
-            };
-
-            check();
-        });
-    }
-
-    static changeLocation(newLocation) {
-        p.location = newLocation;
-        window.history.pushState({}, 'pr0gramm.com', newLocation);
-    }
-
-    static getUrlParams(url) {
-        let result = {};
-        url = url.split('?');
-        let params = url[1].split('&');
-
-        for (let i = 0; i < params.length; i++) {
-            let param = params[i].split('=');
-            result[param[0]] = param[1];
-        }
-
-        return {
-            url: url[0],
-            params: result
-        };
-    }
-
-    static getUrlFromParams(url, params) {
-        let result = url + '?';
-
-        for (let key in params) {
-            if (params.hasOwnProperty(key)) {
-                if (result !== url + '?') {
-                    result += '&';
-                }
-                result += key + '=' + params[key];
-            }
-        }
-
-        return result;
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Utils;
-
-
-
-/***/ }),
 /* 9 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__template_settingsTab_html__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__template_settingsTab_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__template_settingsTab_html__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__style_settings_less__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__style_settings_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__style_settings_less__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Utils_js__ = __webpack_require__(8);
-
-
-
-
-class Settings {
-    constructor(app) {
-        this.style = __WEBPACK_IMPORTED_MODULE_1__style_settings_less___default.a;
-        this.app = app;
-        this.tabs = {};
-        this.tabContent = {};
-
-        this.addListeners();
-    }
-
-
-    addListeners() {
-        window.addEventListener('settingsLoaded', (e) => {
-            this.addSettingsTab();
-        })
-    }
-
-
-    addSettingsTab(tabName) {
-        this.tabContent = document.querySelectorAll('.pane.form-page')[0];
-        this.tabs = document.getElementsByClassName('tab-bar')[0];
-
-        // Create button-element
-        let button = document.createElement('a');
-        button.innerText = 'Addons';
-        button.href = '/settings/addons';
-
-        // Add listener
-        button.addEventListener('click', (e) => {
-            e.preventDefault();
-            this.toggleSettingsTab(button);
-        });
-
-        // Append element to tab-lsit
-        this.tabs.appendChild(button);
-    }
-
-
-    toggleSettingsTab(button) {
-        __WEBPACK_IMPORTED_MODULE_2__Utils_js__["a" /* default */].changeLocation('/settings/addons');
-        let moduleList = document.createElement('div');
-        let modules = this.app.modules;
-
-        this.tabContent.innerHTML = __WEBPACK_IMPORTED_MODULE_0__template_settingsTab_html___default.a;
-        let list = this.tabContent.querySelectorAll('#addon-list')[0];
-
-        // Add list of modules
-        Object.keys(modules).forEach((key) => {
-            let checked = this.app.getActivatedModules().indexOf(key) !== -1;
-
-            // Build module-row
-            moduleList.innerHTML += `
-                <input type="checkbox" 
-                       class="box-from-label"
-                       name="${key}" 
-                       id="${key}" 
-                       data-module="${key}" ${checked ? ' checked="checked"' : ''}>
-                <label for="${key}">
-                    ${modules[key].name}
-                    <span>${modules[key].description}</span>
-                </label>`;
-        });
-
-        list.appendChild(moduleList);
-        this.tabs.getElementsByClassName('active')[0].classList.remove('active');
-        button.classList.add('active');
-
-        // Add save-button
-        let saveButton = this.tabContent.querySelectorAll('#save-addon-settings')[0];
-        saveButton.addEventListener('click', () => {
-            this.saveSettings(moduleList);
-        })
-    }
-
-    saveSettings(moduleList) {
-        let result = [];
-        let actives = moduleList.querySelectorAll(':checked');
-
-        // Get list of checked modules
-        for (let i = 0; i < actives.length; i++) {
-            result.push(actives[i].dataset.module);
-        }
-        this.app.saveActivatedModules(result);
-
-        // Reload pr0gramm
-        p.reload();
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Settings;
-
-
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=form-section> <h2>Addon Einstellungen</h2> <div id=addon-list></div> <div class=form-row> <input type=submit id=save-addon-settings value=\"Einstellungen speichern\" class=\"confirm settings-save\"> </div> </div> ";
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(12);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {"hmr":true}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(6)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/less-loader/dist/cjs.js!./settings.less", function() {
-			var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/less-loader/dist/cjs.js!./settings.less");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(5)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, "#addon-list label {\n  margin-bottom: 10px;\n}\n#addon-list label span {\n  display: block;\n  color: #888;\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -951,7 +958,7 @@ class EventHandler {
 
 
 /***/ }),
-/* 14 */
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -963,7 +970,8 @@ class WidescreenMode {
 
 
     load() {
-        this.styles = __webpack_require__(15);
+        this.styles = __webpack_require__(11);
+        console.log(this.styles);
         this.header = document.getElementById('head-content');
         this.nav = {
             button: null,
@@ -975,7 +983,7 @@ class WidescreenMode {
 
 
     static overrideTemplate() {
-        p.View.Stream.Main.prototype.buildItemRows = function (items, start, end, position) {
+        p.View.Stream.Main.prototype.buildItemRows = function (items) {
             let result = '';
             for (let i = 0; i < items.length; i++) {
                 result += this.buildItem(items[i]);
@@ -1007,13 +1015,13 @@ class WidescreenMode {
 
 
 /***/ }),
-/* 15 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(16);
+var content = __webpack_require__(12);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -1021,7 +1029,7 @@ var transform;
 var options = {"hmr":true}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(6)(content, options);
+var update = __webpack_require__(1)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -1038,28 +1046,25 @@ if(false) {
 }
 
 /***/ }),
-/* 16 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(5)(undefined);
+exports = module.exports = __webpack_require__(0)(undefined);
 // imports
 
 
 // module
-exports.push([module.i, "body.one-sidebar > .side-wide-skyscraper {\n  display: none;\n}\nbody.one-sidebar #page.desktop,\nbody.one-sidebar #page #head {\n  padding: 0 20px;\n  width: 100% !important;\n}\nbody.one-sidebar #page.desktop #pr0-miner,\nbody.one-sidebar #page #head #pr0-miner {\n  display: none;\n}\nbody.one-sidebar #page #stream {\n  text-align: center;\n}\nbody.one-sidebar #page #stream a.thumb {\n  display: inline-block;\n  float: none;\n}\nbody.one-sidebar #page #head-content {\n  display: flex;\n  align-items: center;\n}\nbody.one-sidebar #page #head-content > .user-info {\n  order: 3;\n  margin: 0;\n}\nbody.one-sidebar #page #head-content > #head-menu {\n  padding: 0;\n  flex-grow: 1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\nbody.one-sidebar #page #head-content > #pr0gramm-logo-link {\n  height: 24px;\n  margin: 0;\n}\nbody.one-sidebar #page #head-content .sidebar-toggle {\n  color: #fff;\n  font-size: 20px;\n  margin-right: 10px;\n}\nbody.one-sidebar #page #head-content .sidebar-toggle.active {\n  color: #ee4d2e;\n}\nbody.one-sidebar #footer-links {\n  width: 250px;\n  left: -250px !important;\n  position: fixed;\n  margin: 0;\n  top: 52px;\n  border-right: 3px solid #2a2e31;\n  background: #161618;\n  transition: left .2s linear;\n  z-index: 500;\n}\nbody.one-sidebar #footer-links.open {\n  left: 0 !important;\n  box-shadow: 2px 0 10px #000;\n}\nbody.one-sidebar #footer-links a {\n  color: #fff;\n  display: block;\n  text-align: left;\n  padding: 10px 20px;\n  margin-right: 0;\n  font-size: 16px;\n}\nbody.one-sidebar #footer-links a:hover {\n  color: #ee4d2e;\n}\n", ""]);
+exports.push([module.i, "body.one-sidebar > .side-wide-skyscraper,\nbody.two-sidebars > .side-wide-skyscraper {\n  display: none;\n}\nbody.one-sidebar #page.desktop,\nbody.two-sidebars #page.desktop,\nbody.one-sidebar #page #head,\nbody.two-sidebars #page #head {\n  padding: 0 20px;\n  width: 100% !important;\n}\nbody.one-sidebar #page.desktop #pr0-miner,\nbody.two-sidebars #page.desktop #pr0-miner,\nbody.one-sidebar #page #head #pr0-miner,\nbody.two-sidebars #page #head #pr0-miner {\n  display: none;\n}\nbody.one-sidebar #page #stream,\nbody.two-sidebars #page #stream {\n  text-align: center;\n}\nbody.one-sidebar #page #stream a.thumb,\nbody.two-sidebars #page #stream a.thumb {\n  display: inline-block;\n  float: none;\n}\nbody.one-sidebar #page #head,\nbody.two-sidebars #page #head {\n  background: rgba(0, 0, 0, 0.8);\n}\nbody.one-sidebar #page #head #head-content,\nbody.two-sidebars #page #head #head-content {\n  background: none;\n  display: flex;\n  align-items: center;\n}\nbody.one-sidebar #page #head #head-content > .user-info,\nbody.two-sidebars #page #head #head-content > .user-info {\n  order: 3;\n  margin: 0;\n}\nbody.one-sidebar #page #head #head-content > #head-menu,\nbody.two-sidebars #page #head #head-content > #head-menu {\n  padding: 0;\n  flex-grow: 1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\nbody.one-sidebar #page #head #head-content > #pr0gramm-logo-link,\nbody.two-sidebars #page #head #head-content > #pr0gramm-logo-link {\n  height: 24px;\n  margin: 0;\n}\nbody.one-sidebar #page #head #head-content .sidebar-toggle,\nbody.two-sidebars #page #head #head-content .sidebar-toggle {\n  color: #fff;\n  font-size: 20px;\n  margin-right: 10px;\n}\nbody.one-sidebar #page #head #head-content .sidebar-toggle.active,\nbody.two-sidebars #page #head #head-content .sidebar-toggle.active {\n  color: #ee4d2e;\n}\nbody.one-sidebar #footer-links,\nbody.two-sidebars #footer-links {\n  width: 250px;\n  left: -250px !important;\n  position: fixed;\n  margin: 0;\n  top: 52px;\n  border-right: 3px solid #2a2e31;\n  background: #161618;\n  transition: left .2s linear;\n  z-index: 500;\n}\nbody.one-sidebar #footer-links.open,\nbody.two-sidebars #footer-links.open {\n  left: 0 !important;\n  box-shadow: 2px 0 10px #000;\n}\nbody.one-sidebar #footer-links a,\nbody.two-sidebars #footer-links a {\n  color: #fff;\n  display: block;\n  text-align: left;\n  padding: 10px 20px;\n  margin-right: 0;\n  font-size: 16px;\n}\nbody.one-sidebar #footer-links a:hover,\nbody.two-sidebars #footer-links a:hover {\n  color: #ee4d2e;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 17 */,
-/* 18 */,
-/* 19 */,
-/* 20 */
+/* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Utils__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Utils__ = __webpack_require__(3);
 
 
 // Inspired by Mopsalarms repost-script
@@ -1070,9 +1075,9 @@ class RepostMarker {
         this.description = 'Markiert Reposts in der Übersicht'
     }
 
+
     load() {
-        this.styles = __webpack_require__(21);
-        this.reposts = [];
+        this.styles = __webpack_require__(14);
         this.overrideBuildItem();
 
         // Get reposts, if not searched before
@@ -1085,6 +1090,7 @@ class RepostMarker {
         });
     }
 
+
     overrideBuildItem() {
         let mainView = p.View.Stream.Main;
 
@@ -1095,6 +1101,7 @@ class RepostMarker {
         p.currentView.buildItem = this.buildItem;
     }
 
+
     static markRepost(id) {
         let elem = document.getElementById('item-' + id);
 
@@ -1103,9 +1110,11 @@ class RepostMarker {
         }
     }
 
+
     buildItem(item) {
         return `<a class="silent thumb" id="item-${item.id}" href="${this.baseURL}${item.id}"><img src="${item.thumb}"/></a>`;
     }
+
 
     handleAjax(url) {
         return new Promise((resolve, reject) => {
@@ -1125,7 +1134,7 @@ class RepostMarker {
             // Send manipulated request
             let xhr = new XMLHttpRequest();
             xhr.open('GET', __WEBPACK_IMPORTED_MODULE_0__Utils__["a" /* default */].getUrlFromParams(url.url, params));
-            xhr.addEventListener('load', (result) => {
+            xhr.addEventListener('load', () => {
                 if (xhr.status >= 200 && xhr.status < 300) {
                     let response = JSON.parse(xhr.responseText);
                     resolve(response.items.map((item) => {
@@ -1145,13 +1154,13 @@ class RepostMarker {
 
 
 /***/ }),
-/* 21 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(22);
+var content = __webpack_require__(15);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -1159,7 +1168,7 @@ var transform;
 var options = {"hmr":true}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(6)(content, options);
+var update = __webpack_require__(1)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -1176,10 +1185,10 @@ if(false) {
 }
 
 /***/ }),
-/* 22 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(5)(undefined);
+exports = module.exports = __webpack_require__(0)(undefined);
 // imports
 
 

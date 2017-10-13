@@ -18,10 +18,12 @@ export default class Utils {
         });
     }
 
+
     static changeLocation(newLocation) {
         p.location = newLocation;
         window.history.pushState({}, 'pr0gramm.com', newLocation);
     }
+
 
     static getUrlParams(url) {
         let result = {};
@@ -38,6 +40,7 @@ export default class Utils {
             params: result
         };
     }
+
 
     static getUrlFromParams(url, params) {
         let result = url + '?';

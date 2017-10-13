@@ -8,9 +8,9 @@ export default class RepostMarker {
         this.description = 'Markiert Reposts in der Übersicht'
     }
 
+
     load() {
         this.styles = require('../style/repostMarker.less');
-        this.reposts = [];
         this.overrideBuildItem();
 
         // Get reposts, if not searched before
@@ -23,6 +23,7 @@ export default class RepostMarker {
         });
     }
 
+
     overrideBuildItem() {
         let mainView = p.View.Stream.Main;
 
@@ -33,6 +34,7 @@ export default class RepostMarker {
         p.currentView.buildItem = this.buildItem;
     }
 
+
     static markRepost(id) {
         let elem = document.getElementById('item-' + id);
 
@@ -41,9 +43,11 @@ export default class RepostMarker {
         }
     }
 
+
     buildItem(item) {
         return `<a class="silent thumb" id="item-${item.id}" href="${this.baseURL}${item.id}"><img src="${item.thumb}"/></a>`;
     }
+
 
     handleAjax(url) {
         return new Promise((resolve, reject) => {
@@ -63,7 +67,7 @@ export default class RepostMarker {
             // Send manipulated request
             let xhr = new XMLHttpRequest();
             xhr.open('GET', Utils.getUrlFromParams(url.url, params));
-            xhr.addEventListener('load', (result) => {
+            xhr.addEventListener('load', () => {
                 if (xhr.status >= 200 && xhr.status < 300) {
                     let response = JSON.parse(xhr.responseText);
                     resolve(response.items.map((item) => {

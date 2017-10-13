@@ -1,5 +1,5 @@
-body.one-sidebar {
-
+body.one-sidebar,
+body.two-sidebars {
   > .side-wide-skyscraper {
     display: none;
   }
@@ -17,42 +17,47 @@ body.one-sidebar {
 
     #stream {
       text-align: center;
-      
+
       a.thumb {
         display: inline-block;
         float: none;
       }
     }
+    
+    #head {
+      background: rgba(0, 0, 0, 0.8);
 
-    #head-content {
-      display: flex;
-      align-items: center;
-
-      > .user-info {
-        order: 3;
-        margin: 0;
-      }
-
-      > #head-menu {
-        padding: 0;
-        flex-grow: 1;
+      #head-content {
+        background: none;
         display: flex;
         align-items: center;
-        justify-content: center;
-      }
 
-      > #pr0gramm-logo-link {
-        height: 24px;
-        margin: 0;
-      }
+        > .user-info {
+          order: 3;
+          margin: 0;
+        }
 
-      .sidebar-toggle {
-        color: #fff;
-        font-size: 20px;
-        margin-right: 10px;
+        > #head-menu {
+          padding: 0;
+          flex-grow: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
 
-        &.active {
-          color: #ee4d2e;
+        > #pr0gramm-logo-link {
+          height: 24px;
+          margin: 0;
+        }
+
+        .sidebar-toggle {
+          color: #fff;
+          font-size: 20px;
+          margin-right: 10px;
+
+          &.active {
+            color: #ee4d2e;
+          }
         }
       }
     }

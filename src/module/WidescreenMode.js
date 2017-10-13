@@ -7,6 +7,7 @@ export default class WidescreenMode {
 
     load() {
         this.styles = require('../style/widescreenMode.less');
+        console.log(this.styles);
         this.header = document.getElementById('head-content');
         this.nav = {
             button: null,
@@ -18,7 +19,7 @@ export default class WidescreenMode {
 
 
     static overrideTemplate() {
-        p.View.Stream.Main.prototype.buildItemRows = function (items, start, end, position) {
+        p.View.Stream.Main.prototype.buildItemRows = function (items) {
             let result = '';
             for (let i = 0; i < items.length; i++) {
                 result += this.buildItem(items[i]);
