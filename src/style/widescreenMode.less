@@ -1,0 +1,88 @@
+body.one-sidebar {
+
+  > .side-wide-skyscraper {
+    display: none;
+  }
+
+  #page {
+    &.desktop,
+    #head {
+      padding: 0 20px;
+      width: 100% !important;
+
+      #pr0-miner {
+        display: none;
+      }
+    }
+
+    #stream {
+      > .stream-row {
+        clear: none;
+      }
+    }
+
+    #head-content {
+      display: flex;
+      align-items: center;
+
+      > .user-info {
+        order: 3;
+        margin: 0;
+      }
+
+      > #head-menu {
+        padding: 0;
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      > #pr0gramm-logo-link {
+        height: 24px;
+        margin: 0;
+      }
+
+      .sidebar-toggle {
+        color: #fff;
+        font-size: 20px;
+        margin-right: 10px;
+
+        &.active {
+          color: #ee4d2e;
+        }
+      }
+    }
+  }
+
+  #footer-links {
+    width: 250px;
+    left: -250px !important;
+    position: fixed;
+    margin: 0;
+    top: 52px;
+    border-right: 3px solid rgb(42, 46, 49);
+    background: #161618;
+    transition: left .2s linear;
+    z-index: 200;
+
+    &.open {
+      left: 0 !important;
+      box-shadow: 2px 0 10px #000;
+    }
+
+    a {
+      color: #fff;
+      display: block;
+      text-align: left;
+      padding: 10px 20px;
+      margin-right: 0;
+      font-size: 16px;
+
+      &:hover {
+        color: #ee4d2e;
+      }
+    }
+  }
+}
+
