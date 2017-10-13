@@ -1,0 +1,26 @@
+{
+  "name": "p0weruser",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Florian Maak <fmaak@outlook.de>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "UserScript",
+    "pr0gramm"
+  ],
+  "moduleType": [],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "simplebar": "~2.4.4"
+  }
+}

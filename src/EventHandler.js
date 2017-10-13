@@ -1,6 +1,7 @@
 export default class EventHandler {
     constructor() {
         this.settingsLoaded = new Event('settingsLoaded');
+        this.commentsLoaded = new Event('commentsLoaded');
 
         this.addEvents();
     }
@@ -15,5 +16,14 @@ export default class EventHandler {
                 window.dispatchEvent(_this.settingsLoaded);
             };
         }(p.View.Settings.prototype.render));
+
+        // Add settings-event
+        (function(render) {
+            p.View.Stream.Comments.prototype.render = function() {
+                render.call(this);
+                window.dispatchEvent(_this.commentsLoaded);
+
+            };
+        }(p.View.Stream.Comments.prototype.render));
     }
 }

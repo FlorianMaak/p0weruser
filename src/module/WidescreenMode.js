@@ -1,6 +1,9 @@
+import SimpleBar from '../../bower_components/simplebar/dist/simplebar.js';
+
 export default class WidescreenMode {
     constructor() {
         this.name = 'Widescreen Mode';
+        this.bar = {};
         this.description = 'Stellt das pr0 im Breitbildmodus dar.'
     }
 
@@ -22,14 +25,6 @@ export default class WidescreenMode {
         p.View.Stream.Item.prototype.template = require('../template/streamItem.html');
         p.View.Stream.Comments.prototype.template = require('../template/streamItemComments.html');
 
-
-        p.View.Stream.Item = p.View.Stream.Item.extend({
-            showItem: function($item, scrollTo) {
-                this.parent($item, scrollTo);
-            }
-        });
-
-
         p.View.Stream.Main.prototype.buildItemRows = function (items) {
             let result = '';
             for (let i = 0; i < items.length; i++) {
@@ -38,6 +33,12 @@ export default class WidescreenMode {
 
             return `<div class="item-row">${result}</div>`;
         };
+    }
+
+    addListener() {
+        window.addEventListener('commentsLoaded', () => {
+            this.bar = new SimpleBar(document.getElementsByClassName('item-comments')[0]);
+        });
     }
 
 

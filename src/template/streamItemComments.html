@@ -1,11 +1,11 @@
 <div class="comment-count">
     <span class="pict">c</span> {"Kommentar".inflect(commentCount)}
+    <div class="comments-switch fa fa-"></div>
 </div>
 <div class="comments-head">
     <form class="comment-form" method="post">
         <textarea class="comment" name="comment" required
-                  placeholder="Kommentar schreiben…">
-        </textarea>
+                  placeholder="Kommentar schreiben…"></textarea>
         <input type="hidden" name="parentId" value="0"/>
         <input type="hidden" name="itemId" value="{params.id}"/>
         <div>

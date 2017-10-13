@@ -2,6 +2,7 @@ import Settings from './Settings';
 import EventHandler from './EventHandler';
 import WidescreenMode from './module/WidescreenMode';
 import RepostMarker from './module/RepostMarker';
+import scrollbarCSS from '../bower_components/simplebar/dist/simplebar.css';
 
 export default class P0weruser {
     constructor() {
@@ -22,6 +23,10 @@ export default class P0weruser {
         fa.rel = 'stylesheet';
         fa.href = 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css';
         document.getElementsByTagName('head')[0].appendChild(fa);
+
+        let scrollbar = document.createElement('style');
+        scrollbar.innerText = scrollbarCSS;
+        document.getElementsByTagName('head')[0].appendChild(scrollbar);
     }
 
 

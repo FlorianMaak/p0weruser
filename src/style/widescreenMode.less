@@ -104,7 +104,7 @@ body.two-sidebars {
   background: rgba(0, 0, 0, 0.9);
   position: fixed;
   top: 52px;
-  right: -20px;
+  right: 0;
   left: -20px;
   bottom: -20px;
   padding: 0;
@@ -120,6 +120,19 @@ body.two-sidebars {
       width: 100%;
       flex-direction: column;
 
+      .item-info {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100px;
+
+         > div {
+           position: relative;
+           width: 90%;
+           max-width: 980px;
+         }
+      }
+
       .item-image-wrapper {
         flex-grow: 1;
         overflow: hidden;
@@ -127,6 +140,32 @@ body.two-sidebars {
         align-items: center;
         justify-content: center;
         padding: 40px;
+
+        .stream-prev,
+        .stream-next {
+          display: flex;
+          height: 100%;
+          align-items: center;
+          justify-content: center;
+
+          span:before {
+            opacity: .2;
+            font-size: 70px;
+          }
+
+          &:hover span:before {
+            opacity: .6;
+          }
+        }
+
+        .stream-prev {
+          padding: 0 0 0 20px !important;
+        }
+
+        .stream-next {
+          right: 20px;
+          padding: 0 5px !important
+        }
 
         .video-controls {
           width: 100% !important;
@@ -145,14 +184,32 @@ body.two-sidebars {
 
     .item-comments {
       background: #161618;
-      overflow-y: scroll;
       width: 30vw;
       flex-grow: 0;
       flex-shrink: 0;
+      border-right: 3px solid #2a2e31;
+
+      textarea {
+        &.comment:focus,
+        &.comment:valid,
+        &.reply {
+          height: 75px;
+        }
+      }
+
+      .simplebar-scrollbar {
+        background: #2a2e31;
+        border-radius: 0;
+        right: 0;
+
+        &.visible {
+          opacity: 1;
+        }
+      }
 
       .comment-count {
         display: block;
-        background-color: #1B1E1F;
+        background-color: #2a2e31;
         text-align: left;
         position: sticky;
         padding: 10px 20px;
