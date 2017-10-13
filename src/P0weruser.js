@@ -1,6 +1,7 @@
-import Settings from './module/Settings.js';
-import EventHandler from './EventHandler.js';
+import Settings from './module/Settings';
+import EventHandler from './EventHandler';
 import WidescreenMode from './module/WidescreenMode';
+import RepostMarker from './module/RepostMarker';
 
 class P0weruser {
     constructor() {
@@ -33,7 +34,8 @@ class P0weruser {
     getModules() {
         if (!this.modules) {
             this.modules = {
-                'WidescreenMode': new WidescreenMode()
+                'WidescreenMode': new WidescreenMode(),
+                'RepostMarker': new RepostMarker()
             };
         }
 
@@ -41,7 +43,14 @@ class P0weruser {
     }
 
     getActivatedModules() {
-        return JSON.parse(window.localStorage.getItem('activated_modules'));
+        let modules = window.localStorage.getItem('activated_modules');
+
+        if (!modules) {
+            window.localStorage.setItem('activated_modules', '[]');
+            modules = '[]';
+        }
+        
+        return JSON.parse(modules);
     }
 
 

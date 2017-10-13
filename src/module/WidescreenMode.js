@@ -4,6 +4,7 @@ export default class WidescreenMode {
         this.description = 'Stellt das pr0 im Breitbildmodus dar.'
     }
 
+
     load() {
         this.styles = require('../style/widescreenMode.less');
         this.header = document.getElementById('head-content');
@@ -11,9 +12,22 @@ export default class WidescreenMode {
             button: null,
             container: document.getElementById('footer-links')
         };
-
+        WidescreenMode.overrideTemplate();
         this.addNavigation();
     }
+
+
+    static overrideTemplate() {
+        p.View.Stream.Main.prototype.buildItemRows = function (items, start, end, position) {
+            let result = '';
+            for (let i = 0; i < items.length; i++) {
+                result += this.buildItem(items[i]);
+            }
+
+            return result;
+        };
+    }
+
 
     addNavigation() {
         this.nav.button = document.createElement('a');
@@ -24,6 +38,7 @@ export default class WidescreenMode {
             this.toggleNavigation();
         })
     }
+
 
     toggleNavigation() {
         this.nav.container.classList.toggle('open');

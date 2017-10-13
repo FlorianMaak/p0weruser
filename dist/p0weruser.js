@@ -79,9 +79,11 @@
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__module_Settings_js__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__EventHandler_js__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__module_Settings__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__EventHandler__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__module_WidescreenMode__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__module_RepostMarker__ = __webpack_require__(20);
+
 
 
 
@@ -89,9 +91,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 class P0weruser {
     constructor() {
         P0weruser.addStyles();
-        this.eventHandler = new __WEBPACK_IMPORTED_MODULE_1__EventHandler_js__["a" /* default */]();
+        this.eventHandler = new __WEBPACK_IMPORTED_MODULE_1__EventHandler__["a" /* default */]();
         this.modules = this.getModules();
-        this.settings = new __WEBPACK_IMPORTED_MODULE_0__module_Settings_js__["a" /* default */](this);
+        this.settings = new __WEBPACK_IMPORTED_MODULE_0__module_Settings__["a" /* default */](this);
 
         // Load activated modules
         this.loadModules();
@@ -117,7 +119,8 @@ class P0weruser {
     getModules() {
         if (!this.modules) {
             this.modules = {
-                'WidescreenMode': new __WEBPACK_IMPORTED_MODULE_2__module_WidescreenMode__["a" /* default */]()
+                'WidescreenMode': new __WEBPACK_IMPORTED_MODULE_2__module_WidescreenMode__["a" /* default */](),
+                'RepostMarker': new __WEBPACK_IMPORTED_MODULE_3__module_RepostMarker__["a" /* default */]()
             };
         }
 
@@ -125,7 +128,14 @@ class P0weruser {
     }
 
     getActivatedModules() {
-        return JSON.parse(window.localStorage.getItem('activated_modules'));
+        let modules = window.localStorage.getItem('activated_modules');
+
+        if (!modules) {
+            window.localStorage.setItem('activated_modules', '[]');
+            modules = '[]';
+        }
+        
+        return JSON.parse(modules);
     }
 
 
@@ -700,7 +710,7 @@ class Utils {
         return new Promise((resolve, reject) => {
             let element = [];
             let check = () => {
-                if(! element[0]) {
+                if (!element[0]) {
                     element = document.querySelectorAll(selector);
 
                     setTimeout(() => {
@@ -718,6 +728,37 @@ class Utils {
     static changeLocation(newLocation) {
         p.location = newLocation;
         window.history.pushState({}, 'pr0gramm.com', newLocation);
+    }
+
+    static getUrlParams(url) {
+        let result = {};
+        url = url.split('?');
+        let params = url[1].split('&');
+
+        for (let i = 0; i < params.length; i++) {
+            let param = params[i].split('=');
+            result[param[0]] = param[1];
+        }
+
+        return {
+            url: url[0],
+            params: result
+        };
+    }
+
+    static getUrlFromParams(url, params) {
+        let result = url + '?';
+
+        for (let key in params) {
+            if (params.hasOwnProperty(key)) {
+                if (result !== url + '?') {
+                    result += '&';
+                }
+                result += key + '=' + params[key];
+            }
+        }
+
+        return result;
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Utils;
@@ -834,7 +875,7 @@ class Settings {
 /* 10 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=form-section> <h2>Addon Einstellungen</h2> <h3>Core</h3> <div id=addon-list></div> <div class=form-row> <input type=submit id=save-addon-settings value=\"Einstellungen speichern\" class=\"confirm settings-save\"> </div> </div> ";
+module.exports = "<div class=form-section> <h2>Addon Einstellungen</h2> <div id=addon-list></div> <div class=form-row> <input type=submit id=save-addon-settings value=\"Einstellungen speichern\" class=\"confirm settings-save\"> </div> </div> ";
 
 /***/ }),
 /* 11 */
@@ -876,7 +917,7 @@ exports = module.exports = __webpack_require__(5)(undefined);
 
 
 // module
-exports.push([module.i, "#addon-list span {\n  display: block;\n  color: #888;\n}\n", ""]);
+exports.push([module.i, "#addon-list label {\n  margin-bottom: 10px;\n}\n#addon-list label span {\n  display: block;\n  color: #888;\n}\n", ""]);
 
 // exports
 
@@ -920,6 +961,7 @@ class WidescreenMode {
         this.description = 'Stellt das pr0 im Breitbildmodus dar.'
     }
 
+
     load() {
         this.styles = __webpack_require__(15);
         this.header = document.getElementById('head-content');
@@ -927,9 +969,22 @@ class WidescreenMode {
             button: null,
             container: document.getElementById('footer-links')
         };
-
+        WidescreenMode.overrideTemplate();
         this.addNavigation();
     }
+
+
+    static overrideTemplate() {
+        p.View.Stream.Main.prototype.buildItemRows = function (items, start, end, position) {
+            let result = '';
+            for (let i = 0; i < items.length; i++) {
+                result += this.buildItem(items[i]);
+            }
+
+            return result;
+        };
+    }
+
 
     addNavigation() {
         this.nav.button = document.createElement('a');
@@ -940,6 +995,7 @@ class WidescreenMode {
             this.toggleNavigation();
         })
     }
+
 
     toggleNavigation() {
         this.nav.container.classList.toggle('open');
@@ -990,7 +1046,145 @@ exports = module.exports = __webpack_require__(5)(undefined);
 
 
 // module
-exports.push([module.i, "body.one-sidebar > .side-wide-skyscraper {\n  display: none;\n}\nbody.one-sidebar #page.desktop,\nbody.one-sidebar #page #head {\n  padding: 0 20px;\n  width: 100% !important;\n}\nbody.one-sidebar #page.desktop #pr0-miner,\nbody.one-sidebar #page #head #pr0-miner {\n  display: none;\n}\nbody.one-sidebar #page #stream > .stream-row {\n  clear: none;\n}\nbody.one-sidebar #page #head-content {\n  display: flex;\n  align-items: center;\n}\nbody.one-sidebar #page #head-content > .user-info {\n  order: 3;\n  margin: 0;\n}\nbody.one-sidebar #page #head-content > #head-menu {\n  padding: 0;\n  flex-grow: 1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\nbody.one-sidebar #page #head-content > #pr0gramm-logo-link {\n  height: 24px;\n  margin: 0;\n}\nbody.one-sidebar #page #head-content .sidebar-toggle {\n  color: #fff;\n  font-size: 20px;\n  margin-right: 10px;\n}\nbody.one-sidebar #page #head-content .sidebar-toggle.active {\n  color: #ee4d2e;\n}\nbody.one-sidebar #footer-links {\n  width: 250px;\n  left: -250px !important;\n  position: fixed;\n  margin: 0;\n  top: 52px;\n  border-right: 3px solid #2a2e31;\n  background: #161618;\n  transition: left .2s linear;\n  z-index: 200;\n}\nbody.one-sidebar #footer-links.open {\n  left: 0 !important;\n  box-shadow: 2px 0 10px #000;\n}\nbody.one-sidebar #footer-links a {\n  color: #fff;\n  display: block;\n  text-align: left;\n  padding: 10px 20px;\n  margin-right: 0;\n  font-size: 16px;\n}\nbody.one-sidebar #footer-links a:hover {\n  color: #ee4d2e;\n}\n", ""]);
+exports.push([module.i, "body.one-sidebar > .side-wide-skyscraper {\n  display: none;\n}\nbody.one-sidebar #page.desktop,\nbody.one-sidebar #page #head {\n  padding: 0 20px;\n  width: 100% !important;\n}\nbody.one-sidebar #page.desktop #pr0-miner,\nbody.one-sidebar #page #head #pr0-miner {\n  display: none;\n}\nbody.one-sidebar #page #stream {\n  text-align: center;\n}\nbody.one-sidebar #page #stream a.thumb {\n  display: inline-block;\n  float: none;\n}\nbody.one-sidebar #page #head-content {\n  display: flex;\n  align-items: center;\n}\nbody.one-sidebar #page #head-content > .user-info {\n  order: 3;\n  margin: 0;\n}\nbody.one-sidebar #page #head-content > #head-menu {\n  padding: 0;\n  flex-grow: 1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\nbody.one-sidebar #page #head-content > #pr0gramm-logo-link {\n  height: 24px;\n  margin: 0;\n}\nbody.one-sidebar #page #head-content .sidebar-toggle {\n  color: #fff;\n  font-size: 20px;\n  margin-right: 10px;\n}\nbody.one-sidebar #page #head-content .sidebar-toggle.active {\n  color: #ee4d2e;\n}\nbody.one-sidebar #footer-links {\n  width: 250px;\n  left: -250px !important;\n  position: fixed;\n  margin: 0;\n  top: 52px;\n  border-right: 3px solid #2a2e31;\n  background: #161618;\n  transition: left .2s linear;\n  z-index: 500;\n}\nbody.one-sidebar #footer-links.open {\n  left: 0 !important;\n  box-shadow: 2px 0 10px #000;\n}\nbody.one-sidebar #footer-links a {\n  color: #fff;\n  display: block;\n  text-align: left;\n  padding: 10px 20px;\n  margin-right: 0;\n  font-size: 16px;\n}\nbody.one-sidebar #footer-links a:hover {\n  color: #ee4d2e;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Utils__ = __webpack_require__(8);
+
+
+// Inspired by Mopsalarms repost-script
+// https://github.com/mopsalarm/pr0gramm-reposts-userscript
+class RepostMarker {
+    constructor() {
+        this.name = 'Repost Markierung';
+        this.description = 'Markiert Reposts in der Übersicht'
+    }
+
+    load() {
+        this.styles = __webpack_require__(21);
+        this.reposts = [];
+        this.overrideBuildItem();
+
+        // Get reposts, if not searched before
+        $(document).ajaxComplete((event, request, settings) => {
+            this.handleAjax(settings.url).then((data) => {
+                for (let id of data) {
+                    RepostMarker.markRepost(id);
+                }
+            });
+        });
+    }
+
+    overrideBuildItem() {
+        let mainView = p.View.Stream.Main;
+
+        p.View.Stream.Main = mainView.extend({
+            buildItem: this.buildItem
+        });
+
+        p.currentView.buildItem = this.buildItem;
+    }
+
+    static markRepost(id) {
+        let elem = document.getElementById('item-' + id);
+
+        if (elem) {
+            elem.classList.add('repost');
+        }
+    }
+
+    buildItem(item) {
+        return `<a class="silent thumb" id="item-${item.id}" href="${this.baseURL}${item.id}"><img src="${item.thumb}"/></a>`;
+    }
+
+    handleAjax(url) {
+        return new Promise((resolve, reject) => {
+            if (url.indexOf('/api/items/get') === -1 || url.indexOf('repost') !== -1) {
+                return false
+            }
+
+            // Prepare url
+            url = __WEBPACK_IMPORTED_MODULE_0__Utils__["a" /* default */].getUrlParams(url);
+            let params = url.params;
+            if (!params.tags) {
+                params.tags = 'repost';
+            } else {
+                params.tags += ' repost';
+            }
+
+            // Send manipulated request
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', __WEBPACK_IMPORTED_MODULE_0__Utils__["a" /* default */].getUrlFromParams(url.url, params));
+            xhr.addEventListener('load', (result) => {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    let response = JSON.parse(xhr.responseText);
+                    resolve(response.items.map((item) => {
+                        return item.id;
+                    }));
+                } else {
+                    reject('error!');
+                }
+            });
+
+            xhr.send();
+        });
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = RepostMarker;
+
+
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(22);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(6)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/less-loader/dist/cjs.js!./repostMarker.less", function() {
+			var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/less-loader/dist/cjs.js!./repostMarker.less");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(5)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, ".repost {\n  position: relative;\n}\n.repost:after {\n  content: \"rep0st\";\n  position: absolute;\n  color: #fff;\n  z-index: 10;\n  left: 0;\n  font-weight: bold;\n  font-size: 18px;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n", ""]);
 
 // exports
 

@@ -16,8 +16,11 @@ body.one-sidebar {
     }
 
     #stream {
-      > .stream-row {
-        clear: none;
+      text-align: center;
+      
+      a.thumb {
+        display: inline-block;
+        float: none;
       }
     }
 
@@ -64,7 +67,7 @@ body.one-sidebar {
     border-right: 3px solid rgb(42, 46, 49);
     background: #161618;
     transition: left .2s linear;
-    z-index: 200;
+    z-index: 500;
 
     &.open {
       left: 0 !important;
