@@ -23,7 +23,16 @@ body.two-sidebars {
         float: none;
       }
     }
-    
+    .item-container {
+      position: fixed;
+      top: 52px;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 400;
+    }
+
+
     #head {
       background: rgba(0, 0, 0, 0.8);
 
@@ -94,3 +103,10 @@ body.two-sidebars {
   }
 }
 
+// Image details-view
+#stream .item-container {
+
+  .item-container-content {
+    display: flex;
+  }
+}

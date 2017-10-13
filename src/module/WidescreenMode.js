@@ -7,25 +7,36 @@ export default class WidescreenMode {
 
     load() {
         this.styles = require('../style/widescreenMode.less');
-        console.log(this.styles);
         this.header = document.getElementById('head-content');
         this.nav = {
             button: null,
             container: document.getElementById('footer-links')
         };
-        WidescreenMode.overrideTemplate();
+        WidescreenMode.overrideTemplates();
         this.addNavigation();
     }
 
 
-    static overrideTemplate() {
+    static overrideTemplates() {
+        // Replace templates
+        p.View.Stream.Item.prototype.template = require('../template/streamItem.html');
+        p.View.Stream.Comments.prototype.template = require('../template/streamItemComments.html');
+
+
+        p.View.Stream.Item = p.View.Stream.Item.extend({
+            showItem: function($item, scrollTo) {
+                this.parent($item, scrollTo);
+            }
+        });
+
+
         p.View.Stream.Main.prototype.buildItemRows = function (items) {
             let result = '';
             for (let i = 0; i < items.length; i++) {
                 result += this.buildItem(items[i]);
             }
 
-            return result;
+            return `<div class="item-row">${result}</div>`;
         };
     }
 
