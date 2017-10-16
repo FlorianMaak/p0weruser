@@ -1,6 +1,7 @@
 # Work in Progress
 
 ## Features
+* Addon-Settings
 * Repost-Highlight
 * (WIP) Widescreen mode
 * (planed) Integration of Rene8888s repost-check

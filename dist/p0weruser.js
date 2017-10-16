@@ -1,11 +1,13 @@
 // ==UserScript==
-// @name         pr0gramm Framew0rk
-// @namespace    http://pr0gramm.com
-// @version      0.1
-// @description  Enables some additional features and provides plugin-api
-// @author       eWar Development
-// @match        http://pr0gramm.com/*
-// @match        https://pr0gramm.com/*
+// @name		p0weruser
+// @namespace	https://github.com/FlorianMaak/p0weruser
+// @author		Florian Maak
+// @description	Verbessert das pr0gramm mit einigen Erweiterungen
+// @include		/^https?://pr0gramm.com/.*$/
+// @icon		https://pr0gramm.com/media/pr0gramm-favicon.png
+// @version		0.1.0
+// @grant		none
+// @updateURL	https://github.com/FlorianMaak/p0weruser/raw/master/dist/p0weruser.js
 // ==/UserScript==
 
 /******/ (function(modules) { // webpackBootstrap
@@ -70,7 +72,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -532,6 +534,74 @@ function updateLink (link, options, obj) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+class Utils {
+    static waitForElement(selector) {
+        return new Promise((resolve, reject) => {
+            let element = [];
+            let check = () => {
+                if (!element[0]) {
+                    element = document.querySelectorAll(selector);
+
+                    setTimeout(() => {
+                        check();
+                    }, 10);
+                } else {
+                    resolve(element);
+                }
+            };
+
+            check();
+        });
+    }
+
+
+    static changeLocation(newLocation) {
+        p.location = newLocation;
+        window.history.pushState({}, 'pr0gramm.com', newLocation);
+    }
+
+
+    static getUrlParams(url) {
+        let result = {};
+        url = url.split('?');
+        let params = url[1].split('&');
+
+        for (let i = 0; i < params.length; i++) {
+            let param = params[i].split('=');
+            result[param[0]] = param[1];
+        }
+
+        return {
+            url: url[0],
+            params: result
+        };
+    }
+
+
+    static getUrlFromParams(url, params) {
+        let result = url + '?';
+
+        for (let key in params) {
+            if (params.hasOwnProperty(key)) {
+                if (result !== url + '?') {
+                    result += '&';
+                }
+                result += key + '=' + params[key];
+            }
+        }
+
+        return result;
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Utils;
+
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Settings__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__EventHandler__ = __webpack_require__(9);
@@ -615,74 +685,6 @@ window.p0weruser = new P0weruser();
 
 
 /***/ }),
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-class Utils {
-    static waitForElement(selector) {
-        return new Promise((resolve, reject) => {
-            let element = [];
-            let check = () => {
-                if (!element[0]) {
-                    element = document.querySelectorAll(selector);
-
-                    setTimeout(() => {
-                        check();
-                    }, 10);
-                } else {
-                    resolve(element);
-                }
-            };
-
-            check();
-        });
-    }
-
-
-    static changeLocation(newLocation) {
-        p.location = newLocation;
-        window.history.pushState({}, 'pr0gramm.com', newLocation);
-    }
-
-
-    static getUrlParams(url) {
-        let result = {};
-        url = url.split('?');
-        let params = url[1].split('&');
-
-        for (let i = 0; i < params.length; i++) {
-            let param = params[i].split('=');
-            result[param[0]] = param[1];
-        }
-
-        return {
-            url: url[0],
-            params: result
-        };
-    }
-
-
-    static getUrlFromParams(url, params) {
-        let result = url + '?';
-
-        for (let key in params) {
-            if (params.hasOwnProperty(key)) {
-                if (result !== url + '?') {
-                    result += '&';
-                }
-                result += key + '=' + params[key];
-            }
-        }
-
-        return result;
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Utils;
-
-
-
-/***/ }),
 /* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -691,8 +693,8 @@ class Utils {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__template_settingsTab_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__template_settingsTab_html__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__style_settings_less__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__style_settings_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__style_settings_less__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Utils__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__P0weruser__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Utils__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__P0weruser__ = __webpack_require__(3);
 
 
 
@@ -997,7 +999,7 @@ class EventHandler {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bower_components_simplebar_dist_simplebar_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bower_components_simplebar_dist_simplebar_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__bower_components_simplebar_dist_simplebar_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Utils__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Utils__ = __webpack_require__(2);
 
 
 
@@ -1145,7 +1147,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "body.one-sidebar > .side-wide-skyscraper,\nbody.two-sidebars > .side-wide-skyscraper {\n  display: none;\n}\nbody.one-sidebar #page.desktop,\nbody.two-sidebars #page.desktop,\nbody.one-sidebar #page #head,\nbody.two-sidebars #page #head {\n  padding: 0 20px;\n  width: 100% !important;\n}\nbody.one-sidebar #page.desktop #pr0-miner,\nbody.two-sidebars #page.desktop #pr0-miner,\nbody.one-sidebar #page #head #pr0-miner,\nbody.two-sidebars #page #head #pr0-miner {\n  display: none;\n}\nbody.one-sidebar #page #stream,\nbody.two-sidebars #page #stream {\n  text-align: center;\n}\nbody.one-sidebar #page #stream a.thumb,\nbody.two-sidebars #page #stream a.thumb {\n  display: inline-block;\n  float: none;\n}\nbody.one-sidebar #page #head,\nbody.two-sidebars #page #head {\n  background: rgba(0, 0, 0, 0.8);\n}\nbody.one-sidebar #page #head #head-content,\nbody.two-sidebars #page #head #head-content {\n  background: none;\n  display: flex;\n  align-items: center;\n}\nbody.one-sidebar #page #head #head-content > .user-info,\nbody.two-sidebars #page #head #head-content > .user-info {\n  order: 3;\n  margin: 0;\n}\nbody.one-sidebar #page #head #head-content > #head-menu,\nbody.two-sidebars #page #head #head-content > #head-menu {\n  padding: 0;\n  flex-grow: 1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\nbody.one-sidebar #page #head #head-content > #pr0gramm-logo-link,\nbody.two-sidebars #page #head #head-content > #pr0gramm-logo-link {\n  height: 24px;\n  margin: 0;\n}\nbody.one-sidebar #page #head #head-content .sidebar-toggle,\nbody.two-sidebars #page #head #head-content .sidebar-toggle {\n  color: #fff;\n  font-size: 20px;\n  margin-right: 10px;\n}\nbody.one-sidebar #page #head #head-content .sidebar-toggle.active,\nbody.two-sidebars #page #head #head-content .sidebar-toggle.active {\n  color: #ee4d2e;\n}\nbody.one-sidebar #footer-links,\nbody.two-sidebars #footer-links {\n  width: 250px;\n  left: -250px !important;\n  position: fixed;\n  margin: 0;\n  top: 52px;\n  border-right: 3px solid #2a2e31;\n  background: #161618;\n  transition: left .2s linear;\n  z-index: 500;\n}\nbody.one-sidebar #footer-links.open,\nbody.two-sidebars #footer-links.open {\n  left: 0 !important;\n  box-shadow: 2px 0 10px #000;\n}\nbody.one-sidebar #footer-links a,\nbody.two-sidebars #footer-links a {\n  color: #fff;\n  display: block;\n  text-align: left;\n  padding: 10px 20px;\n  margin-right: 0;\n  font-size: 16px;\n}\nbody.one-sidebar #footer-links a:hover,\nbody.two-sidebars #footer-links a:hover {\n  color: #ee4d2e;\n}\n#stream .item-container {\n  margin: 0;\n  max-height: calc(100vh - 52px);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: rgba(0, 0, 0, 0.9);\n  position: fixed;\n  top: 52px;\n  right: 0;\n  left: -20px;\n  bottom: -20px;\n  padding: 0;\n  z-index: 10;\n}\n#stream .item-container .item-container-content {\n  display: flex;\n  height: 100%;\n  width: 100%;\n}\n#stream .item-container .item-container-content .image-main {\n  display: flex;\n  width: 100%;\n  flex-direction: column;\n}\n#stream .item-container .item-container-content .image-main .item-info {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100px;\n}\n#stream .item-container .item-container-content .image-main .item-info > div {\n  position: relative;\n  width: 90%;\n  max-width: 980px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper {\n  flex-grow: 1;\n  overflow: hidden;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 40px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev,\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next {\n  display: flex;\n  height: 100%;\n  align-items: center;\n  justify-content: center;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev span:before,\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next span:before {\n  opacity: .2;\n  font-size: 70px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev:hover span:before,\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next:hover span:before {\n  opacity: .6;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev {\n  padding: 0 0 0 20px !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next {\n  right: 20px;\n  padding: 0 5px !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .video-controls {\n  width: 100% !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .video-controls .video-position-bar-background {\n  min-height: 2px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .item-image {\n  height: auto !important;\n  width: auto !important;\n}\n#stream .item-container .item-container-content .item-comments {\n  background: #161618;\n  width: 30vw;\n  flex-grow: 0;\n  flex-shrink: 0;\n  border-right: 3px solid #2a2e31;\n}\n#stream .item-container .item-container-content .item-comments textarea.comment:focus,\n#stream .item-container .item-container-content .item-comments textarea.comment:valid,\n#stream .item-container .item-container-content .item-comments textarea.reply {\n  height: 75px;\n}\n#stream .item-container .item-container-content .item-comments .simplebar-scrollbar {\n  background: #2a2e31;\n  border-radius: 0;\n  right: 0;\n}\n#stream .item-container .item-container-content .item-comments .simplebar-scrollbar.visible {\n  opacity: 1;\n}\n#stream .item-container .item-container-content .item-comments .comment-count {\n  display: block;\n  background-color: #2a2e31;\n  text-align: left;\n  position: sticky;\n  padding: 10px 20px;\n  top: 0;\n  z-index: 400;\n}\n", ""]);
+exports.push([module.i, "body[class] > .side-wide-skyscraper {\n  display: none;\n}\nbody[class] #page.desktop,\nbody[class] #page #head {\n  padding: 0 20px;\n  width: 100% !important;\n}\nbody[class] #page.desktop #pr0-miner,\nbody[class] #page #head #pr0-miner {\n  display: none;\n}\nbody[class] #page #stream {\n  text-align: center;\n}\nbody[class] #page #stream a.thumb {\n  display: inline-block;\n  float: none;\n}\nbody[class] #page #head {\n  background: rgba(0, 0, 0, 0.8);\n}\nbody[class] #page #head #head-content {\n  background: none;\n  display: flex;\n  align-items: center;\n}\nbody[class] #page #head #head-content > .user-info {\n  order: 3;\n  margin: 0;\n}\nbody[class] #page #head #head-content > #head-menu {\n  padding: 0;\n  flex-grow: 1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\nbody[class] #page #head #head-content > #pr0gramm-logo-link {\n  height: 24px;\n  margin: 0;\n}\nbody[class] #page #head #head-content .sidebar-toggle {\n  color: #fff;\n  font-size: 20px;\n  margin-right: 10px;\n}\nbody[class] #page #head #head-content .sidebar-toggle.active {\n  color: #ee4d2e;\n}\nbody[class] > #footer-links {\n  width: 250px;\n  left: -250px !important;\n  position: fixed;\n  margin: 0;\n  top: 52px;\n  border-right: 3px solid #2a2e31;\n  background: #161618;\n  transition: left .2s linear;\n  z-index: 500;\n}\nbody[class] > #footer-links.open {\n  left: 0 !important;\n  box-shadow: 2px 0 10px #000;\n}\nbody[class] > #footer-links a {\n  color: #fff;\n  display: block;\n  text-align: left;\n  padding: 10px 20px;\n  margin-right: 0;\n  font-size: 16px;\n}\nbody[class] > #footer-links a:hover {\n  color: #ee4d2e;\n}\n#stream .item-container {\n  margin: 0;\n  max-height: calc(100vh - 52px);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: rgba(0, 0, 0, 0.9);\n  position: fixed;\n  top: 52px;\n  right: 0;\n  left: -20px;\n  bottom: -20px;\n  padding: 0;\n  z-index: 10;\n}\n#stream .item-container .item-container-content {\n  display: flex;\n  height: 100%;\n  width: 100%;\n}\n#stream .item-container .item-container-content .image-main {\n  display: flex;\n  width: 100%;\n  flex-direction: column;\n}\n#stream .item-container .item-container-content .image-main .item-info {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100px;\n}\n#stream .item-container .item-container-content .image-main .item-info > div {\n  position: relative;\n  width: 90%;\n  max-width: 980px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper {\n  flex-grow: 1;\n  overflow: hidden;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 40px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev,\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next {\n  display: flex;\n  height: 100%;\n  align-items: center;\n  justify-content: center;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev span:before,\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next span:before {\n  opacity: .2;\n  font-size: 70px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev:hover span:before,\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next:hover span:before {\n  opacity: .6;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev {\n  padding: 0 0 0 20px !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next {\n  right: 20px;\n  padding: 0 5px !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .video-controls {\n  width: 100% !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .video-controls .video-position-bar-background {\n  min-height: 2px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .item-image {\n  height: auto !important;\n  width: auto !important;\n}\n#stream .item-container .item-container-content .item-comments {\n  background: #161618;\n  width: 30vw;\n  flex-grow: 0;\n  flex-shrink: 0;\n  border-right: 3px solid #2a2e31;\n}\n#stream .item-container .item-container-content .item-comments textarea.comment:focus,\n#stream .item-container .item-container-content .item-comments textarea.comment:valid,\n#stream .item-container .item-container-content .item-comments textarea.reply {\n  height: 75px;\n}\n#stream .item-container .item-container-content .item-comments .simplebar-scrollbar {\n  background: #2a2e31;\n  border-radius: 0;\n  right: 0;\n}\n#stream .item-container .item-container-content .item-comments .simplebar-scrollbar.visible {\n  opacity: 1;\n}\n#stream .item-container .item-container-content .item-comments .comment-count {\n  display: block;\n  background-color: #2a2e31;\n  text-align: left;\n  position: sticky;\n  padding: 10px 20px;\n  top: 0;\n  z-index: 400;\n}\n", ""]);
 
 // exports
 
@@ -1167,7 +1169,7 @@ module.exports = "<div class=comment-count> <span class=pict>c</span> {\"Komment
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Utils__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Utils__ = __webpack_require__(2);
 
 
 // Inspired by Mopsalarms repost-script
