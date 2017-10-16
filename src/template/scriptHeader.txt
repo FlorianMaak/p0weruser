@@ -1,9 +1,11 @@
 // ==UserScript==
-// @name         pr0gramm Framew0rk
-// @namespace    http://pr0gramm.com
-// @version      0.1
-// @description  Enables some additional features and provides plugin-api
-// @author       eWar Development
-// @match        http://pr0gramm.com/*
-// @match        https://pr0gramm.com/*
+// @name		p0weruser
+// @namespace	https://github.com/FlorianMaak/p0weruser
+// @author		Florian Maak
+// @description	Verbessert das pr0gramm mit einigen Erweiterungen
+// @include		/^https?://pr0gramm.com/.*$/
+// @icon		https://pr0gramm.com/media/pr0gramm-favicon.png
+// @version		0.1.0
+// @grant		none
+// @updateURL	https://github.com/FlorianMaak/p0weruser/raw/master/dist/p0weruser.js
 // ==/UserScript==
