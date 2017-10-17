@@ -43,9 +43,9 @@ export default class WidescreenMode {
 
     addListener() {
         window.addEventListener('commentsLoaded', () => {
-            let img = document.getElementsByClassName('item-image')[0];
-            this.container = img.parentNode;
-            this.resized = (img.height > this.container.offsetHeight || img.width > this.container.offsetWidth);
+            this.img = document.getElementsByClassName('item-image')[0];
+            this.container = this.img.parentNode;
+            this.resized = (this.img.height > this.container.offsetHeight || this.img.width > this.container.offsetWidth);
             this.container.classList.toggle('resized', this.resized);
 
             Utils.waitForElement('.item-comments').then((el) => {
@@ -64,7 +64,9 @@ export default class WidescreenMode {
         if(! this.listenerAdded) {
             this.listenerAdded = true;
             document.addEventListener('keydown', (e) => {
-                this.handleKeypress(e);
+                if(document.activeElement.tagName !== 'TEXTAREA' && document.activeElement.tagName !== 'INPUT') {
+                    this.handleKeypress(e);
+                }
             });
         }
     }
@@ -75,7 +77,11 @@ export default class WidescreenMode {
             case 'Space':
                 e.preventDefault();
                 if(this.resized) {
+                    let img = $(this.img);
+                    this.container.classList.add('oversize');
                     this.container.classList.toggle('resized');
+
+                    img.draggable();
                 }
                 break;
 
