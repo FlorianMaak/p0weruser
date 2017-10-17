@@ -5,6 +5,9 @@ export default class WidescreenMode {
     constructor() {
         this.name = 'Widescreen Mode';
         this.bar = {};
+        this.container = {};
+        this.resized = false;
+        this.listenerAdded = false;
         this.description = 'Stellt das pr0 im Breitbildmodus dar.'
     }
 
@@ -40,14 +43,10 @@ export default class WidescreenMode {
 
     addListener() {
         window.addEventListener('commentsLoaded', () => {
-            Utils.waitForElement('.item-image').then((img) => {
-                img = img[0];
-                let container = img.parentNode;
-                this.resized = (img.height > container.offsetHeight || img.width > container.offsetWidth);
-
-                container.classList.toggle('resized', this.resized);
-            });
-
+            let img = document.getElementsByClassName('item-image')[0];
+            this.container = img.parentNode;
+            this.resized = (img.height > this.container.offsetHeight || img.width > this.container.offsetWidth);
+            this.container.classList.toggle('resized', this.resized);
 
             Utils.waitForElement('.item-comments').then((el) => {
                 this.bar = new SimpleBar(el[0]);
@@ -60,16 +59,35 @@ export default class WidescreenMode {
 
                 WidescreenMode.handleWheelChange(e.deltaY);
             });
-
-            element.addEventListener('keypress', (e) => {
-                this.handleKeypress(e.code);
-            })
         });
+
+        if(! this.listenerAdded) {
+            this.listenerAdded = true;
+            document.addEventListener('keydown', (e) => {
+                this.handleKeypress(e);
+            });
+        }
     }
 
 
-    handleKeypress(code) {
-        console.log(code);
+    handleKeypress(e) {
+        switch(e.code) {
+            case 'Space':
+                e.preventDefault();
+                if(this.resized) {
+                    this.container.classList.toggle('resized');
+                }
+                break;
+
+            case 'ArrowUp':
+                e.preventDefault();
+                console.log('up');
+                break;
+            case 'ArrowDown':
+                e.preventDefault();
+                console.log('down');
+                break;
+        }
     }
 
 
