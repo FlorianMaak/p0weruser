@@ -109,6 +109,10 @@ body[class] {
   padding: 0;
   z-index: 10;
 
+  .item-pointer {
+    display: none;
+  }
+
   .item-container-content {
     display: flex;
     height: 100%;
@@ -140,10 +144,16 @@ body[class] {
         justify-content: center;
         padding: 40px;
 
+        &.resized {
+          .item-image {
+            max-height: ~"calc(100vh - 180px)";
+          }
+        }
+
         .stream-prev,
         .stream-next {
           display: flex;
-          height: 100%;
+          height: 50px;
           align-items: center;
           justify-content: center;
 
@@ -188,6 +198,10 @@ body[class] {
       flex-shrink: 0;
       border-right: 3px solid #2a2e31;
 
+      .comments-head {
+        padding: 12px 8px 14px 30px;
+      }
+
       textarea {
         &.comment:focus,
         &.comment:valid,
@@ -211,7 +225,7 @@ body[class] {
         background-color: #2a2e31;
         text-align: left;
         position: sticky;
-        padding: 10px 20px;
+        padding: 10px 35px;
         top: 0;
         z-index: 400;
       }

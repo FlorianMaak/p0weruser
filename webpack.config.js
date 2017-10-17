@@ -4,7 +4,6 @@ const fs = require('fs');
 
 module.exports = {
     entry: './src/P0weruser.js',
-	watch: true,
     output: {
         filename: 'p0weruser.js',
         path: path.resolve(__dirname, 'dist')
