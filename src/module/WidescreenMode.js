@@ -37,6 +37,7 @@ export default class WidescreenMode {
         };
     }
 
+
     addListener() {
         window.addEventListener('commentsLoaded', () => {
             Utils.waitForElement('.item-image').then((img) => {
@@ -59,8 +60,18 @@ export default class WidescreenMode {
 
                 WidescreenMode.handleWheelChange(e.deltaY);
             });
+
+            element.addEventListener('keypress', (e) => {
+                this.handleKeypress(e.code);
+            })
         });
     }
+
+
+    handleKeypress(code) {
+        console.log(code);
+    }
+
 
     static handleWheelChange(deltaY) {
         let el = {};
