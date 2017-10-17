@@ -144,6 +144,12 @@ body[class] {
         justify-content: center;
         padding: 40px;
 
+        &.resized {
+          .item-image {
+            max-height: ~"calc(100vh - 180px)";
+          }
+        }
+
         .stream-prev,
         .stream-next {
           display: flex;

@@ -17,6 +17,7 @@
   },
   "scripts": {
     "postinstall": "bower install",
-    "build": "webpack  --config webpack.config.js"
+    "build": "webpack  --config webpack.config.js --watch",
+    "test": "webpack --config webpack.config.js"
   }
 }

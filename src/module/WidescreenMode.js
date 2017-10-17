@@ -39,6 +39,15 @@ export default class WidescreenMode {
 
     addListener() {
         window.addEventListener('commentsLoaded', () => {
+            Utils.waitForElement('.item-image').then((img) => {
+                img = img[0];
+                let container = img.parentNode;
+                this.resized = (img.height > container.offsetHeight || img.width > container.offsetWidth);
+
+                container.classList.toggle('resized', this.resized);
+            });
+
+
             Utils.waitForElement('.item-comments').then((el) => {
                 this.bar = new SimpleBar(el[0]);
             });
