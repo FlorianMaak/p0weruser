@@ -1,5 +1,4 @@
 import SimpleBar from '../../bower_components/simplebar/dist/simplebar.js';
-import Utils from '../Utils';
 
 export default class WidescreenMode {
     constructor() {
@@ -71,6 +70,7 @@ export default class WidescreenMode {
 
         // Enable draggable
         if(this.resized) {
+            this.container.classList.add('oversize');
             this.img.draggable();
             this.img.draggable('disable');
         }
@@ -99,7 +99,6 @@ export default class WidescreenMode {
                 e.preventDefault();
                 if(this.resized) {
                     this.img.unbind('click');
-                    this.container.classList.add('oversize');
                     this.container.classList.toggle('resized');
                     this.isMoveable = ! this.container.classList.contains('resized');
                     this.img.draggable(this.isMoveable  ? 'enable' : 'disable');

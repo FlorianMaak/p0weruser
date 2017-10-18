@@ -1007,8 +1007,6 @@ class EventHandler {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bower_components_simplebar_dist_simplebar_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bower_components_simplebar_dist_simplebar_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__bower_components_simplebar_dist_simplebar_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Utils__ = __webpack_require__(2);
-
 
 
 class WidescreenMode {
@@ -1081,6 +1079,7 @@ class WidescreenMode {
 
         // Enable draggable
         if(this.resized) {
+            this.container.classList.add('oversize');
             this.img.draggable();
             this.img.draggable('disable');
         }
@@ -1109,7 +1108,6 @@ class WidescreenMode {
                 e.preventDefault();
                 if(this.resized) {
                     this.img.unbind('click');
-                    this.container.classList.add('oversize');
                     this.container.classList.toggle('resized');
                     this.isMoveable = ! this.container.classList.contains('resized');
                     this.img.draggable(this.isMoveable  ? 'enable' : 'disable');
