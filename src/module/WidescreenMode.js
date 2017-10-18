@@ -41,6 +41,13 @@ export default class WidescreenMode {
             }
         });
 
+        // Fix audio-controls
+        p.View.Stream.Item.TARGET = {
+            NOTHING: 0,
+            SEEK_CONTROLS: 1,
+            VOLUME_CONTROLS: 2
+        };
+
         // Extend comments-rendering and template
         p.View.Stream.Comments = p.View.Stream.Comments.extend({
             template: require('../template/streamItemComments.html'),
