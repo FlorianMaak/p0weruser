@@ -147,6 +147,8 @@ body[class] {
         &.resized {
           .item-image {
             max-height: ~"calc(100vh - 180px)";
+            top: auto !important;
+            left: auto !important;
           }
         }
 
@@ -193,6 +195,7 @@ body[class] {
         .item-image {
           height: auto !important;
           width: auto !important;
+          outline: none;
         }
       }
     }
@@ -224,6 +227,10 @@ body[class] {
         &.visible {
           opacity: 1;
         }
+      }
+
+      .simplebar-content {
+        outline: none;
       }
 
       .comment-count {
