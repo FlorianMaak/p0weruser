@@ -4,9 +4,11 @@ import Utils from '../Utils';
 export default class WidescreenMode {
     constructor() {
         this.name = 'Widescreen Mode';
-        this.bar = {};
+        this.bar = null;
         this.container = {};
+        this.commentsContainer = {};
         this.resized = false;
+        this.commentSwitch = null;
         this.listenerAdded = false;
         this.description = 'Stellt das pr0 im Breitbildmodus dar.'
     }
@@ -43,28 +45,45 @@ export default class WidescreenMode {
 
     addListener() {
         window.addEventListener('commentsLoaded', () => {
-            let img = document.getElementsByClassName('item-image')[0];
-            this.container = img.parentNode;
-            this.resized = (img.height > this.container.offsetHeight || img.width > this.container.offsetWidth);
+            this.img = $('.item-image');
+            this.commentsContainer = $('.item-comments');
+            this.container = this.img[0].parentNode;
+            this.resized = (this.img.height() > this.container.offsetHeight || this.img.width() > this.container.offsetWidth);
             this.container.classList.toggle('resized', this.resized);
+            this.isMoveable = false;
 
+            // Apply custom scrollbar
             Utils.waitForElement('.item-comments').then((el) => {
                 this.bar = new SimpleBar(el[0]);
+
+                // Add switch-listener
+                this.commentSwitch = this.commentsContainer.find('.comments-switch')[0];
+                this.commentSwitch.addEventListener('click', () => {
+                    this.commentsContainer[0].classList.toggle('wide');
+                });
             });
 
+            // Enable draggable
+            if(this.resized) {
+                this.img.draggable();
+                this.img.draggable('disable');
+            }
+
             // Handle wheel-change
-            let element = document.getElementsByClassName('item-image-wrapper')[0];
-            element.addEventListener('mousewheel', (e) => {
+            this.container.addEventListener('mousewheel', (e) => {
                 e.preventDefault();
 
                 WidescreenMode.handleWheelChange(e.deltaY);
             });
         });
 
+        // Add keydown listener to handle arrowkeys and spacebar
         if(! this.listenerAdded) {
             this.listenerAdded = true;
             document.addEventListener('keydown', (e) => {
-                this.handleKeypress(e);
+                if(document.activeElement.tagName !== 'TEXTAREA' && document.activeElement.tagName !== 'INPUT') {
+                    this.handleKeypress(e);
+                }
             });
         }
     }
@@ -75,17 +94,27 @@ export default class WidescreenMode {
             case 'Space':
                 e.preventDefault();
                 if(this.resized) {
+                    this.img.unbind('click');
+                    this.container.classList.add('oversize');
                     this.container.classList.toggle('resized');
+                    this.isMoveable = ! this.container.classList.contains('resized');
+                    this.img.draggable(this.isMoveable  ? 'enable' : 'disable');
+                    this.img.attr('tabindex', -1).focus();
                 }
                 break;
 
             case 'ArrowUp':
-                e.preventDefault();
-                console.log('up');
-                break;
             case 'ArrowDown':
-                e.preventDefault();
-                console.log('down');
+                if(this.isMoveable) {
+                    this.img.animate({
+                        top: e.code === 'ArrowDown' ? '-=20' : '+=20'
+                    }, 0);
+                } else {
+                    let elem = $(this.commentsContainer).find('.simplebar-content');
+                    if (!elem.is(':focus')) {
+                        elem.attr('tabindex', -1).focus();
+                    }
+                }
                 break;
         }
     }
