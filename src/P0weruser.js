@@ -68,11 +68,7 @@ export default class P0weruser {
     }
 }
 
-if (document.readyState === "complete" || document.readyState === "loaded" || document.readyState === "interactive") {
-    window.p0weruser = new P0weruser();
-} else {
-    document.addEventListener("DOMContentLoaded", () => {
-        window.p0weruser = new P0weruser()
-    });
-}
+
+// Load script
+window.p0weruser = new P0weruser();
 

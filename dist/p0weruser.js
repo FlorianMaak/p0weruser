@@ -682,13 +682,9 @@ class P0weruser {
 /* harmony export (immutable) */ __webpack_exports__["default"] = P0weruser;
 
 
-if (document.readyState === "complete" || document.readyState === "loaded" || document.readyState === "interactive") {
-    window.p0weruser = new P0weruser();
-} else {
-    document.addEventListener("DOMContentLoaded", () => {
-        window.p0weruser = new P0weruser()
-    });
-}
+
+// Load script
+window.p0weruser = new P0weruser();
 
 
 
@@ -1039,7 +1035,12 @@ class WidescreenMode {
             template: __webpack_require__(14),
             show: function (rowIndex, itemData, defaultHeight, jumpToComment) {
                 this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
-                _this.addItemListener(this.$image);
+
+                _this.addItemListener(this.$image, itemData);
+                document.body.classList.add('fixed');
+            },
+            remove: function() {
+                document.body.classList.remove('fixed');
             }
         });
 
@@ -1069,10 +1070,10 @@ class WidescreenMode {
         };
     }
 
-    addItemListener(image) {
+    addItemListener(image, itemData) {
         this.img = image;
         this.container = this.img[0].parentNode;
-        this.resized = (this.img.height() > this.container.offsetHeight || this.img.width() > this.container.offsetWidth);
+        this.resized = (itemData.height > this.container.offsetHeight || itemData.width > this.container.offsetWidth);
         this.container.classList.toggle('resized', this.resized);
 
         // Enable draggable
