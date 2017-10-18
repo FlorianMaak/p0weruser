@@ -4,10 +4,11 @@ import Utils from '../Utils';
 export default class WidescreenMode {
     constructor() {
         this.name = 'Widescreen Mode';
-        this.bar = {};
+        this.bar = null;
         this.container = {};
         this.commentsContainer = {};
         this.resized = false;
+        this.commentSwitch = null;
         this.listenerAdded = false;
         this.description = 'Stellt das pr0 im Breitbildmodus dar.'
     }
@@ -54,6 +55,12 @@ export default class WidescreenMode {
             // Apply custom scrollbar
             Utils.waitForElement('.item-comments').then((el) => {
                 this.bar = new SimpleBar(el[0]);
+
+                // Add switch-listener
+                this.commentSwitch = this.commentsContainer.find('.comments-switch')[0];
+                this.commentSwitch.addEventListener('click', () => {
+                    this.commentsContainer[0].classList.toggle('wide');
+                });
             });
 
             // Enable draggable
