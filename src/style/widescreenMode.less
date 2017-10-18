@@ -157,8 +157,36 @@ body[class] {
 
          > div {
            position: relative;
+           display: flex;
            width: 90%;
            max-width: 980px;
+
+           .item-details,
+           .item-tags {
+             padding: 5px 20px 5px 40px;
+           }
+
+           .item-vote {
+             display: flex;
+             align-items: center;
+             left: 0;
+             top: 0;
+             position: relative;
+
+             .vote-fav {
+               position: relative;
+               margin-left: 20px;
+               font-size: 32px;
+               left: 0;
+               top: 0;
+             }
+
+             .score {
+               position: relative;
+               top: 0;
+               left: 10px;
+             }
+           }
          }
       }
 
@@ -232,7 +260,10 @@ body[class] {
       flex-grow: 0;
       flex-shrink: 0;
       border-right: 3px solid #2a2e31;
-      transition: width .2s ease-out;
+
+      &.toggled {
+        transition: width .2s ease-out;
+      }
 
       &.wide {
         width: 40vw;

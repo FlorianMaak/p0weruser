@@ -12,6 +12,7 @@ export default class WidescreenMode {
 
 
     load() {
+        this.commentsWide = window.localStorage.getItem('comments_wide') === 'true';
         this.styles = require('../style/widescreenMode.less');
         this.header = document.getElementById('head-content');
         this.nav = {
@@ -32,9 +33,10 @@ export default class WidescreenMode {
                 this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
 
                 _this.addItemListener(this.$image, itemData);
-                document.body.classList.add('fixed');
+                 document.body.classList.add('fixed');
             },
             remove: function() {
+                this.parent();
                 document.body.classList.remove('fixed');
             }
         });
@@ -45,11 +47,16 @@ export default class WidescreenMode {
             render: function () {
                 this.parent();
                 _this.commentsContainer = this.$container;
+                _this.commentsContainer[0].classList.toggle('wide', _this.commentsWide);
                 new SimpleBar(this.$container[0]);
 
                 let commentSwitch = this.$container.find('.comments-switch')[0];
                 commentSwitch.addEventListener('click', () => {
+                    this.$container[0].classList.add('toggled');
                     this.$container[0].classList.toggle('wide');
+                    _this.commentsWide = this.$container[0].classList.contains('wide');
+
+                    window.localStorage.setItem('comments_wide',  _this.commentsWide);
                 });
             }
         });
