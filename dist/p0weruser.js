@@ -1102,7 +1102,9 @@ class WidescreenMode {
             case 'ArrowUp':
             case 'ArrowDown':
                 if(this.isMoveable) {
-                    console.log('todo');
+                    this.img.animate({
+                        top: e.code === 'ArrowDown' ? '-=20' : '+=20'
+                    }, 0);
                 } else {
                     let elem = $(this.commentsContainer).find('.simplebar-content');
                     if (!elem.is(':focus')) {
@@ -1357,7 +1359,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, ".repost {\n  position: relative;\n}\n.repost:after {\n  content: \"rep0st\";\n  position: absolute;\n  color: #fff;\n  z-index: 10;\n  left: 0;\n  font-weight: bold;\n  font-size: 18px;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n", ""]);
+exports.push([module.i, ".repost {\n  position: relative;\n}\n.repost:after {\n  content: \"rep0st\";\n  position: absolute;\n  color: #fff;\n  z-index: 4;\n  left: 0;\n  font-weight: bold;\n  font-size: 18px;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  background-color: rgba(0, 0, 0, 0.5);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n", ""]);
 
 // exports
 

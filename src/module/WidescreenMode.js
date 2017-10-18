@@ -99,7 +99,9 @@ export default class WidescreenMode {
             case 'ArrowUp':
             case 'ArrowDown':
                 if(this.isMoveable) {
-                    console.log('todo');
+                    this.img.animate({
+                        top: e.code === 'ArrowDown' ? '-=20' : '+=20'
+                    }, 0);
                 } else {
                     let elem = $(this.commentsContainer).find('.simplebar-content');
                     if (!elem.is(':focus')) {
