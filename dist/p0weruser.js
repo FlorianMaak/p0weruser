@@ -682,7 +682,14 @@ class P0weruser {
 /* harmony export (immutable) */ __webpack_exports__["default"] = P0weruser;
 
 
-window.p0weruser = new P0weruser();
+if (document.readyState === "complete" || document.readyState === "loaded" || document.readyState === "interactive") {
+    window.p0weruser = new P0weruser();
+} else {
+    document.addEventListener("DOMContentLoaded", () => {
+        window.p0weruser = new P0weruser()
+    });
+}
+
 
 
 /***/ }),
@@ -1024,17 +1031,38 @@ class WidescreenMode {
             button: null,
             container: document.getElementById('footer-links')
         };
-        WidescreenMode.overrideTemplates();
-        this.addListener();
+        this.overrideViews();
         this.addNavigation();
     }
 
 
-    static overrideTemplates() {
-        // Replace templates
-        p.View.Stream.Item.prototype.template = __webpack_require__(14);
-        p.View.Stream.Comments.prototype.template = __webpack_require__(15);
+    overrideViews() {
+        // Override Item-View
+        let _this = this;
+        p.View.Stream.Item = p.View.Stream.Item.extend({
+            template: __webpack_require__(14),
+            show: function(rowIndex, itemData, defaultHeight, jumpToComment) {
+                this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
+                _this.addItemListener(this.$image);
+            }
+        });
 
+        // Extend comments-rendering and template
+        p.View.Stream.Comments = p.View.Stream.Comments.extend({
+            template: __webpack_require__(15),
+            render: function() {
+                this.parent();
+                _this.commentsContainer = this.$container;
+                new __WEBPACK_IMPORTED_MODULE_0__bower_components_simplebar_dist_simplebar_js___default.a(this.$container[0]);
+
+                let commentSwitch = this.$container.find('.comments-switch')[0];
+                commentSwitch.addEventListener('click', () => {
+                    this.$container[0].classList.toggle('wide');
+                });
+            }
+        });
+
+        // Handle stream-building
         p.View.Stream.Main.prototype.buildItemRows = function (items) {
             let result = '';
             for (let i = 0; i < items.length; i++) {
@@ -1045,42 +1073,25 @@ class WidescreenMode {
         };
     }
 
+    addItemListener(image) {
+        this.img = image;
+        this.container = this.img[0].parentNode;
+        this.resized = (this.img.height() > this.container.offsetHeight || this.img.width() > this.container.offsetWidth);
+        this.container.classList.toggle('resized', this.resized);
 
-    addListener() {
-        window.addEventListener('commentsLoaded', () => {
-            this.img = $('.item-image');
-            this.commentsContainer = $('.item-comments');
-            this.container = this.img[0].parentNode;
-            this.resized = (this.img.height() > this.container.offsetHeight || this.img.width() > this.container.offsetWidth);
-            this.container.classList.toggle('resized', this.resized);
-            this.isMoveable = false;
+        // Enable draggable
+        if(this.resized) {
+            this.img.draggable();
+            this.img.draggable('disable');
+        }
 
-            // Apply custom scrollbar
-            __WEBPACK_IMPORTED_MODULE_1__Utils__["a" /* default */].waitForElement('.item-comments').then((el) => {
-                this.bar = new __WEBPACK_IMPORTED_MODULE_0__bower_components_simplebar_dist_simplebar_js___default.a(el[0]);
+        // Handle wheel-change
+        this.container.addEventListener('mousewheel', (e) => {
+            e.preventDefault();
 
-                // Add switch-listener
-                this.commentSwitch = this.commentsContainer.find('.comments-switch')[0];
-                this.commentSwitch.addEventListener('click', () => {
-                    this.commentsContainer[0].classList.toggle('wide');
-                });
-            });
-
-            // Enable draggable
-            if(this.resized) {
-                this.img.draggable();
-                this.img.draggable('disable');
-            }
-
-            // Handle wheel-change
-            this.container.addEventListener('mousewheel', (e) => {
-                e.preventDefault();
-
-                WidescreenMode.handleWheelChange(e.deltaY);
-            });
+            WidescreenMode.handleWheelChange(e.deltaY);
         });
 
-        // Add keydown listener to handle arrowkeys and spacebar
         if(! this.listenerAdded) {
             this.listenerAdded = true;
             document.addEventListener('keydown', (e) => {
@@ -1113,7 +1124,7 @@ class WidescreenMode {
                         top: e.code === 'ArrowDown' ? '-=20' : '+=20'
                     }, 0);
                 } else {
-                    let elem = $(this.commentsContainer).find('.simplebar-content');
+                    let elem = this.commentsContainer.find('.simplebar-content');
                     if (!elem.is(':focus')) {
                         elem.attr('tabindex', -1).focus();
                     }
