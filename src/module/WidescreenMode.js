@@ -114,13 +114,7 @@ export default class WidescreenMode {
         switch (e.code) {
             case 'Space':
                 e.preventDefault();
-                if (this.resized) {
-                    this.img.unbind('click');
-                    this.container.classList.toggle('resized');
-                    this.isMoveable = !this.container.classList.contains('resized');
-                    this.img.draggable(this.isMoveable ? 'enable' : 'disable');
-                    this.img.attr('tabindex', -1).focus();
-                }
+                this.toggleMove();
                 break;
             case 'Escape':
                 if (this.resized && p.currentView.$itemContainer) {
@@ -140,6 +134,22 @@ export default class WidescreenMode {
                     }
                 }
                 break;
+        }
+    }
+
+    toggleMove() {
+        if (this.resized) {
+            this.img.unbind('click');
+            this.container.classList.toggle('resized');
+            this.isMoveable = !this.container.classList.contains('resized');
+            this.img.draggable(this.isMoveable ? 'enable' : 'disable');
+            this.img.attr('tabindex', -1).focus();
+
+            if(! this.img.resizeInit) {
+                this.container.style.alignItems = 'flex-start';
+            }
+
+            this.img.resizeInit = true;
         }
     }
 
