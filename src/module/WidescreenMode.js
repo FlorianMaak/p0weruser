@@ -3,11 +3,9 @@ import SimpleBar from '../../bower_components/simplebar/dist/simplebar.js';
 export default class WidescreenMode {
     constructor() {
         this.name = 'Widescreen Mode';
-        this.bar = null;
         this.container = {};
         this.commentsContainer = {};
         this.resized = false;
-        this.commentSwitch = null;
         this.listenerAdded = false;
         this.description = 'Stellt das pr0 im Breitbildmodus dar.'
     }
@@ -30,7 +28,7 @@ export default class WidescreenMode {
         let _this = this;
         p.View.Stream.Item = p.View.Stream.Item.extend({
             template: require('../template/streamItem.html'),
-            show: function(rowIndex, itemData, defaultHeight, jumpToComment) {
+            show: function (rowIndex, itemData, defaultHeight, jumpToComment) {
                 this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
                 _this.addItemListener(this.$image);
             }
@@ -39,7 +37,7 @@ export default class WidescreenMode {
         // Extend comments-rendering and template
         p.View.Stream.Comments = p.View.Stream.Comments.extend({
             template: require('../template/streamItemComments.html'),
-            render: function() {
+            render: function () {
                 this.parent();
                 _this.commentsContainer = this.$container;
                 new SimpleBar(this.$container[0]);
@@ -69,7 +67,7 @@ export default class WidescreenMode {
         this.container.classList.toggle('resized', this.resized);
 
         // Enable draggable
-        if(this.resized) {
+        if (this.resized) {
             this.container.classList.add('oversize');
             this.img.draggable();
             this.img.draggable('disable');
@@ -82,10 +80,10 @@ export default class WidescreenMode {
             WidescreenMode.handleWheelChange(e.deltaY);
         });
 
-        if(! this.listenerAdded) {
+        if (!this.listenerAdded) {
             this.listenerAdded = true;
             document.addEventListener('keydown', (e) => {
-                if(document.activeElement.tagName !== 'TEXTAREA' && document.activeElement.tagName !== 'INPUT') {
+                if (document.activeElement.tagName !== 'TEXTAREA' && document.activeElement.tagName !== 'INPUT') {
                     this.handleKeypress(e);
                 }
             });
@@ -94,21 +92,25 @@ export default class WidescreenMode {
 
 
     handleKeypress(e) {
-        switch(e.code) {
+        switch (e.code) {
             case 'Space':
                 e.preventDefault();
-                if(this.resized) {
+                if (this.resized) {
                     this.img.unbind('click');
                     this.container.classList.toggle('resized');
-                    this.isMoveable = ! this.container.classList.contains('resized');
-                    this.img.draggable(this.isMoveable  ? 'enable' : 'disable');
+                    this.isMoveable = !this.container.classList.contains('resized');
+                    this.img.draggable(this.isMoveable ? 'enable' : 'disable');
                     this.img.attr('tabindex', -1).focus();
                 }
                 break;
-
+            case 'Escape':
+                if (this.resized && p.currentView.$itemContainer) {
+                    p.currentView.hideItem();
+                }
+                break;
             case 'ArrowUp':
             case 'ArrowDown':
-                if(this.isMoveable) {
+                if (this.isMoveable) {
                     this.img.animate({
                         top: e.code === 'ArrowDown' ? '-=20' : '+=20'
                     }, 0);
@@ -126,7 +128,7 @@ export default class WidescreenMode {
     static handleWheelChange(deltaY) {
         let el = {};
 
-        if(deltaY < 0) {
+        if (deltaY < 0) {
             el = document.getElementsByClassName('stream-prev')[0];
         } else {
             el = document.getElementsByClassName('stream-next')[0];

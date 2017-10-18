@@ -1012,11 +1012,9 @@ class EventHandler {
 class WidescreenMode {
     constructor() {
         this.name = 'Widescreen Mode';
-        this.bar = null;
         this.container = {};
         this.commentsContainer = {};
         this.resized = false;
-        this.commentSwitch = null;
         this.listenerAdded = false;
         this.description = 'Stellt das pr0 im Breitbildmodus dar.'
     }
@@ -1039,7 +1037,7 @@ class WidescreenMode {
         let _this = this;
         p.View.Stream.Item = p.View.Stream.Item.extend({
             template: __webpack_require__(14),
-            show: function(rowIndex, itemData, defaultHeight, jumpToComment) {
+            show: function (rowIndex, itemData, defaultHeight, jumpToComment) {
                 this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
                 _this.addItemListener(this.$image);
             }
@@ -1048,7 +1046,7 @@ class WidescreenMode {
         // Extend comments-rendering and template
         p.View.Stream.Comments = p.View.Stream.Comments.extend({
             template: __webpack_require__(15),
-            render: function() {
+            render: function () {
                 this.parent();
                 _this.commentsContainer = this.$container;
                 new __WEBPACK_IMPORTED_MODULE_0__bower_components_simplebar_dist_simplebar_js___default.a(this.$container[0]);
@@ -1078,7 +1076,7 @@ class WidescreenMode {
         this.container.classList.toggle('resized', this.resized);
 
         // Enable draggable
-        if(this.resized) {
+        if (this.resized) {
             this.container.classList.add('oversize');
             this.img.draggable();
             this.img.draggable('disable');
@@ -1091,10 +1089,10 @@ class WidescreenMode {
             WidescreenMode.handleWheelChange(e.deltaY);
         });
 
-        if(! this.listenerAdded) {
+        if (!this.listenerAdded) {
             this.listenerAdded = true;
             document.addEventListener('keydown', (e) => {
-                if(document.activeElement.tagName !== 'TEXTAREA' && document.activeElement.tagName !== 'INPUT') {
+                if (document.activeElement.tagName !== 'TEXTAREA' && document.activeElement.tagName !== 'INPUT') {
                     this.handleKeypress(e);
                 }
             });
@@ -1103,21 +1101,25 @@ class WidescreenMode {
 
 
     handleKeypress(e) {
-        switch(e.code) {
+        switch (e.code) {
             case 'Space':
                 e.preventDefault();
-                if(this.resized) {
+                if (this.resized) {
                     this.img.unbind('click');
                     this.container.classList.toggle('resized');
-                    this.isMoveable = ! this.container.classList.contains('resized');
-                    this.img.draggable(this.isMoveable  ? 'enable' : 'disable');
+                    this.isMoveable = !this.container.classList.contains('resized');
+                    this.img.draggable(this.isMoveable ? 'enable' : 'disable');
                     this.img.attr('tabindex', -1).focus();
                 }
                 break;
-
+            case 'Escape':
+                if (this.resized && p.currentView.$itemContainer) {
+                    p.currentView.hideItem();
+                }
+                break;
             case 'ArrowUp':
             case 'ArrowDown':
-                if(this.isMoveable) {
+                if (this.isMoveable) {
                     this.img.animate({
                         top: e.code === 'ArrowDown' ? '-=20' : '+=20'
                     }, 0);
@@ -1135,7 +1137,7 @@ class WidescreenMode {
     static handleWheelChange(deltaY) {
         let el = {};
 
-        if(deltaY < 0) {
+        if (deltaY < 0) {
             el = document.getElementsByClassName('stream-prev')[0];
         } else {
             el = document.getElementsByClassName('stream-next')[0];
@@ -1224,7 +1226,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "body[class] > .side-wide-skyscraper {\n  display: none;\n}\nbody[class] #page.desktop,\nbody[class] #page #head {\n  padding: 0 20px;\n  width: 100% !important;\n}\nbody[class] #page.desktop #pr0-miner,\nbody[class] #page #head #pr0-miner {\n  display: none;\n}\nbody[class] #page #stream {\n  text-align: center;\n}\nbody[class] #page #stream a.thumb {\n  display: inline-block;\n  float: none;\n}\nbody[class] #page #head {\n  background: rgba(0, 0, 0, 0.8);\n}\nbody[class] #page #head #head-content {\n  background: none;\n  display: flex;\n  align-items: center;\n}\nbody[class] #page #head #head-content > .user-info {\n  order: 3;\n  margin: 0;\n}\nbody[class] #page #head #head-content > #head-menu {\n  padding: 0;\n  flex-grow: 1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\nbody[class] #page #head #head-content > #pr0gramm-logo-link {\n  height: 24px;\n  margin: 0;\n}\nbody[class] #page #head #head-content .sidebar-toggle {\n  color: #fff;\n  font-size: 20px;\n  margin-right: 10px;\n}\nbody[class] #page #head #head-content .sidebar-toggle.active {\n  color: #ee4d2e;\n}\nbody[class] > #footer-links {\n  width: 250px;\n  left: -250px !important;\n  position: fixed;\n  margin: 0;\n  top: 52px;\n  border-right: 3px solid #2a2e31;\n  background: #161618;\n  transition: left .2s linear;\n  z-index: 500;\n}\nbody[class] > #footer-links.open {\n  left: 0 !important;\n  box-shadow: 2px 0 10px #000;\n}\nbody[class] > #footer-links a {\n  color: #fff;\n  display: block;\n  text-align: left;\n  padding: 10px 20px;\n  margin-right: 0;\n  font-size: 16px;\n}\nbody[class] > #footer-links a:hover {\n  color: #ee4d2e;\n}\nbody[class] > #footer-links a:before {\n  font-family: 'FontAwesome';\n  margin-right: 10px;\n}\nbody[class] > #footer-links a[href=\"/faq\"]:before {\n  content: \"\\F059\";\n}\nbody[class] > #footer-links a[href=\"/contact\"]:before {\n  content: \"\\F0E0\";\n}\nbody[class] > #footer-links a[href=\"http://app.pr0gramm.com\"]:before {\n  content: \"\\F10B\";\n}\nbody[class] > #footer-links a[href=\"https://twitter.com/pr0gramm\"]:before {\n  content: \"\\F099\";\n}\n#stream .item-container {\n  margin: 0;\n  max-height: calc(100vh - 52px);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: rgba(0, 0, 0, 0.9);\n  position: fixed;\n  top: 52px;\n  right: 0;\n  left: -20px;\n  bottom: -20px;\n  padding: 0;\n  z-index: 10;\n}\n#stream .item-container .item-pointer {\n  display: none;\n}\n#stream .item-container .item-container-content {\n  display: flex;\n  height: 100%;\n  width: 100%;\n}\n#stream .item-container .item-container-content .image-main {\n  display: flex;\n  width: 100%;\n  flex-direction: column;\n}\n#stream .item-container .item-container-content .image-main .item-info {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100px;\n}\n#stream .item-container .item-container-content .image-main .item-info > div {\n  position: relative;\n  width: 90%;\n  max-width: 980px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper {\n  flex-grow: 1;\n  overflow: hidden;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 40px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper.resized .item-image {\n  max-height: calc(100vh - 180px);\n  top: auto !important;\n  left: auto !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper.oversize:not(.resized) .item-image {\n  cursor: move;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev,\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next {\n  display: flex;\n  height: 50px;\n  align-items: center;\n  justify-content: center;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev span:before,\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next span:before {\n  opacity: .2;\n  font-size: 70px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev:hover span:before,\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next:hover span:before {\n  opacity: .6;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev {\n  padding: 0 0 0 20px !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next {\n  right: 20px;\n  padding: 0 5px !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .video-controls {\n  width: 100% !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .video-controls .video-position-bar-background {\n  min-height: 2px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .item-image {\n  height: auto !important;\n  width: auto !important;\n  outline: none;\n}\n#stream .item-container .item-container-content .item-comments {\n  background: #161618;\n  width: 30vw;\n  flex-grow: 0;\n  flex-shrink: 0;\n  border-right: 3px solid #2a2e31;\n  transition: width 0.2s ease-out;\n}\n#stream .item-container .item-container-content .item-comments.wide {\n  width: 40vw;\n}\n#stream .item-container .item-container-content .item-comments.wide .comments-switch:before {\n  content: \"\\F053\";\n}\n#stream .item-container .item-container-content .item-comments .comments-head {\n  padding: 12px 8px 14px 30px;\n}\n#stream .item-container .item-container-content .item-comments .comments-head .comment-content,\n#stream .item-container .item-container-content .item-comments .comments-head .comment-foot,\n#stream .item-container .item-container-content .item-comments .comments-head .comment {\n  max-width: 100%;\n}\n#stream .item-container .item-container-content .item-comments .comment-count {\n  display: flex;\n  align-items: center;\n  background-color: #2a2e31;\n  text-align: left;\n  position: sticky;\n  padding: 10px 10px 10px 35px;\n  top: 0;\n  z-index: 400;\n}\n#stream .item-container .item-container-content .item-comments .comment-count > div:first-child {\n  flex-grow: 1;\n}\n#stream .item-container .item-container-content .item-comments .comment-count .comments-switch {\n  cursor: pointer;\n}\n#stream .item-container .item-container-content .item-comments textarea.comment:focus,\n#stream .item-container .item-container-content .item-comments textarea.comment:valid,\n#stream .item-container .item-container-content .item-comments textarea.reply {\n  height: 75px;\n}\n#stream .item-container .item-container-content .item-comments .simplebar-scrollbar {\n  background: #2a2e31;\n  border-radius: 0;\n  right: 0;\n}\n#stream .item-container .item-container-content .item-comments .simplebar-scrollbar.visible {\n  opacity: 1;\n}\n#stream .item-container .item-container-content .item-comments .simplebar-content {\n  outline: none;\n}\n", ""]);
+exports.push([module.i, "body[class].fixed {\n  overflow: hidden;\n}\nbody[class] > .side-wide-skyscraper {\n  display: none;\n}\nbody[class] #page.desktop,\nbody[class] #page #head {\n  padding: 0 20px;\n  width: 100% !important;\n}\nbody[class] #page.desktop #pr0-miner,\nbody[class] #page #head #pr0-miner {\n  display: none;\n}\nbody[class] #page #stream {\n  text-align: center;\n}\nbody[class] #page #stream a.thumb {\n  display: inline-block;\n  float: none;\n}\nbody[class] #page #head {\n  background: rgba(0, 0, 0, 0.8);\n}\nbody[class] #page #head #head-content {\n  background: none;\n  display: flex;\n  align-items: center;\n}\nbody[class] #page #head #head-content > .user-info {\n  order: 3;\n  margin: 0;\n}\nbody[class] #page #head #head-content > #head-menu {\n  padding: 0;\n  flex-grow: 1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\nbody[class] #page #head #head-content > #pr0gramm-logo-link {\n  height: 24px;\n  margin: 0;\n}\nbody[class] #page #head #head-content .sidebar-toggle {\n  color: #fff;\n  font-size: 20px;\n  margin-right: 10px;\n}\nbody[class] #page #head #head-content .sidebar-toggle.active {\n  color: #ee4d2e;\n}\nbody[class] > #footer-links {\n  width: 250px;\n  left: -250px !important;\n  position: fixed;\n  margin: 0;\n  top: 52px;\n  border-right: 3px solid #2a2e31;\n  background: #161618;\n  transition: left .2s linear;\n  z-index: 500;\n}\nbody[class] > #footer-links.open {\n  left: 0 !important;\n  box-shadow: 2px 0 10px #000;\n}\nbody[class] > #footer-links a {\n  color: #fff;\n  display: block;\n  text-align: left;\n  padding: 10px 20px;\n  margin-right: 0;\n  font-size: 16px;\n}\nbody[class] > #footer-links a:hover {\n  color: #ee4d2e;\n}\nbody[class] > #footer-links a:before {\n  font-family: 'FontAwesome';\n  margin-right: 10px;\n}\nbody[class] > #footer-links a[href=\"/faq\"]:before {\n  content: \"\\F059\";\n}\nbody[class] > #footer-links a[href=\"/contact\"]:before {\n  content: \"\\F0E0\";\n}\nbody[class] > #footer-links a[href=\"http://app.pr0gramm.com\"]:before {\n  content: \"\\F10B\";\n}\nbody[class] > #footer-links a[href=\"https://twitter.com/pr0gramm\"]:before {\n  content: \"\\F099\";\n}\n#stream .item-container {\n  margin: 0;\n  max-height: calc(100vh - 52px);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: rgba(0, 0, 0, 0.9);\n  position: fixed;\n  top: 52px;\n  right: 0;\n  left: -20px;\n  bottom: -20px;\n  padding: 0;\n  z-index: 10;\n}\n#stream .item-container .item-pointer {\n  display: none;\n}\n#stream .item-container .item-container-content {\n  display: flex;\n  height: 100%;\n  width: 100%;\n}\n#stream .item-container .item-container-content .image-main {\n  display: flex;\n  width: 100%;\n  flex-direction: column;\n}\n#stream .item-container .item-container-content .image-main .item-info {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100px;\n}\n#stream .item-container .item-container-content .image-main .item-info > div {\n  position: relative;\n  width: 90%;\n  max-width: 980px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper {\n  flex-grow: 1;\n  overflow: hidden;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 40px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper.resized .item-image {\n  max-height: calc(100vh - 180px);\n  top: auto !important;\n  left: auto !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper.oversize:not(.resized) .item-image {\n  cursor: move;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev,\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next {\n  display: flex;\n  height: 50px;\n  align-items: center;\n  justify-content: center;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev span:before,\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next span:before {\n  opacity: .2;\n  font-size: 70px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev:hover span:before,\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next:hover span:before {\n  opacity: .6;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev {\n  padding: 0 0 0 20px !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next {\n  right: 20px;\n  padding: 0 5px !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .video-controls {\n  width: 100% !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .video-controls .video-position-bar-background {\n  min-height: 2px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .item-image {\n  height: auto !important;\n  width: auto !important;\n  outline: none;\n}\n#stream .item-container .item-container-content .item-comments {\n  background: #161618;\n  width: 30vw;\n  flex-grow: 0;\n  flex-shrink: 0;\n  border-right: 3px solid #2a2e31;\n  transition: width 0.2s ease-out;\n}\n#stream .item-container .item-container-content .item-comments.wide {\n  width: 40vw;\n}\n#stream .item-container .item-container-content .item-comments.wide .comments-switch:before {\n  content: \"\\F053\";\n}\n#stream .item-container .item-container-content .item-comments .comments-head {\n  padding: 12px 8px 14px 30px;\n}\n#stream .item-container .item-container-content .item-comments .comments-head .comment-content,\n#stream .item-container .item-container-content .item-comments .comments-head .comment-foot,\n#stream .item-container .item-container-content .item-comments .comments-head .comment {\n  max-width: 100%;\n}\n#stream .item-container .item-container-content .item-comments .comment-count {\n  display: flex;\n  align-items: center;\n  background-color: #2a2e31;\n  text-align: left;\n  position: sticky;\n  padding: 10px 10px 10px 35px;\n  top: 0;\n  z-index: 400;\n}\n#stream .item-container .item-container-content .item-comments .comment-count > div:first-child {\n  flex-grow: 1;\n}\n#stream .item-container .item-container-content .item-comments .comment-count .comments-switch {\n  cursor: pointer;\n}\n#stream .item-container .item-container-content .item-comments textarea.comment:focus,\n#stream .item-container .item-container-content .item-comments textarea.comment:valid,\n#stream .item-container .item-container-content .item-comments textarea.reply {\n  height: 75px;\n}\n#stream .item-container .item-container-content .item-comments .simplebar-scrollbar {\n  background: #2a2e31;\n  border-radius: 0;\n  right: 0;\n}\n#stream .item-container .item-container-content .item-comments .simplebar-scrollbar.visible {\n  opacity: 1;\n}\n#stream .item-container .item-container-content .item-comments .simplebar-content {\n  outline: none;\n}\n", ""]);
 
 // exports
 
