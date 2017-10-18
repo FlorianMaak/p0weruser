@@ -198,6 +198,15 @@ body[class] {
         justify-content: center;
         padding: 40px;
 
+        .video-controls {
+          height: 64px;
+
+          .audio-controls {
+            left: 20px;
+            bottom: 20px;
+          }
+        }
+
         &.resized {
           .item-image {
             max-height: ~"calc(100vh - 200px)";
@@ -259,6 +268,7 @@ body[class] {
       width: 30vw;
       flex-grow: 0;
       flex-shrink: 0;
+      padding-top: 30px;
       border-right: 3px solid #2a2e31;
 
       &.toggled {
@@ -271,10 +281,14 @@ body[class] {
         .comments-switch:before {
           content: "\f053";
         }
+
+        .comment-count {
+          width: 40vw;
+        }
       }
 
       .comments-head {
-        padding: 12px 8px 14px 30px;
+        padding: 10px 10px 10px 30px;
 
         .comment-content,
         .comment-foot,
@@ -288,10 +302,12 @@ body[class] {
         align-items: center;
         background-color: #2a2e31;
         text-align: left;
-        position: sticky;
         padding: 10px 10px 10px 35px;
-        top: 0;
+        transition: width .2s ease-out;
         z-index: 400;
+        position: fixed;
+        top: 52px;
+        width: 30vw;
 
         > div:first-child {
           flex-grow: 1;
@@ -303,6 +319,8 @@ body[class] {
       }
 
       textarea {
+        transition: height .2s ease-out;
+
         &.comment:focus,
         &.comment:valid,
         &.reply {
