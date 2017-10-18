@@ -89,6 +89,27 @@ body[class] {
       &:hover {
         color: #ee4d2e;
       }
+
+      &:before {
+        font-family: 'FontAwesome';
+        margin-right: 10px;
+      }
+
+      &[href="/faq"]:before {
+        content: "\f059";
+      }
+
+      &[href="/contact"]:before {
+        content: "\f0e0";
+      }
+
+      &[href="http://app.pr0gramm.com"]:before {
+        content: "\f10b";
+      }
+
+      &[href="https://twitter.com/pr0gramm"]:before {
+        content: "\f099";
+      }
     }
   }
 }
