@@ -24,7 +24,7 @@ export default class Utils {
         window.history.pushState({}, 'pr0gramm.com', newLocation);
     }
 
-
+    
     static getUrlParams(url) {
         let result = {};
         url = url.split('?');

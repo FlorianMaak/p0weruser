@@ -574,6 +574,23 @@ class P0weruser {
     }
 
 
+    static getActivatedModules() {
+        let modules = window.localStorage.getItem('activated_modules');
+
+        if (!modules) {
+            window.localStorage.setItem('activated_modules', '[]');
+            modules = '[]';
+        }
+
+        return JSON.parse(modules);
+    }
+
+
+    static saveActivatedModules(selection) {
+        window.localStorage.setItem('activated_modules', JSON.stringify(selection));
+    }
+
+
     loadModules() {
         let activated = P0weruser.getActivatedModules();
 
@@ -592,23 +609,6 @@ class P0weruser {
         }
 
         return this.modules;
-    }
-
-
-    static getActivatedModules() {
-        let modules = window.localStorage.getItem('activated_modules');
-
-        if (!modules) {
-            window.localStorage.setItem('activated_modules', '[]');
-            modules = '[]';
-        }
-
-        return JSON.parse(modules);
-    }
-
-
-    static saveActivatedModules(selection) {
-        window.localStorage.setItem('activated_modules', JSON.stringify(selection));
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["default"] = P0weruser;
@@ -651,7 +651,7 @@ class Utils {
         window.history.pushState({}, 'pr0gramm.com', newLocation);
     }
 
-
+    
     static getUrlParams(url) {
         let result = {};
         url = url.split('?');
@@ -715,6 +715,30 @@ class Settings {
     }
 
 
+    static clearSettings() {
+        // clear module settings
+        window.localStorage.setItem('activated_modules', '[]');
+
+        // Reload pr0gramm
+        p.reload();
+    }
+
+
+    static saveSettings(moduleList) {
+        let result = [];
+        let actives = moduleList.querySelectorAll(':checked');
+
+        // Get list of checked modules
+        for (let i = 0; i < actives.length; i++) {
+            result.push(actives[i].dataset.module);
+        }
+        __WEBPACK_IMPORTED_MODULE_3__P0weruser__["default"].saveActivatedModules(result);
+
+        // Reload pr0gramm
+        p.reload();
+    }
+
+
     addListeners() {
         window.addEventListener('settingsLoaded', () => {
             this.addSettingsTab();
@@ -774,7 +798,7 @@ class Settings {
         // Add listener to clear-button
         let clearButton = this.tabContent.getElementsByClassName('clear-settings-button')[0];
         clearButton.addEventListener('click', () => {
-            if(window.confirm('Einstellungen wirklich zurücksetzen?')) {
+            if (window.confirm('Einstellungen wirklich zurücksetzen?')) {
                 Settings.clearSettings();
             }
         });
@@ -784,28 +808,6 @@ class Settings {
         saveButton.addEventListener('click', () => {
             Settings.saveSettings(moduleList);
         })
-    }
-
-    static clearSettings() {
-        // clear module settings
-        window.localStorage.setItem('activated_modules', '[]');
-
-        // Reload pr0gramm
-        p.reload();
-    }
-
-    static saveSettings(moduleList) {
-        let result = [];
-        let actives = moduleList.querySelectorAll(':checked');
-
-        // Get list of checked modules
-        for (let i = 0; i < actives.length; i++) {
-            result.push(actives[i].dataset.module);
-        }
-        __WEBPACK_IMPORTED_MODULE_3__P0weruser__["default"].saveActivatedModules(result);
-
-        // Reload pr0gramm
-        p.reload();
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Settings;
@@ -971,20 +973,21 @@ class EventHandler {
         this.addEvents();
     }
 
+
     addEvents() {
         let _this = this;
 
         // Add settings-event
-        (function(render) {
-            p.View.Settings.prototype.render = function(params) {
+        (function (render) {
+            p.View.Settings.prototype.render = function (params) {
                 render.call(this, params);
                 window.dispatchEvent(_this.settingsLoaded);
             };
         }(p.View.Settings.prototype.render));
 
         // Add locationchange event
-        (function(navigate) {
-            p.navigateTo = function(location, mode) {
+        (function (navigate) {
+            p.navigateTo = function (location, mode) {
                 navigate.call(this, location, mode);
                 _this.locationChange.mode = mode;
                 window.dispatchEvent(_this.locationChange);
@@ -1015,6 +1018,17 @@ class WidescreenMode {
         this.description = 'Stellt das pr0 im Breitbildmodus dar.'
     }
 
+    static handleWheelChange(deltaY) {
+        let el = {};
+
+        if (deltaY < 0) {
+            el = document.getElementsByClassName('stream-prev')[0];
+        } else {
+            el = document.getElementsByClassName('stream-next')[0];
+        }
+
+        el.click();
+    }
 
     load() {
         this.commentsWide = window.localStorage.getItem('comments_wide') === 'true';
@@ -1028,13 +1042,12 @@ class WidescreenMode {
         this.addNavigation();
     }
 
-
     overrideViews() {
         // Override Item-View
         let _this = this;
 
         p.View.Base = p.View.Base.extend({
-            showLoader: function() {
+            showLoader: function () {
                 console.log('te');
             }
         });
@@ -1045,9 +1058,9 @@ class WidescreenMode {
                 this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
 
                 _this.addItemListener(this.$image, itemData);
-                 document.body.classList.add('fixed');
+                document.body.classList.add('fixed');
             },
-            remove: function() {
+            remove: function () {
                 this.parent();
                 document.body.classList.remove('fixed');
             }
@@ -1075,7 +1088,7 @@ class WidescreenMode {
                     this.$container[0].classList.toggle('wide');
                     _this.commentsWide = this.$container[0].classList.contains('wide');
 
-                    window.localStorage.setItem('comments_wide',  _this.commentsWide);
+                    window.localStorage.setItem('comments_wide', _this.commentsWide);
                 });
             }
         });
@@ -1120,13 +1133,12 @@ class WidescreenMode {
             });
 
             window.addEventListener('locationChange', (e) => {
-                if(e.mode === 0) {
+                if (e.mode === 0) {
                     document.body.classList.remove('fixed');
                 }
             })
         }
     }
-
 
     handleKeypress(e) {
         switch (e.code) {
@@ -1163,27 +1175,13 @@ class WidescreenMode {
             this.img.draggable(this.isMoveable ? 'enable' : 'disable');
             this.img.attr('tabindex', -1).focus();
 
-            if(! this.img.resizeInit) {
+            if (!this.img.resizeInit) {
                 this.container.style.alignItems = 'flex-start';
             }
 
             this.img.resizeInit = true;
         }
     }
-
-
-    static handleWheelChange(deltaY) {
-        let el = {};
-
-        if (deltaY < 0) {
-            el = document.getElementsByClassName('stream-prev')[0];
-        } else {
-            el = document.getElementsByClassName('stream-next')[0];
-        }
-
-        el.click();
-    }
-
 
     addNavigation() {
         this.nav.button = document.createElement('a');
@@ -1298,6 +1296,15 @@ class RepostMarker {
     }
 
 
+    static markRepost(id) {
+        let elem = document.getElementById('item-' + id);
+
+        if (elem) {
+            elem.classList.add('repost');
+        }
+    }
+
+
     load() {
         this.styles = __webpack_require__(17);
         this.overrideBuildItem();
@@ -1321,15 +1328,6 @@ class RepostMarker {
         });
 
         p.currentView.buildItem = this.buildItem;
-    }
-
-
-    static markRepost(id) {
-        let elem = document.getElementById('item-' + id);
-
-        if (elem) {
-            elem.classList.add('repost');
-        }
     }
 
 

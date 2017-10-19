@@ -10,6 +10,17 @@ export default class WidescreenMode {
         this.description = 'Stellt das pr0 im Breitbildmodus dar.'
     }
 
+    static handleWheelChange(deltaY) {
+        let el = {};
+
+        if (deltaY < 0) {
+            el = document.getElementsByClassName('stream-prev')[0];
+        } else {
+            el = document.getElementsByClassName('stream-next')[0];
+        }
+
+        el.click();
+    }
 
     load() {
         this.commentsWide = window.localStorage.getItem('comments_wide') === 'true';
@@ -23,13 +34,12 @@ export default class WidescreenMode {
         this.addNavigation();
     }
 
-
     overrideViews() {
         // Override Item-View
         let _this = this;
 
         p.View.Base = p.View.Base.extend({
-            showLoader: function() {
+            showLoader: function () {
                 console.log('te');
             }
         });
@@ -40,9 +50,9 @@ export default class WidescreenMode {
                 this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
 
                 _this.addItemListener(this.$image, itemData);
-                 document.body.classList.add('fixed');
+                document.body.classList.add('fixed');
             },
-            remove: function() {
+            remove: function () {
                 this.parent();
                 document.body.classList.remove('fixed');
             }
@@ -70,7 +80,7 @@ export default class WidescreenMode {
                     this.$container[0].classList.toggle('wide');
                     _this.commentsWide = this.$container[0].classList.contains('wide');
 
-                    window.localStorage.setItem('comments_wide',  _this.commentsWide);
+                    window.localStorage.setItem('comments_wide', _this.commentsWide);
                 });
             }
         });
@@ -115,13 +125,12 @@ export default class WidescreenMode {
             });
 
             window.addEventListener('locationChange', (e) => {
-                if(e.mode === 0) {
+                if (e.mode === 0) {
                     document.body.classList.remove('fixed');
                 }
             })
         }
     }
-
 
     handleKeypress(e) {
         switch (e.code) {
@@ -158,27 +167,13 @@ export default class WidescreenMode {
             this.img.draggable(this.isMoveable ? 'enable' : 'disable');
             this.img.attr('tabindex', -1).focus();
 
-            if(! this.img.resizeInit) {
+            if (!this.img.resizeInit) {
                 this.container.style.alignItems = 'flex-start';
             }
 
             this.img.resizeInit = true;
         }
     }
-
-
-    static handleWheelChange(deltaY) {
-        let el = {};
-
-        if (deltaY < 0) {
-            el = document.getElementsByClassName('stream-prev')[0];
-        } else {
-            el = document.getElementsByClassName('stream-next')[0];
-        }
-
-        el.click();
-    }
-
 
     addNavigation() {
         this.nav.button = document.createElement('a');

@@ -9,6 +9,15 @@ export default class RepostMarker {
     }
 
 
+    static markRepost(id) {
+        let elem = document.getElementById('item-' + id);
+
+        if (elem) {
+            elem.classList.add('repost');
+        }
+    }
+
+
     load() {
         this.styles = require('../style/repostMarker.less');
         this.overrideBuildItem();
@@ -32,15 +41,6 @@ export default class RepostMarker {
         });
 
         p.currentView.buildItem = this.buildItem;
-    }
-
-
-    static markRepost(id) {
-        let elem = document.getElementById('item-' + id);
-
-        if (elem) {
-            elem.classList.add('repost');
-        }
     }
 
 
