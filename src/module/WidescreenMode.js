@@ -182,12 +182,25 @@ export default class WidescreenMode {
 
         this.nav.button.addEventListener('click', () => {
             this.toggleNavigation();
-        })
+        });
+
+        // Init additional menuitems
+        this.addMenuItem('pr0p0ll', 'https://pr0p0ll.com', ' fa-bar-chart');
     }
 
 
     toggleNavigation() {
         this.nav.container.classList.toggle('open');
         this.nav.button.classList.toggle('active');
+    }
+
+
+    addMenuItem(name, url, faClass) {
+        let elem = document.createElement('a');
+        elem.className = faClass;
+        elem.innerText = name;
+        elem.href = url;
+        elem.target = '_blank';
+        this.nav.container.firstElementChild.appendChild(elem);
     }
 }

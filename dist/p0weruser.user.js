@@ -1221,13 +1221,26 @@ class WidescreenMode {
 
         this.nav.button.addEventListener('click', () => {
             this.toggleNavigation();
-        })
+        });
+
+        // Init additional menuitems
+        this.addMenuItem('pr0p0ll', 'https://pr0p0ll.com', ' fa-bar-chart');
     }
 
 
     toggleNavigation() {
         this.nav.container.classList.toggle('open');
         this.nav.button.classList.toggle('active');
+    }
+
+
+    addMenuItem(name, url, faClass) {
+        let elem = document.createElement('a');
+        elem.className = faClass;
+        elem.innerText = name;
+        elem.href = url;
+        elem.target = '_blank';
+        this.nav.container.firstElementChild.appendChild(elem);
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = WidescreenMode;
@@ -1673,7 +1686,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, ".comments .comment + .comment-box {\n  border-left-style: solid;\n  border-color: #ee4d2e;\n}\n.comments .comment + .comment-box .comment + .comment-box {\n  border-color: #1db992;\n}\n.comments .comment + .comment-box .comment + .comment-box .comment + .comment-box {\n  border-color: #bfbc06;\n}\n.comments .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box {\n  border-color: #008fff;\n}\n.comments .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box {\n  border-color: #ff0082;\n}\n.comments .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box {\n  border-color: #ee2e2e;\n}\n.comments .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box {\n  border-color: #f7ea19;\n}\n.comments .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box {\n  border-color: #19f7a6;\n}\n.comments .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box {\n  border-color: #ee4d2e;\n}\n.ui-tooltip {\n  position: absolute;\n  z-index: 9999;\n  padding: 10px;\n  background-color: #2a2e31;\n  border: 2px solid #252525;\n  max-width: 30vw;\n}\n", ""]);
+exports.push([module.i, ".comments .comment + .comment-box {\n  padding-left: 0;\n}\n.comments .comment + .comment-box > div > .comment {\n  border-left-style: solid;\n  border-color: #ee4d2e;\n  padding-left: 5px;\n}\n.comments .comment + .comment-box > div > .comment > .comment-vote {\n  left: 10px;\n}\n.comments .comment + .comment-box > div > .comment + .comment-box > div > .comment {\n  border-color: #1db992;\n}\n.comments .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment {\n  border-color: #bfbc06;\n}\n.comments .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment {\n  border-color: #008fff;\n}\n.comments .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment {\n  border-color: #ff0082;\n}\n.comments .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment {\n  border-color: #ee2e2e;\n}\n.comments .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment {\n  border-color: #f7ea19;\n}\n.comments .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment {\n  border-color: #19f7a6;\n}\n.comments .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment {\n  border-color: #ee4d2e;\n}\n.comments .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment {\n  border-color: #8c19f7;\n}\n.comments .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment {\n  border-color: #19f743;\n}\n.comments .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment {\n  border-color: #b9791d;\n}\n.comments .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment {\n  border-color: #1db9b3;\n}\n.comments .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment + .comment-box > div > .comment {\n  border-color: #fff;\n}\n.ui-tooltip {\n  position: absolute;\n  z-index: 9999;\n  padding: 10px;\n  background-color: #2a2e31;\n  border: 2px solid #252525;\n  max-width: 30vw;\n}\n", ""]);
 
 // exports
 
