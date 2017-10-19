@@ -2,6 +2,7 @@ import Settings from './Settings';
 import EventHandler from './EventHandler';
 import WidescreenMode from './module/WidescreenMode';
 import RepostMarker from './module/RepostMarker';
+import BenisInNavbar from './module/BenisInNavbar';
 import scrollbarCSS from '../bower_components/simplebar/dist/simplebar.css';
 
 export default class P0weruser {
@@ -60,7 +61,8 @@ export default class P0weruser {
         if (!this.modules) {
             this.modules = {
                 'WidescreenMode': new WidescreenMode(),
-                'RepostMarker': new RepostMarker()
+                'RepostMarker': new RepostMarker(),
+                'BenisInNavbar': new BenisInNavbar()
             };
         }
 

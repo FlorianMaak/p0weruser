@@ -56,4 +56,9 @@ export default class Utils {
 
         return result;
     }
+
+
+    static insertAfter(node, reference) {
+        reference.parentNode.insertBefore(node, reference.nextSibling);
+    }
 }
