@@ -2,6 +2,7 @@ export default class EventHandler {
     constructor() {
         this.settingsLoaded = new Event('settingsLoaded');
         this.locationChange = new Event('locationChange');
+        this.userSync = new Event('userSync');
 
         this.addEvents();
     }
@@ -26,5 +27,13 @@ export default class EventHandler {
                 window.dispatchEvent(_this.locationChange);
             };
         }(p.navigateTo));
+
+        (function (syncCallback) {
+            p.User.prototype.syncCallback = function (response) {
+                _this.userSync.data = response;
+                syncCallback.call(this, response);
+                window.dispatchEvent(_this.userSync);
+            };
+        }(p.User.prototype.syncCallback));
     }
 }

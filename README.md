@@ -1,11 +1,12 @@
-[![Build Status](https://travis-ci.org/FlorianMaak/p0weruser.svg?branch=master)](https://travis-ci.org/FlorianMaak/p0weruser)
-
-# Work in Progress
+# p0weruser
+Extend pr0gramm.com with some extra functions and improve look and feel. Don't like a special feature? No problem, just disable
+it using settings.
 
 ## Features
 * Addon-Settings
 * Repost-Highlight
-* (WIP) Widescreen mode
+* Widescreen mode
+* Current benis in header
 * (planed) Integration of Rene8888s repost-check
 * (planed) Highlighting of previously visited posts
 * (planed) A poor man's "stelz"
@@ -14,8 +15,12 @@
 
 ## Installation
 Just install Greasemonkey or Tapermonkey and install the script by a simple
-click on the following url:
-[https://github.com/FlorianMaak/p0weruser/raw/master/dist/p0weruser.js](https://github.com/FlorianMaak/p0weruser/raw/master/dist/p0weruser.js)
+click on one of the following urls:
+### Release [![Build Status](https://travis-ci.org/FlorianMaak/p0weruser.svg?branch=master)](https://travis-ci.org/FlorianMaak/p0weruser)
+[https://github.com/FlorianMaak/p0weruser/raw/master/dist/p0weruser.user.js](https://github.com/FlorianMaak/p0weruser/raw/master/dist/p0weruser.user.js)
+
+### Beta [![Build Status](https://travis-ci.org/FlorianMaak/p0weruser.svg?branch=develop)](https://travis-ci.org/FlorianMaak/p0weruser)
+[https://github.com/FlorianMaak/p0weruser/raw/develop/dist/p0weruser.user.js](https://github.com/FlorianMaak/p0weruser/raw/develop/dist/p0weruser.user.js)
 
 ## Contribution
 Feel free to fork this project. If you like to contribute, please use git-flow
