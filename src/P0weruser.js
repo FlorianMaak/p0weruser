@@ -4,6 +4,7 @@ import WidescreenMode from './module/WidescreenMode';
 import RepostMarker from './module/RepostMarker';
 import BenisInNavbar from './module/BenisInNavbar';
 import scrollbarCSS from '../bower_components/simplebar/dist/simplebar.css';
+import AdvancedComments from './module/AdvancedComments';
 
 export default class P0weruser {
     constructor() {
@@ -53,6 +54,7 @@ export default class P0weruser {
 
         for (let i = 0; i < activated.length; i++) {
             this.modules[activated[i]].load();
+            console.debug(`Loaded module: ${activated[i]}`);
         }
     }
 
@@ -62,7 +64,8 @@ export default class P0weruser {
             this.modules = {
                 'WidescreenMode': new WidescreenMode(),
                 'RepostMarker': new RepostMarker(),
-                'BenisInNavbar': new BenisInNavbar()
+                'BenisInNavbar': new BenisInNavbar(),
+                'AdvancedComments': new AdvancedComments()
             };
         }
 

@@ -5,7 +5,7 @@
 // @description	Erweitert pr0gramm.com um weitere Funktionen
 // @include		/^https?://pr0gramm.com/.*$/
 // @icon		https://pr0gramm.com/media/pr0gramm-favicon.png
-// @version		0.3.0
+// @version		0.2.2
 // @grant		none
 // @require     https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
 // @updateURL	https://github.com/FlorianMaak/p0weruser/raw/master/dist/p0weruser.js
@@ -616,6 +616,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__module_BenisInNavbar__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__bower_components_simplebar_dist_simplebar_css__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__bower_components_simplebar_dist_simplebar_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__bower_components_simplebar_dist_simplebar_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__module_AdvancedComments__ = __webpack_require__(24);
+
 
 
 
@@ -671,6 +673,7 @@ class P0weruser {
 
         for (let i = 0; i < activated.length; i++) {
             this.modules[activated[i]].load();
+            console.debug(`Loaded module: ${activated[i]}`);
         }
     }
 
@@ -680,7 +683,8 @@ class P0weruser {
             this.modules = {
                 'WidescreenMode': new __WEBPACK_IMPORTED_MODULE_2__module_WidescreenMode__["a" /* default */](),
                 'RepostMarker': new __WEBPACK_IMPORTED_MODULE_3__module_RepostMarker__["a" /* default */](),
-                'BenisInNavbar': new __WEBPACK_IMPORTED_MODULE_4__module_BenisInNavbar__["a" /* default */]()
+                'BenisInNavbar': new __WEBPACK_IMPORTED_MODULE_4__module_BenisInNavbar__["a" /* default */](),
+                'AdvancedComments': new __WEBPACK_IMPORTED_MODULE_6__module_AdvancedComments__["a" /* default */]()
             };
         }
 
@@ -976,6 +980,7 @@ module.exports = function (css) {
 class EventHandler {
     constructor() {
         this.settingsLoaded = new Event('settingsLoaded');
+        this.commentsLoaded = new Event('commentsLoaded');
         this.locationChange = new Event('locationChange');
         this.userSync = new Event('userSync');
 
@@ -1002,6 +1007,15 @@ class EventHandler {
                 window.dispatchEvent(_this.locationChange);
             };
         }(p.navigateTo));
+
+        // Add commentsloaded-event
+        (function(render) {
+            p.View.Stream.Comments.prototype.render = function() {
+                render.call(this);
+                window.dispatchEvent(_this.commentsLoaded);
+
+            };
+        }(p.View.Stream.Comments.prototype.render));
 
         (function (syncCallback) {
             p.User.prototype.syncCallback = function (response) {
@@ -1561,6 +1575,106 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 // module
 exports.push([module.i, "/*!\n * \n *             SimpleBar.js - v2.4.3\n *             Scrollbars, simpler.\n *             https://grsmto.github.io/simplebar/\n *             \n *             Made by Adrien Grsmto from a fork by Jonathan Nicol\n *             Under MIT License\n *         \n */\n[data-simplebar] {\n  position: relative;\n  z-index: 0;\n  overflow: hidden;\n  -webkit-overflow-scrolling: touch;\n}\n[data-simplebar=init] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n.simplebar-scroll-content {\n  overflow-x: hidden;\n  overflow-y: scroll;\n  min-width: 100%;\n  box-sizing: content-box;\n}\n.simplebar-content {\n  overflow-x: scroll;\n  overflow-y: hidden;\n  box-sizing: border-box;\n  min-height: 100%;\n}\n.simplebar-track {\n  z-index: 1;\n  position: absolute;\n  right: 0;\n  bottom: 0;\n  width: 11px;\n}\n.simplebar-scrollbar {\n  position: absolute;\n  right: 2px;\n  border-radius: 7px;\n  min-height: 10px;\n  width: 7px;\n  opacity: 0;\n  transition: opacity .2s linear;\n  background: #000;\n  background-clip: padding-box;\n}\n.simplebar-track:hover .simplebar-scrollbar {\n  opacity: .5;\n  transition: opacity 0 linear;\n}\n.simplebar-track .simplebar-scrollbar.visible {\n  opacity: 0.5;\n}\n.simplebar-track.horizontal {\n  left: 0;\n  width: auto;\n  height: 11px;\n}\n.simplebar-track.vertical {\n  top: 0;\n}\n.horizontal.simplebar-track .simplebar-scrollbar {\n  right: auto;\n  top: 2px;\n  height: 7px;\n  min-height: 0;\n  min-width: 10px;\n  width: auto;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 24 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Utils__ = __webpack_require__(2);
+
+
+class AdvancedComments {
+    constructor() {
+        this.name = 'Erweiterte Kommentare';
+        this.description = 'Erweitert die Kommentare um Farben und weitere Funktionen';
+    }
+
+
+    load() {
+        this.styles = __webpack_require__(25);
+
+        this.prepareComments();
+    }
+
+    handleMouseover(pId, source) {
+        const elem = document.querySelectorAll(`#${pId} .comment-content`);
+        source.title = elem[0].innerText;
+    }
+
+
+    prepareComments() {
+        window.addEventListener('commentsLoaded', () => {
+            const comments = $('.comments .comment-box .comment');
+            comments.tooltip();
+            for(let i = 0; i < comments.length; i++) {
+                const container = $(comments[i]);
+                const comment = $(container.parents('.comment-box')[0]).prev('.comment');
+
+                if(comment[0]) {
+                    const pId = comment[0].id;
+                    let elem = document.createElement('a');
+
+                    elem.href = `#${pId}`;
+                    elem.className = 'fa fa-level-up action preview-link';
+                    container.find('.comment-foot').append(elem);
+
+                    elem.addEventListener('mouseover', () => {
+                        this.handleMouseover(pId, elem);
+                    });
+                }
+            }
+        });
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = AdvancedComments;
+
+
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(26);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/less-loader/dist/cjs.js!./advancedComments.less", function() {
+			var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/less-loader/dist/cjs.js!./advancedComments.less");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, ".comments .comment + .comment-box {\n  border-left-style: solid;\n  border-color: #ee4d2e;\n}\n.comments .comment + .comment-box .comment + .comment-box {\n  border-color: #1db992;\n}\n.comments .comment + .comment-box .comment + .comment-box .comment + .comment-box {\n  border-color: #bfbc06;\n}\n.comments .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box {\n  border-color: #008fff;\n}\n.comments .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box {\n  border-color: #ff0082;\n}\n.comments .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box {\n  border-color: #ee2e2e;\n}\n.comments .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box {\n  border-color: #f7ea19;\n}\n.comments .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box {\n  border-color: #19f7a6;\n}\n.comments .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box .comment + .comment-box {\n  border-color: #ee4d2e;\n}\n.ui-tooltip {\n  position: absolute;\n  z-index: 9999;\n  padding: 10px;\n  background-color: #2a2e31;\n  border: 2px solid #252525;\n  max-width: 30vw;\n}\n", ""]);
 
 // exports
 
