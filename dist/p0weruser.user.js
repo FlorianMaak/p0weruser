@@ -73,7 +73,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -535,96 +535,6 @@ function updateLink (link, options, obj) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Settings__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__EventHandler__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__module_WidescreenMode__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__module_RepostMarker__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__bower_components_simplebar_dist_simplebar_css__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__bower_components_simplebar_dist_simplebar_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__bower_components_simplebar_dist_simplebar_css__);
-
-
-
-
-
-
-class P0weruser {
-    constructor() {
-        P0weruser.addStyles();
-        this.eventHandler = new __WEBPACK_IMPORTED_MODULE_1__EventHandler__["a" /* default */]();
-        this.modules = this.getModules();
-        this.settings = new __WEBPACK_IMPORTED_MODULE_0__Settings__["a" /* default */](this);
-
-        // Load activated modules
-        this.loadModules();
-    }
-
-
-    static addStyles() {
-        // FontAwesome (Icons)
-        let fa = document.createElement('link');
-        fa.type = 'text/css';
-        fa.rel = 'stylesheet';
-        fa.href = 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css';
-        document.getElementsByTagName('head')[0].appendChild(fa);
-
-        let scrollbar = document.createElement('style');
-        scrollbar.innerText = __WEBPACK_IMPORTED_MODULE_4__bower_components_simplebar_dist_simplebar_css___default.a;
-        document.getElementsByTagName('head')[0].appendChild(scrollbar);
-    }
-
-
-    static getActivatedModules() {
-        let modules = window.localStorage.getItem('activated_modules');
-
-        if (!modules) {
-            window.localStorage.setItem('activated_modules', '[]');
-            modules = '[]';
-        }
-
-        return JSON.parse(modules);
-    }
-
-
-    static saveActivatedModules(selection) {
-        window.localStorage.setItem('activated_modules', JSON.stringify(selection));
-    }
-
-
-    loadModules() {
-        let activated = P0weruser.getActivatedModules();
-
-        for (let i = 0; i < activated.length; i++) {
-            this.modules[activated[i]].load();
-        }
-    }
-
-
-    getModules() {
-        if (!this.modules) {
-            this.modules = {
-                'WidescreenMode': new __WEBPACK_IMPORTED_MODULE_2__module_WidescreenMode__["a" /* default */](),
-                'RepostMarker': new __WEBPACK_IMPORTED_MODULE_3__module_RepostMarker__["a" /* default */]()
-            };
-        }
-
-        return this.modules;
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["default"] = P0weruser;
-
-
-
-// Load script
-window.p0weruser = new P0weruser();
-
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 class Utils {
     static waitForElement(selector) {
         return new Promise((resolve, reject) => {
@@ -683,8 +593,106 @@ class Utils {
 
         return result;
     }
+
+
+    static insertAfter(node, reference) {
+        reference.parentNode.insertBefore(node, reference.nextSibling);
+    }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Utils;
+
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Settings__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__EventHandler__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__module_WidescreenMode__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__module_RepostMarker__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__module_BenisInNavbar__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__bower_components_simplebar_dist_simplebar_css__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__bower_components_simplebar_dist_simplebar_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__bower_components_simplebar_dist_simplebar_css__);
+
+
+
+
+
+
+
+class P0weruser {
+    constructor() {
+        P0weruser.addStyles();
+        this.eventHandler = new __WEBPACK_IMPORTED_MODULE_1__EventHandler__["a" /* default */]();
+        this.modules = this.getModules();
+        this.settings = new __WEBPACK_IMPORTED_MODULE_0__Settings__["a" /* default */](this);
+
+        // Load activated modules
+        this.loadModules();
+    }
+
+
+    static addStyles() {
+        // FontAwesome (Icons)
+        let fa = document.createElement('link');
+        fa.type = 'text/css';
+        fa.rel = 'stylesheet';
+        fa.href = 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css';
+        document.getElementsByTagName('head')[0].appendChild(fa);
+
+        let scrollbar = document.createElement('style');
+        scrollbar.innerText = __WEBPACK_IMPORTED_MODULE_5__bower_components_simplebar_dist_simplebar_css___default.a;
+        document.getElementsByTagName('head')[0].appendChild(scrollbar);
+    }
+
+
+    static getActivatedModules() {
+        let modules = window.localStorage.getItem('activated_modules');
+
+        if (!modules) {
+            window.localStorage.setItem('activated_modules', '[]');
+            modules = '[]';
+        }
+
+        return JSON.parse(modules);
+    }
+
+
+    static saveActivatedModules(selection) {
+        window.localStorage.setItem('activated_modules', JSON.stringify(selection));
+    }
+
+
+    loadModules() {
+        let activated = P0weruser.getActivatedModules();
+
+        for (let i = 0; i < activated.length; i++) {
+            this.modules[activated[i]].load();
+        }
+    }
+
+
+    getModules() {
+        if (!this.modules) {
+            this.modules = {
+                'WidescreenMode': new __WEBPACK_IMPORTED_MODULE_2__module_WidescreenMode__["a" /* default */](),
+                'RepostMarker': new __WEBPACK_IMPORTED_MODULE_3__module_RepostMarker__["a" /* default */](),
+                'BenisInNavbar': new __WEBPACK_IMPORTED_MODULE_4__module_BenisInNavbar__["a" /* default */]()
+            };
+        }
+
+        return this.modules;
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["default"] = P0weruser;
+
+
+
+// Load script
+window.p0weruser = new P0weruser();
 
 
 
@@ -697,8 +705,8 @@ class Utils {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__template_settingsTab_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__template_settingsTab_html__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__style_settings_less__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__style_settings_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__style_settings_less__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Utils__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__P0weruser__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Utils__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__P0weruser__ = __webpack_require__(3);
 
 
 
@@ -969,6 +977,7 @@ class EventHandler {
     constructor() {
         this.settingsLoaded = new Event('settingsLoaded');
         this.locationChange = new Event('locationChange');
+        this.userSync = new Event('userSync');
 
         this.addEvents();
     }
@@ -993,6 +1002,14 @@ class EventHandler {
                 window.dispatchEvent(_this.locationChange);
             };
         }(p.navigateTo));
+
+        (function (syncCallback) {
+            p.User.prototype.syncCallback = function (response) {
+                _this.userSync.data = response;
+                syncCallback.call(this, response);
+                window.dispatchEvent(_this.userSync);
+            };
+        }(p.User.prototype.syncCallback));
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = EventHandler;
@@ -1284,7 +1301,7 @@ module.exports = "<div class=comment-count> <div><span class=pict>c</span> {\"Ko
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Utils__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Utils__ = __webpack_require__(2);
 
 
 // Inspired by Mopsalarms repost-script
@@ -1420,12 +1437,97 @@ exports.push([module.i, ".repost {\n  position: relative;\n}\n.repost:after {\n 
 
 /***/ }),
 /* 19 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Utils__ = __webpack_require__(2);
+
+
+class BenisInNavbar {
+    constructor() {
+        this.name = 'Benis in Navigation';
+        this.description = 'Zeigt deinen aktuellen Benis in der Headerleiste an';
+    }
+
+
+    load() {
+        this.benis = '-';
+        this.styles = __webpack_require__(20);
+        this.target = document.getElementById('user-profile-name');
+        this.addListener();
+
+        this.addBenis();
+    }
+
+    addBenis() {
+        this.target.innerText = this.benis;
+    }
+
+    addListener() {
+        window.addEventListener('userSync', (e) => {
+            this.benis = e.data.score;
+
+            this.addBenis();
+        });
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = BenisInNavbar;
+
+
+
+/***/ }),
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(20);
+var content = __webpack_require__(21);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/less-loader/dist/cjs.js!./benisInNavbar.less", function() {
+			var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/less-loader/dist/cjs.js!./benisInNavbar.less");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "#user-profile-name:before {\n  font-family: 'FontAwesome';\n  margin-right: 5px;\n  content: '\\F2BE';\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(23);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -1450,7 +1552,7 @@ if(false) {
 }
 
 /***/ }),
-/* 20 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(undefined);
