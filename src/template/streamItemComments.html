@@ -38,12 +38,8 @@
                                 <span class="user-comment-op">OP</span>
                             <?js}?>
                             <a href="#user/{c.name}" class="user um{c.mark}">{c.name}</a>
-                            <?js if( p.shouldShowScore(c) ) {?>
-                                <span class="score" title="{c.up} up, {c.down} down">{"Punkt".inflect(c.score)}</span>
-                            <?js } else { ?>
-                                <span class="score-hidden" title="Score noch unsichtbar">●●●</span>
-                            <?js } ?>
-                            <a href="#{tab}/{itemId}:comment{c.id}" class="time permalink" title="{c.date.readableTime()}">{c.date.relativeTime(true)}</a>
+                            <span class="score" title="{c.up} up, {c.down} down">{"Punkt".inflect(c.score)}</span>
+                            <a href="#{tab}/{itemId}:comment{c.id}" class="time permalink">{c.date.relativeTime(true)}</a>
                             <?js if( level < CONFIG.COMMENTS_MAX_LEVELS ) {?>
                                 <a href="#{tab}/{itemId}:comment{c.id}" class="comment-reply-link action">
                                     <span class="pict">r</span> antworten

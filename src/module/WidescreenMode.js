@@ -1,4 +1,5 @@
 import SimpleBar from '../../bower_components/simplebar/dist/simplebar.js';
+import Utils from '../Utils';
 
 export default class WidescreenMode {
     constructor() {
@@ -82,6 +83,17 @@ export default class WidescreenMode {
 
                     window.localStorage.setItem('comments_wide', _this.commentsWide);
                 });
+            },
+            focusComment(comment) {
+                let target = this.$container.find('#' + comment);
+                if (target.length) {
+                    Utils.waitForElement('.simplebar-scroll-content').then((el) => {
+                        this.$scrollContainer = $(el[0]);
+                        let jumpPos = target.offset().top - this.$scrollContainer.offset().top - CONFIG.HEADER_HEIGHT - 80;
+                        this.$scrollContainer.scrollTop(jumpPos);
+                        target.highlight(180, 180, 180, 1);
+                    });
+                }
             }
         });
 
@@ -182,12 +194,25 @@ export default class WidescreenMode {
 
         this.nav.button.addEventListener('click', () => {
             this.toggleNavigation();
-        })
+        });
+
+        // Init additional menuitems
+        this.addMenuItem('pr0p0ll', 'https://pr0p0ll.com', ' fa-bar-chart');
     }
 
 
     toggleNavigation() {
         this.nav.container.classList.toggle('open');
         this.nav.button.classList.toggle('active');
+    }
+
+
+    addMenuItem(name, url, faClass) {
+        let elem = document.createElement('a');
+        elem.className = faClass;
+        elem.innerText = name;
+        elem.href = url;
+        elem.target = '_blank';
+        this.nav.container.firstElementChild.appendChild(elem);
     }
 }

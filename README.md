@@ -7,6 +7,8 @@ it using settings.
 * Repost-Highlight
 * Widescreen mode
 * Current benis in header
+* Notification Center
+* Advanced Comments
 * (planed) Integration of Rene8888s repost-check
 * (planed) Highlighting of previously visited posts
 * (planed) A poor man's "stelz"
@@ -21,6 +23,22 @@ click on one of the following urls:
 
 ### Beta [![Build Status](https://travis-ci.org/FlorianMaak/p0weruser.svg?branch=develop)](https://travis-ci.org/FlorianMaak/p0weruser)
 [https://github.com/FlorianMaak/p0weruser/raw/develop/dist/p0weruser.user.js](https://github.com/FlorianMaak/p0weruser/raw/develop/dist/p0weruser.user.js)
+
+## Screenshots
+![repost](https://user-images.githubusercontent.com/6325146/31791525-1e0a84b4-b519-11e7-90f8-c5306afcc485.jpg)
+> Repost-Highlighting
+
+![settings](https://user-images.githubusercontent.com/6325146/31791526-1e25664e-b519-11e7-9974-0187f606ed62.jpg)
+> Enable or diasble modules via settings
+
+![widescreen](https://user-images.githubusercontent.com/6325146/31791527-1e3d0fa6-b519-11e7-9ded-b6d9720b5708.jpg)
+> Use pr0gramm in a very productive widescreen-mode
+
+![comments](https://user-images.githubusercontent.com/6325146/31791528-1e5496f8-b519-11e7-8210-5cd96c864761.jpg)
+> Colorize comment-dimensions and quickly jump to parent comments
+
+![notifications](https://user-images.githubusercontent.com/6325146/31791529-1e6bd46c-b519-11e7-8527-d620f50b07f2.jpg)
+> Access your notifications directly from any page
 
 ## Contribution
 Feel free to fork this project. If you like to contribute, please use git-flow
