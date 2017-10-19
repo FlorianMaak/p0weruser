@@ -1,4 +1,5 @@
 import SimpleBar from '../../bower_components/simplebar/dist/simplebar.js';
+import Utils from '../Utils';
 
 export default class WidescreenMode {
     constructor() {
@@ -82,6 +83,17 @@ export default class WidescreenMode {
 
                     window.localStorage.setItem('comments_wide', _this.commentsWide);
                 });
+            },
+            focusComment(comment) {
+                let target = this.$container.find('#' + comment);
+                if (target.length) {
+                    Utils.waitForElement('.simplebar-scroll-content').then((el) => {
+                        this.$scrollContainer = $(el[0]);
+                        let jumpPos = target.offset().top - this.$scrollContainer.offset().top - CONFIG.HEADER_HEIGHT - 80;
+                        this.$scrollContainer.scrollTop(jumpPos);
+                        target.highlight(180, 180, 180, 1);
+                    });
+                }
             }
         });
 
