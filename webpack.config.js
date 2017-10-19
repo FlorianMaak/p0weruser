@@ -5,7 +5,7 @@ const fs = require('fs');
 module.exports = {
     entry: './src/P0weruser.js',
     output: {
-        filename: 'p0weruser.js',
+        filename: 'p0weruser.user.js',
         path: path.resolve(__dirname, 'dist')
     },
     plugins: [
