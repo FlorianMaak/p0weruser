@@ -57,12 +57,15 @@
       align-items: center;
       justify-content: center;
       display: flex;
+      opacity: .5;
 
       &:not(:last-child) {
         border-bottom: 1px solid #252525;
       }
 
       &:hover {
+        opacity: 1;
+
         .headline {
           color: var(--theme-main-color);
         }
@@ -79,19 +82,44 @@
         font-weight: bold;
       }
 
+      .comment-thumb {
+        height: 42px;
+        width: 42px;
+      }
+
       .content {
         padding: 10px;
         flex-grow: 1;
 
+        small {
+          display: block;
+          font-size: 12px;
+          font-weight: normal;
+          color: #666;
+        }
+
         .time {
           float: right;
+        }
+
+        .text {
+          text-overflow: ellipsis;
+          max-width: 200px;
+          color: #666;
+          white-space: nowrap;
+          overflow: hidden;
+        }
+
+        span {
+          font-size: 12px;
         }
       }
 
       .message {
-        width: 32px;
-        margin-left: 3px;
-        font-size: 28px;
+        width: 42px;
+        margin-left: 4px;
+        font-size: 34px;
+        margin-right: -4px;
       }
     }
   }

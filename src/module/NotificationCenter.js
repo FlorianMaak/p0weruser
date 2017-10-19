@@ -8,6 +8,7 @@ export default class NotificationCenter {
 
 
     load() {
+        this.menuOpen = false;
         this.template = require('../template/notificationCenter.html');
         this.templateEntry = require('../template/notificationEntry.html');
         this.style = require('../style/notificationCenter.less');
@@ -22,15 +23,28 @@ export default class NotificationCenter {
         this.addListener();
     }
 
+
     addListener() {
         this.icon.unbind('click');
         this.icon[0].addEventListener('click', (e) => {
             e.preventDefault();
+            e.stopPropagation();
             this.toggleMenu();
-        })
+        });
+
+        window.addEventListener('click', (e) => {
+            if(this.menuOpen) {
+                if(! $(e.target).parents('#notification-center')[0]) {
+                    e.preventDefault();
+                    this.toggleMenu();
+                }
+            }
+        });
     }
 
+
     toggleMenu() {
+        this.menuOpen = !this.menuOpen;
         this.icon[0].classList.toggle('active');
         this.elem.classList.toggle('visible');
         this.messageContainer.innerHTML = '<span class="fa fa-spinner fa-spin"></span>';
@@ -58,7 +72,8 @@ export default class NotificationCenter {
                     messages[i].thumb,
                     messages[i].mark,
                     messages[i].itemId,
-                    messages[i].id
+                    messages[i].id,
+                    messages[i].message
                 );
             }
 
@@ -66,9 +81,11 @@ export default class NotificationCenter {
         });
     }
 
+
     static getTitle(message) {
         return message.thumb === null ? 'Private Nachricht' : 'Kommentar';
     }
+
 
     getNotifications() {
         return new Promise((resolve, reject) => {
@@ -76,7 +93,8 @@ export default class NotificationCenter {
         });
     }
 
-    addEntry(title, user, date, image, mark, id, cId) {
+
+    addEntry(title, user, date, image, mark, id, cId, msg) {
         let elem = document.createElement('li');
         let img = '<img src="//thumb.pr0gramm.com/##THUMB##" class="comment-thumb">';
         let url = image ? `/new/${id}:comment${cId}` : `/inbox/messages`;
@@ -88,8 +106,8 @@ export default class NotificationCenter {
         }
 
         elem.innerHTML = this.templateEntry.replaceArray(
-            ['##TITLE##', '##USER##', '##TIME##', '##THUMB##', '##URL##', '##MARK##'],
-            [title, user, new Date(date * 1000).relativeTime(), img, url, mark]
+            ['##TITLE##', '##USER##', '##TIME##', '##THUMB##', '##URL##', '##MARK##', '##TEXT##'],
+            [title, user, new Date(date * 1000).relativeTime(), img, url, mark, msg]
         );
 
         this.messageContainer.appendChild(elem);

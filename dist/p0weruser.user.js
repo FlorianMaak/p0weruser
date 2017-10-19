@@ -1737,6 +1737,7 @@ class NotificationCenter {
 
 
     load() {
+        this.menuOpen = false;
         this.template = __webpack_require__(28);
         this.templateEntry = __webpack_require__(29);
         this.style = __webpack_require__(30);
@@ -1751,15 +1752,28 @@ class NotificationCenter {
         this.addListener();
     }
 
+
     addListener() {
         this.icon.unbind('click');
         this.icon[0].addEventListener('click', (e) => {
             e.preventDefault();
+            e.stopPropagation();
             this.toggleMenu();
-        })
+        });
+
+        window.addEventListener('click', (e) => {
+            if(this.menuOpen) {
+                if(! $(e.target).parents('#notification-center')[0]) {
+                    e.preventDefault();
+                    this.toggleMenu();
+                }
+            }
+        });
     }
 
+
     toggleMenu() {
+        this.menuOpen = !this.menuOpen;
         this.icon[0].classList.toggle('active');
         this.elem.classList.toggle('visible');
         this.messageContainer.innerHTML = '<span class="fa fa-spinner fa-spin"></span>';
@@ -1787,7 +1801,8 @@ class NotificationCenter {
                     messages[i].thumb,
                     messages[i].mark,
                     messages[i].itemId,
-                    messages[i].id
+                    messages[i].id,
+                    messages[i].message
                 );
             }
 
@@ -1795,9 +1810,11 @@ class NotificationCenter {
         });
     }
 
+
     static getTitle(message) {
         return message.thumb === null ? 'Private Nachricht' : 'Kommentar';
     }
+
 
     getNotifications() {
         return new Promise((resolve, reject) => {
@@ -1805,7 +1822,8 @@ class NotificationCenter {
         });
     }
 
-    addEntry(title, user, date, image, mark, id, cId) {
+
+    addEntry(title, user, date, image, mark, id, cId, msg) {
         let elem = document.createElement('li');
         let img = '<img src="//thumb.pr0gramm.com/##THUMB##" class="comment-thumb">';
         let url = image ? `/new/${id}:comment${cId}` : `/inbox/messages`;
@@ -1817,8 +1835,8 @@ class NotificationCenter {
         }
 
         elem.innerHTML = this.templateEntry.replaceArray(
-            ['##TITLE##', '##USER##', '##TIME##', '##THUMB##', '##URL##', '##MARK##'],
-            [title, user, new Date(date * 1000).relativeTime(), img, url, mark]
+            ['##TITLE##', '##USER##', '##TIME##', '##THUMB##', '##URL##', '##MARK##', '##TEXT##'],
+            [title, user, new Date(date * 1000).relativeTime(), img, url, mark, msg]
         );
 
         this.messageContainer.appendChild(elem);
@@ -1838,7 +1856,7 @@ module.exports = "<ul id=new-messages> </ul> <div> <a href=/inbox/all class=acti
 /* 29 */
 /***/ (function(module, exports) {
 
-module.exports = "<div> ##THUMB## </div> <a href=##URL## class=content> <div class=headline>##TITLE##</div> <span class=\"user um##MARK##\">##USER##</span> <span class=\"time permalink\">##TIME##</span> </a> ";
+module.exports = "<div> ##THUMB## </div> <a href=##URL## class=content> <div class=headline>##TITLE##</div> <div class=text>##TEXT##</div> <span class=\"user um##MARK##\">##USER##</span> <span class=\"time permalink\">##TIME##</span> </a> ";
 
 /***/ }),
 /* 30 */
@@ -1880,7 +1898,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "#inbox-link {\n  position: relative;\n}\n#inbox-link.active {\n  color: var(--theme-main-color);\n}\n#notification-center {\n  display: none;\n  position: fixed;\n  right: 40px;\n  top: 52px;\n  z-index: 100;\n  border: 3px solid #2a2e31;\n  background-color: #161618;\n  box-shadow: 2px 0 10px #000;\n  min-width: 300px;\n  max-height: 50vh;\n  flex-direction: column;\n}\n#notification-center.visible {\n  display: flex;\n}\n#notification-center > div {\n  padding: 10px;\n  text-align: center;\n  border-top: 1px solid #252525;\n}\n#notification-center #new-messages {\n  padding-left: 10px;\n  margin: 0;\n}\n#notification-center #new-messages.loading {\n  text-align: center;\n  justify-content: center;\n  padding: 10px;\n}\n#notification-center #new-messages.loading .fa-spin {\n  font-size: 24px;\n}\n#notification-center #new-messages .simplebar-scrollbar {\n  background: #2a2e31;\n  right: 0;\n  border-radius: 0;\n}\n#notification-center #new-messages .simplebar-scrollbar.visible {\n  opacity: 1;\n}\n#notification-center #new-messages li {\n  align-items: center;\n  justify-content: center;\n  display: flex;\n}\n#notification-center #new-messages li:not(:last-child) {\n  border-bottom: 1px solid #252525;\n}\n#notification-center #new-messages li:hover .headline {\n  color: var(--theme-main-color);\n}\n#notification-center #new-messages li.no-notifications {\n  text-align: center;\n  width: 100%;\n  padding: 10px;\n}\n#notification-center #new-messages li .headline {\n  color: #fff;\n  font-weight: bold;\n}\n#notification-center #new-messages li .content {\n  padding: 10px;\n  flex-grow: 1;\n}\n#notification-center #new-messages li .content .time {\n  float: right;\n}\n#notification-center #new-messages li .message {\n  width: 32px;\n  margin-left: 3px;\n  font-size: 28px;\n}\n", ""]);
+exports.push([module.i, "#inbox-link {\n  position: relative;\n}\n#inbox-link.active {\n  color: var(--theme-main-color);\n}\n#notification-center {\n  display: none;\n  position: fixed;\n  right: 40px;\n  top: 52px;\n  z-index: 100;\n  border: 3px solid #2a2e31;\n  background-color: #161618;\n  box-shadow: 2px 0 10px #000;\n  min-width: 300px;\n  max-height: 50vh;\n  flex-direction: column;\n}\n#notification-center.visible {\n  display: flex;\n}\n#notification-center > div {\n  padding: 10px;\n  text-align: center;\n  border-top: 1px solid #252525;\n}\n#notification-center #new-messages {\n  padding-left: 10px;\n  margin: 0;\n}\n#notification-center #new-messages.loading {\n  text-align: center;\n  justify-content: center;\n  padding: 10px;\n}\n#notification-center #new-messages.loading .fa-spin {\n  font-size: 24px;\n}\n#notification-center #new-messages .simplebar-scrollbar {\n  background: #2a2e31;\n  right: 0;\n  border-radius: 0;\n}\n#notification-center #new-messages .simplebar-scrollbar.visible {\n  opacity: 1;\n}\n#notification-center #new-messages li {\n  align-items: center;\n  justify-content: center;\n  display: flex;\n  opacity: .5;\n}\n#notification-center #new-messages li:not(:last-child) {\n  border-bottom: 1px solid #252525;\n}\n#notification-center #new-messages li:hover {\n  opacity: 1;\n}\n#notification-center #new-messages li:hover .headline {\n  color: var(--theme-main-color);\n}\n#notification-center #new-messages li.no-notifications {\n  text-align: center;\n  width: 100%;\n  padding: 10px;\n}\n#notification-center #new-messages li .headline {\n  color: #fff;\n  font-weight: bold;\n}\n#notification-center #new-messages li .comment-thumb {\n  height: 42px;\n  width: 42px;\n}\n#notification-center #new-messages li .content {\n  padding: 10px;\n  flex-grow: 1;\n}\n#notification-center #new-messages li .content small {\n  display: block;\n  font-size: 12px;\n  font-weight: normal;\n  color: #666;\n}\n#notification-center #new-messages li .content .time {\n  float: right;\n}\n#notification-center #new-messages li .content .text {\n  text-overflow: ellipsis;\n  max-width: 200px;\n  color: #666;\n  white-space: nowrap;\n  overflow: hidden;\n}\n#notification-center #new-messages li .content span {\n  font-size: 12px;\n}\n#notification-center #new-messages li .message {\n  width: 42px;\n  margin-left: 4px;\n  font-size: 34px;\n  margin-right: -4px;\n}\n", ""]);
 
 // exports
 
