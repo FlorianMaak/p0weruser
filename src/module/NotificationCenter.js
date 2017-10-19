@@ -37,6 +37,7 @@ export default class NotificationCenter {
         this.messageContainer.classList.add('loading');
 
         this.getNotifications().then((notifications) => {
+            p.user.setInboxLink(0);
             let messages = notifications.messages;
             this.messageContainer.innerHTML = '';
             this.messageContainer.classList.remove('loading');
