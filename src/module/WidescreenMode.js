@@ -27,6 +27,13 @@ export default class WidescreenMode {
     overrideViews() {
         // Override Item-View
         let _this = this;
+
+        p.View.Base = p.View.Base.extend({
+            showLoader: function() {
+                console.log('te');
+            }
+        });
+
         p.View.Stream.Item = p.View.Stream.Item.extend({
             template: require('../template/streamItem.html'),
             show: function (rowIndex, itemData, defaultHeight, jumpToComment) {
@@ -106,6 +113,12 @@ export default class WidescreenMode {
                     this.handleKeypress(e);
                 }
             });
+
+            window.addEventListener('locationChange', (e) => {
+                if(e.mode === 0) {
+                    document.body.classList.remove('fixed');
+                }
+            })
         }
     }
 

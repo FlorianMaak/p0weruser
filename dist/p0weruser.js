@@ -966,7 +966,7 @@ module.exports = function (css) {
 class EventHandler {
     constructor() {
         this.settingsLoaded = new Event('settingsLoaded');
-        this.commentsLoaded = new Event('commentsLoaded');
+        this.locationChange = new Event('locationChange');
 
         this.addEvents();
     }
@@ -982,14 +982,14 @@ class EventHandler {
             };
         }(p.View.Settings.prototype.render));
 
-        // Add settings-event
-        (function(render) {
-            p.View.Stream.Comments.prototype.render = function() {
-                render.call(this);
-                window.dispatchEvent(_this.commentsLoaded);
-
+        // Add locationchange event
+        (function(navigate) {
+            p.navigateTo = function(location, mode) {
+                navigate.call(this, location, mode);
+                _this.locationChange.mode = mode;
+                window.dispatchEvent(_this.locationChange);
             };
-        }(p.View.Stream.Comments.prototype.render));
+        }(p.navigateTo));
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = EventHandler;
@@ -1032,6 +1032,13 @@ class WidescreenMode {
     overrideViews() {
         // Override Item-View
         let _this = this;
+
+        p.View.Base = p.View.Base.extend({
+            showLoader: function() {
+                console.log('te');
+            }
+        });
+
         p.View.Stream.Item = p.View.Stream.Item.extend({
             template: __webpack_require__(14),
             show: function (rowIndex, itemData, defaultHeight, jumpToComment) {
@@ -1111,6 +1118,12 @@ class WidescreenMode {
                     this.handleKeypress(e);
                 }
             });
+
+            window.addEventListener('locationChange', (e) => {
+                if(e.mode === 0) {
+                    document.body.classList.remove('fixed');
+                }
+            })
         }
     }
 
