@@ -61,4 +61,14 @@ export default class Utils {
     static insertAfter(node, reference) {
         reference.parentNode.insertBefore(node, reference.nextSibling);
     }
+
+    static addPrototypes() {
+        String.prototype.replaceArray = function(find, replace) {
+            let replaceString = this;
+            for (let i = 0; i < find.length; i++) {
+                replaceString = replaceString.replace(find[i], replace[i]);
+            }
+            return replaceString;
+        };
+    }
 }

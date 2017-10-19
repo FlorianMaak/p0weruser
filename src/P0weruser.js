@@ -1,13 +1,16 @@
 import Settings from './Settings';
+import Utils from './Utils';
 import EventHandler from './EventHandler';
 import WidescreenMode from './module/WidescreenMode';
 import RepostMarker from './module/RepostMarker';
 import BenisInNavbar from './module/BenisInNavbar';
 import scrollbarCSS from '../bower_components/simplebar/dist/simplebar.css';
 import AdvancedComments from './module/AdvancedComments';
+import NotificationCenter from './module/NotificationCenter';
 
 export default class P0weruser {
     constructor() {
+        Utils.addPrototypes();
         P0weruser.addStyles();
         this.eventHandler = new EventHandler();
         this.modules = this.getModules();
@@ -65,7 +68,8 @@ export default class P0weruser {
                 'WidescreenMode': new WidescreenMode(),
                 'RepostMarker': new RepostMarker(),
                 'BenisInNavbar': new BenisInNavbar(),
-                'AdvancedComments': new AdvancedComments()
+                'AdvancedComments': new AdvancedComments(),
+                'NotificationCenter': new NotificationCenter()
             };
         }
 

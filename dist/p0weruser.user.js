@@ -598,6 +598,16 @@ class Utils {
     static insertAfter(node, reference) {
         reference.parentNode.insertBefore(node, reference.nextSibling);
     }
+
+    static addPrototypes() {
+        String.prototype.replaceArray = function(find, replace) {
+            let replaceString = this;
+            for (let i = 0; i < find.length; i++) {
+                replaceString = replaceString.replace(find[i], replace[i]);
+            }
+            return replaceString;
+        };
+    }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Utils;
 
@@ -610,13 +620,17 @@ class Utils {
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Settings__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__EventHandler__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__module_WidescreenMode__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__module_RepostMarker__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__module_BenisInNavbar__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__bower_components_simplebar_dist_simplebar_css__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__bower_components_simplebar_dist_simplebar_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__bower_components_simplebar_dist_simplebar_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__module_AdvancedComments__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Utils__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__EventHandler__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__module_WidescreenMode__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__module_RepostMarker__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__module_BenisInNavbar__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__bower_components_simplebar_dist_simplebar_css__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__bower_components_simplebar_dist_simplebar_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__bower_components_simplebar_dist_simplebar_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__module_AdvancedComments__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__module_NotificationCenter__ = __webpack_require__(27);
+
+
 
 
 
@@ -627,8 +641,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 class P0weruser {
     constructor() {
+        __WEBPACK_IMPORTED_MODULE_1__Utils__["a" /* default */].addPrototypes();
         P0weruser.addStyles();
-        this.eventHandler = new __WEBPACK_IMPORTED_MODULE_1__EventHandler__["a" /* default */]();
+        this.eventHandler = new __WEBPACK_IMPORTED_MODULE_2__EventHandler__["a" /* default */]();
         this.modules = this.getModules();
         this.settings = new __WEBPACK_IMPORTED_MODULE_0__Settings__["a" /* default */](this);
 
@@ -646,7 +661,7 @@ class P0weruser {
         document.getElementsByTagName('head')[0].appendChild(fa);
 
         let scrollbar = document.createElement('style');
-        scrollbar.innerText = __WEBPACK_IMPORTED_MODULE_5__bower_components_simplebar_dist_simplebar_css___default.a;
+        scrollbar.innerText = __WEBPACK_IMPORTED_MODULE_6__bower_components_simplebar_dist_simplebar_css___default.a;
         document.getElementsByTagName('head')[0].appendChild(scrollbar);
     }
 
@@ -681,10 +696,11 @@ class P0weruser {
     getModules() {
         if (!this.modules) {
             this.modules = {
-                'WidescreenMode': new __WEBPACK_IMPORTED_MODULE_2__module_WidescreenMode__["a" /* default */](),
-                'RepostMarker': new __WEBPACK_IMPORTED_MODULE_3__module_RepostMarker__["a" /* default */](),
-                'BenisInNavbar': new __WEBPACK_IMPORTED_MODULE_4__module_BenisInNavbar__["a" /* default */](),
-                'AdvancedComments': new __WEBPACK_IMPORTED_MODULE_6__module_AdvancedComments__["a" /* default */]()
+                'WidescreenMode': new __WEBPACK_IMPORTED_MODULE_3__module_WidescreenMode__["a" /* default */](),
+                'RepostMarker': new __WEBPACK_IMPORTED_MODULE_4__module_RepostMarker__["a" /* default */](),
+                'BenisInNavbar': new __WEBPACK_IMPORTED_MODULE_5__module_BenisInNavbar__["a" /* default */](),
+                'AdvancedComments': new __WEBPACK_IMPORTED_MODULE_7__module_AdvancedComments__["a" /* default */](),
+                'NotificationCenter': new __WEBPACK_IMPORTED_MODULE_8__module_NotificationCenter__["a" /* default */]()
             };
         }
 
@@ -1690,6 +1706,170 @@ exports.push([module.i, ".comments .comment + .comment-box {\n  padding-left: 0;
 
 // exports
 
+
+/***/ }),
+/* 27 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bower_components_simplebar_dist_simplebar_js__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bower_components_simplebar_dist_simplebar_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__bower_components_simplebar_dist_simplebar_js__);
+
+
+class NotificationCenter {
+    constructor() {
+        this.name = 'Nachriten Schnellzugriff';
+        this.description = 'Öffnet neue Benachrichtigungen in einem kleinen Menü';
+    }
+
+
+    load() {
+        this.template = __webpack_require__(28);
+        this.templateEntry = __webpack_require__(31);
+        this.style = __webpack_require__(29);
+        this.icon = $('#inbox-link');
+        this.elem = document.createElement('div');
+        this.elem.innerHTML = this.template;
+
+        this.elem.id = 'notification-center';
+        document.body.appendChild(this.elem);
+        this.messageContainer = document.getElementById('new-messages');
+
+        this.addListener();
+    }
+
+    addListener() {
+        this.icon.unbind('click');
+        this.icon[0].addEventListener('click', (e) => {
+            e.preventDefault();
+            this.toggleMenu();
+        })
+    }
+
+    toggleMenu() {
+        this.icon[0].classList.toggle('active');
+        this.elem.classList.toggle('visible');
+        this.messageContainer.innerHTML = '<span class="fa fa-spinner fa-spin"></span>';
+        this.messageContainer.classList.add('loading');
+
+        this.getNotifications().then((notifications) => {
+            let messages = notifications.messages;
+            this.messageContainer.innerHTML = '';
+            this.messageContainer.classList.remove('loading');
+
+            if(messages <= 0) {
+                let elem = document.createElement('li');
+                elem.innerText = 'Keine neuen Benachrichtigungen!';
+                elem.className = 'no-notifications';
+                this.messageContainer.appendChild(elem);
+                return false;
+            }
+
+            for(let i = 0; i < messages.length; i++) {
+                this.addEntry(NotificationCenter.getTitle(
+                    messages[i]),
+                    messages[i].name,
+                    messages[i].created,
+                    messages[i].thumb,
+                    messages[i].mark,
+                    messages[i].itemId,
+                    messages[i].id
+                );
+            }
+
+            new __WEBPACK_IMPORTED_MODULE_0__bower_components_simplebar_dist_simplebar_js___default.a(this.messageContainer);
+        });
+    }
+
+    static getTitle(message) {
+        return message.thumb === null ? 'Private Nachricht' : 'Kommentar';
+    }
+
+    getNotifications() {
+        return new Promise((resolve, reject) => {
+            p.api.get('inbox.all', {}, resolve, reject);
+        });
+    }
+
+    addEntry(title, user, date, image, mark, id, cId) {
+        let elem = document.createElement('li');
+        let img = '<img src="//thumb.pr0gramm.com/##THUMB##" class="comment-thumb">';
+        let url = image ? `/new/${id}:comment${cId}` : `/inbox/messages`;
+
+        if(! image) {
+            img = '<span class="message fa fa-envelope"></span>';
+        } else {
+            img = img.replace('##THUMB', image);
+        }
+
+        elem.innerHTML = this.templateEntry.replaceArray(
+            ['##TITLE##', '##USER##', '##TIME##', '##THUMB##', '##URL##', '##MARK##'],
+            [title, user, new Date(date * 1000).relativeTime(), img, url, mark]
+        );
+
+        this.messageContainer.appendChild(elem);
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = NotificationCenter;
+
+
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports) {
+
+module.exports = "<ul id=new-messages> </ul> <div> <a href=/inbox/all class=action>Alle Benachrichtigungen</a> </div> ";
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(30);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/less-loader/dist/cjs.js!./notificationCenter.less", function() {
+			var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/less-loader/dist/cjs.js!./notificationCenter.less");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "#inbox-link {\n  position: relative;\n}\n#inbox-link.active {\n  color: var(--theme-main-color);\n}\n#notification-center {\n  display: none;\n  position: fixed;\n  right: 40px;\n  top: 52px;\n  z-index: 100;\n  border: 3px solid #2a2e31;\n  background-color: #161618;\n  box-shadow: 2px 0 10px #000;\n  min-width: 300px;\n  max-height: 50vh;\n  flex-direction: column;\n}\n#notification-center.visible {\n  display: flex;\n}\n#notification-center > div {\n  padding: 10px;\n  text-align: center;\n  border-top: 1px solid #252525;\n}\n#notification-center #new-messages {\n  padding-left: 10px;\n  margin: 0;\n}\n#notification-center #new-messages.loading {\n  text-align: center;\n  padding: 10px;\n}\n#notification-center #new-messages.loading .fa-spin {\n  font-size: 24px;\n}\n#notification-center #new-messages .simplebar-scrollbar {\n  background: #2a2e31;\n  right: 0;\n  border-radius: 0;\n}\n#notification-center #new-messages .simplebar-scrollbar.visible {\n  opacity: 1;\n}\n#notification-center #new-messages li {\n  align-items: center;\n  justify-content: center;\n  display: flex;\n}\n#notification-center #new-messages li:not(:last-child) {\n  border-bottom: 1px solid #252525;\n}\n#notification-center #new-messages li:hover .headline {\n  color: var(--theme-main-color);\n}\n#notification-center #new-messages li.no-notifications {\n  text-align: center;\n  width: 100%;\n  padding: 10px;\n}\n#notification-center #new-messages li .headline {\n  color: #fff;\n  font-weight: bold;\n}\n#notification-center #new-messages li .content {\n  padding: 10px;\n  flex-grow: 1;\n}\n#notification-center #new-messages li .content .time {\n  float: right;\n}\n#notification-center #new-messages li .message {\n  width: 32px;\n  margin-left: 3px;\n  font-size: 28px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports) {
+
+module.exports = "<div> ##THUMB## </div> <a href=##URL## class=content> <div class=headline>##TITLE##</div> <span class=\"user um##MARK##\">##USER##</span> <span class=\"time permalink\">##TIME##</span> </a> ";
 
 /***/ })
 /******/ ]);
