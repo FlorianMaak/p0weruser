@@ -13,7 +13,7 @@ export default class AdvancedComments {
         this.prepareComments();
     }
 
-    handleMouseover(pId, source) {
+    static handleMouseover(pId, source) {
         const elem = document.querySelectorAll(`#${pId} .comment-content`);
         source.title = elem[0].innerText;
     }
@@ -30,13 +30,12 @@ export default class AdvancedComments {
                 if(comment[0]) {
                     const pId = comment[0].id;
                     let elem = document.createElement('a');
-
                     elem.href = `#${pId}`;
                     elem.className = 'fa fa-level-up action preview-link';
                     container.find('.comment-foot').append(elem);
 
                     elem.addEventListener('mouseover', () => {
-                        this.handleMouseover(pId, elem);
+                        AdvancedComments.handleMouseover(pId, elem);
                     });
                 }
             }
