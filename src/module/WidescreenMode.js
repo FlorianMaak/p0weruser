@@ -1,37 +1,91 @@
 import SimpleBar from '../../bower_components/simplebar/dist/simplebar.js';
-import Utils from '../Utils';
 
 export default class WidescreenMode {
     constructor() {
         this.name = 'Widescreen Mode';
-        this.bar = null;
         this.container = {};
         this.commentsContainer = {};
         this.resized = false;
-        this.commentSwitch = null;
         this.listenerAdded = false;
         this.description = 'Stellt das pr0 im Breitbildmodus dar.'
     }
 
+    static handleWheelChange(deltaY) {
+        let el = {};
+
+        if (deltaY < 0) {
+            el = document.getElementsByClassName('stream-prev')[0];
+        } else {
+            el = document.getElementsByClassName('stream-next')[0];
+        }
+
+        el.click();
+    }
 
     load() {
+        this.commentsWide = window.localStorage.getItem('comments_wide') === 'true';
         this.styles = require('../style/widescreenMode.less');
         this.header = document.getElementById('head-content');
         this.nav = {
             button: null,
             container: document.getElementById('footer-links')
         };
-        WidescreenMode.overrideTemplates();
-        this.addListener();
+        this.overrideViews();
         this.addNavigation();
     }
 
+    overrideViews() {
+        // Override Item-View
+        let _this = this;
 
-    static overrideTemplates() {
-        // Replace templates
-        p.View.Stream.Item.prototype.template = require('../template/streamItem.html');
-        p.View.Stream.Comments.prototype.template = require('../template/streamItemComments.html');
+        p.View.Base = p.View.Base.extend({
+            showLoader: function () {
+                console.log('te');
+            }
+        });
 
+        p.View.Stream.Item = p.View.Stream.Item.extend({
+            template: require('../template/streamItem.html'),
+            show: function (rowIndex, itemData, defaultHeight, jumpToComment) {
+                this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
+
+                _this.addItemListener(this.$image, itemData);
+                document.body.classList.add('fixed');
+            },
+            remove: function () {
+                this.parent();
+                document.body.classList.remove('fixed');
+            }
+        });
+
+        // Fix audio-controls
+        p.View.Stream.Item.TARGET = {
+            NOTHING: 0,
+            SEEK_CONTROLS: 1,
+            VOLUME_CONTROLS: 2
+        };
+
+        // Extend comments-rendering and template
+        p.View.Stream.Comments = p.View.Stream.Comments.extend({
+            template: require('../template/streamItemComments.html'),
+            render: function () {
+                this.parent();
+                _this.commentsContainer = this.$container;
+                _this.commentsContainer[0].classList.toggle('wide', _this.commentsWide);
+                new SimpleBar(this.$container[0]);
+
+                let commentSwitch = this.$container.find('.comments-switch')[0];
+                commentSwitch.addEventListener('click', () => {
+                    this.$container[0].classList.add('toggled');
+                    this.$container[0].classList.toggle('wide');
+                    _this.commentsWide = this.$container[0].classList.contains('wide');
+
+                    window.localStorage.setItem('comments_wide', _this.commentsWide);
+                });
+            }
+        });
+
+        // Handle stream-building
         p.View.Stream.Main.prototype.buildItemRows = function (items) {
             let result = '';
             for (let i = 0; i < items.length; i++) {
@@ -42,75 +96,61 @@ export default class WidescreenMode {
         };
     }
 
+    addItemListener(image, itemData) {
+        this.img = image;
+        this.container = this.img[0].parentNode;
+        this.resized = (itemData.height > this.container.offsetHeight || itemData.width > this.container.offsetWidth);
+        this.container.classList.toggle('resized', this.resized);
 
-    addListener() {
-        window.addEventListener('commentsLoaded', () => {
-            this.img = $('.item-image');
-            this.commentsContainer = $('.item-comments');
-            this.container = this.img[0].parentNode;
-            this.resized = (this.img.height() > this.container.offsetHeight || this.img.width() > this.container.offsetWidth);
-            this.container.classList.toggle('resized', this.resized);
-            this.isMoveable = false;
+        // Enable draggable
+        if (this.resized) {
+            this.container.classList.add('oversize');
+            this.img.draggable();
+            this.img.draggable('disable');
+        }
 
-            // Apply custom scrollbar
-            Utils.waitForElement('.item-comments').then((el) => {
-                this.bar = new SimpleBar(el[0]);
+        // Handle wheel-change
+        this.container.addEventListener('mousewheel', (e) => {
+            e.preventDefault();
 
-                // Add switch-listener
-                this.commentSwitch = this.commentsContainer.find('.comments-switch')[0];
-                this.commentSwitch.addEventListener('click', () => {
-                    this.commentsContainer[0].classList.toggle('wide');
-                });
-            });
-
-            // Enable draggable
-            if(this.resized) {
-                this.img.draggable();
-                this.img.draggable('disable');
-            }
-
-            // Handle wheel-change
-            this.container.addEventListener('mousewheel', (e) => {
-                e.preventDefault();
-
-                WidescreenMode.handleWheelChange(e.deltaY);
-            });
+            WidescreenMode.handleWheelChange(e.deltaY);
         });
 
-        // Add keydown listener to handle arrowkeys and spacebar
-        if(! this.listenerAdded) {
+        if (!this.listenerAdded) {
             this.listenerAdded = true;
             document.addEventListener('keydown', (e) => {
-                if(document.activeElement.tagName !== 'TEXTAREA' && document.activeElement.tagName !== 'INPUT') {
+                if (document.activeElement.tagName !== 'TEXTAREA' && document.activeElement.tagName !== 'INPUT') {
                     this.handleKeypress(e);
                 }
             });
+
+            window.addEventListener('locationChange', (e) => {
+                if (e.mode === 0) {
+                    document.body.classList.remove('fixed');
+                }
+            })
         }
     }
 
-
     handleKeypress(e) {
-        switch(e.code) {
+        switch (e.code) {
             case 'Space':
                 e.preventDefault();
-                if(this.resized) {
-                    this.img.unbind('click');
-                    this.container.classList.add('oversize');
-                    this.container.classList.toggle('resized');
-                    this.isMoveable = ! this.container.classList.contains('resized');
-                    this.img.draggable(this.isMoveable  ? 'enable' : 'disable');
-                    this.img.attr('tabindex', -1).focus();
+                this.toggleMove();
+                break;
+            case 'Escape':
+                if (this.resized && p.currentView.$itemContainer) {
+                    p.currentView.hideItem();
                 }
                 break;
-
             case 'ArrowUp':
             case 'ArrowDown':
-                if(this.isMoveable) {
+                if (this.isMoveable) {
                     this.img.animate({
                         top: e.code === 'ArrowDown' ? '-=20' : '+=20'
                     }, 0);
                 } else {
-                    let elem = $(this.commentsContainer).find('.simplebar-content');
+                    let elem = this.commentsContainer.find('.simplebar-content');
                     if (!elem.is(':focus')) {
                         elem.attr('tabindex', -1).focus();
                     }
@@ -119,19 +159,21 @@ export default class WidescreenMode {
         }
     }
 
+    toggleMove() {
+        if (this.resized) {
+            this.img.unbind('click');
+            this.container.classList.toggle('resized');
+            this.isMoveable = !this.container.classList.contains('resized');
+            this.img.draggable(this.isMoveable ? 'enable' : 'disable');
+            this.img.attr('tabindex', -1).focus();
 
-    static handleWheelChange(deltaY) {
-        let el = {};
+            if (!this.img.resizeInit) {
+                this.container.style.alignItems = 'flex-start';
+            }
 
-        if(deltaY < 0) {
-            el = document.getElementsByClassName('stream-prev')[0];
-        } else {
-            el = document.getElementsByClassName('stream-next')[0];
+            this.img.resizeInit = true;
         }
-
-        el.click();
     }
-
 
     addNavigation() {
         this.nav.button = document.createElement('a');

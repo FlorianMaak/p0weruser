@@ -64,45 +64,45 @@
         <div class="item-info">
             <div>
                 <div class="item-vote{p.voteClass(item.vote)}">
-                    <span class="pict vote-up">+</span>
-                    <span class="pict vote-down">-</span>
-                    <?js if( p.shouldShowScore(item) ) {?>
+                    <div>
+                        <span class="pict vote-up">+</span>
+                        <span class="pict vote-down">-</span>
+                    </div>
                     <span class="score<?js if(!p.olderThanMinAge(item)){?> score-young<?js}?>"
                           title="{item.up} up, {item.down} down">
                         <?js print(item.up - item.down)?>
                     </span>
-                    <?js } else { ?>
-                    <span class="score-hidden" title="Score noch unsichtbar">●●●</span>
+                    <?js if( item.user != p.user.name ) {?>
+                        <span class="pict vote-fav{p.favClass(item.vote)}">*</span>
                     <?js } ?>
                 </div>
-                <?js if( item.user != p.user.name ) {?>
-                <span class="pict vote-fav{p.favClass(item.vote)}">*</span>
-                <?js } ?>
-                <div class="item-details">
-                    <a class="time" title="{item.date.readableTime()}" href="/new/{item.id}">{item.date.relativeTime(true)}</a>
-                    <span class="time">von</span>
-                    <a href="#user/{item.user}" class="user um{item.mark}">{item.user}</a>
-                    <span class="item-source">
+                <div>
+                    <div class="item-details">
+                        <a class="time" title="{item.date.readableTime()}" href="/new/{item.id}">{item.date.relativeTime(true)}</a>
+                        <span class="time">von</span>
+                        <a href="#user/{item.user}" class="user um{item.mark}">{item.user}</a>
+                        <span class="item-source">
                     <?js if( item.source ) {?>
-                        <span class="pict">s</span>&nbsp;<a href="{{item.source}}" target="_blank">{{item.source.hostName()}}</a>
-                        <?js } else { ?>
-                        <span class="pict">s</span>upload</span>
-                    <?js } ?>
-                    </span>
-                    <?js if( !item.video ) {?>
-                    <span class="item-google-search">
+                            <span class="pict">s</span>&nbsp;<a href="{{item.source}}" target="_blank">{{item.source.hostName()}}</a>
+                            <?js } else { ?>
+                            <span class="pict">s</span>upload</span>
+                        <?js } ?>
+                        </span>
+                        <?js if( !item.video ) {?>
+                        <span class="item-google-search">
                         <span class="pict">g</span>&nbsp;
                         <a href="https://www.google.com/searchbyimage?hl=en&amp;safe=off&amp;site=search&amp;image_url=http:{item.image}"
                            target="_blank"> Bild googeln
                         </a>
                     </span>
-                    <?js } ?>
-                    <?js if( p.user.admin ) { ?>
-                    [<span class="action" id="item-delete" data-id="{item.id}">del</span>]
-                    [<a href="/new/phash.{item.id}.12">phash</a>]
-                    <?js } ?>
+                        <?js } ?>
+                        <?js if( p.user.admin ) { ?>
+                        [<span class="action" id="item-delete" data-id="{item.id}">del</span>]
+                        [<a href="/new/phash.{item.id}.12">phash</a>]
+                        <?js } ?>
+                    </div>
+                    <div class="item-tags"></div>
                 </div>
-                <div class="item-tags"></div>
             </div>
         </div>
     </div>

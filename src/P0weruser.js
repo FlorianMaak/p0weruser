@@ -30,6 +30,23 @@ export default class P0weruser {
     }
 
 
+    static getActivatedModules() {
+        let modules = window.localStorage.getItem('activated_modules');
+
+        if (!modules) {
+            window.localStorage.setItem('activated_modules', '[]');
+            modules = '[]';
+        }
+
+        return JSON.parse(modules);
+    }
+
+
+    static saveActivatedModules(selection) {
+        window.localStorage.setItem('activated_modules', JSON.stringify(selection));
+    }
+
+
     loadModules() {
         let activated = P0weruser.getActivatedModules();
 
@@ -49,23 +66,9 @@ export default class P0weruser {
 
         return this.modules;
     }
-
-
-    static getActivatedModules() {
-        let modules = window.localStorage.getItem('activated_modules');
-
-        if (!modules) {
-            window.localStorage.setItem('activated_modules', '[]');
-            modules = '[]';
-        }
-
-        return JSON.parse(modules);
-    }
-
-
-    static saveActivatedModules(selection) {
-        window.localStorage.setItem('activated_modules', JSON.stringify(selection));
-    }
 }
 
+
+// Load script
 window.p0weruser = new P0weruser();
+
