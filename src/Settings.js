@@ -14,6 +14,30 @@ export default class Settings {
     }
 
 
+    static clearSettings() {
+        // clear module settings
+        window.localStorage.setItem('activated_modules', '[]');
+
+        // Reload pr0gramm
+        p.reload();
+    }
+
+
+    static saveSettings(moduleList) {
+        let result = [];
+        let actives = moduleList.querySelectorAll(':checked');
+
+        // Get list of checked modules
+        for (let i = 0; i < actives.length; i++) {
+            result.push(actives[i].dataset.module);
+        }
+        P0weruser.saveActivatedModules(result);
+
+        // Reload pr0gramm
+        p.reload();
+    }
+
+
     addListeners() {
         window.addEventListener('settingsLoaded', () => {
             this.addSettingsTab();
@@ -73,7 +97,7 @@ export default class Settings {
         // Add listener to clear-button
         let clearButton = this.tabContent.getElementsByClassName('clear-settings-button')[0];
         clearButton.addEventListener('click', () => {
-            if(window.confirm('Einstellungen wirklich zurücksetzen?')) {
+            if (window.confirm('Einstellungen wirklich zurücksetzen?')) {
                 Settings.clearSettings();
             }
         });
@@ -83,27 +107,5 @@ export default class Settings {
         saveButton.addEventListener('click', () => {
             Settings.saveSettings(moduleList);
         })
-    }
-
-    static clearSettings() {
-        // clear module settings
-        window.localStorage.setItem('activated_modules', '[]');
-
-        // Reload pr0gramm
-        p.reload();
-    }
-
-    static saveSettings(moduleList) {
-        let result = [];
-        let actives = moduleList.querySelectorAll(':checked');
-
-        // Get list of checked modules
-        for (let i = 0; i < actives.length; i++) {
-            result.push(actives[i].dataset.module);
-        }
-        P0weruser.saveActivatedModules(result);
-
-        // Reload pr0gramm
-        p.reload();
     }
 }

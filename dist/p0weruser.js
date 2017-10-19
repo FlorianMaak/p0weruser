@@ -73,7 +73,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -535,74 +535,6 @@ function updateLink (link, options, obj) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-class Utils {
-    static waitForElement(selector) {
-        return new Promise((resolve, reject) => {
-            let element = [];
-            let check = () => {
-                if (!element[0]) {
-                    element = document.querySelectorAll(selector);
-
-                    setTimeout(() => {
-                        check();
-                    }, 10);
-                } else {
-                    resolve(element);
-                }
-            };
-
-            check();
-        });
-    }
-
-
-    static changeLocation(newLocation) {
-        p.location = newLocation;
-        window.history.pushState({}, 'pr0gramm.com', newLocation);
-    }
-
-
-    static getUrlParams(url) {
-        let result = {};
-        url = url.split('?');
-        let params = url[1].split('&');
-
-        for (let i = 0; i < params.length; i++) {
-            let param = params[i].split('=');
-            result[param[0]] = param[1];
-        }
-
-        return {
-            url: url[0],
-            params: result
-        };
-    }
-
-
-    static getUrlFromParams(url, params) {
-        let result = url + '?';
-
-        for (let key in params) {
-            if (params.hasOwnProperty(key)) {
-                if (result !== url + '?') {
-                    result += '&';
-                }
-                result += key + '=' + params[key];
-            }
-        }
-
-        return result;
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Utils;
-
-
-
-/***/ }),
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Settings__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__EventHandler__ = __webpack_require__(9);
@@ -642,6 +574,23 @@ class P0weruser {
     }
 
 
+    static getActivatedModules() {
+        let modules = window.localStorage.getItem('activated_modules');
+
+        if (!modules) {
+            window.localStorage.setItem('activated_modules', '[]');
+            modules = '[]';
+        }
+
+        return JSON.parse(modules);
+    }
+
+
+    static saveActivatedModules(selection) {
+        window.localStorage.setItem('activated_modules', JSON.stringify(selection));
+    }
+
+
     loadModules() {
         let activated = P0weruser.getActivatedModules();
 
@@ -661,28 +610,82 @@ class P0weruser {
 
         return this.modules;
     }
-
-
-    static getActivatedModules() {
-        let modules = window.localStorage.getItem('activated_modules');
-
-        if (!modules) {
-            window.localStorage.setItem('activated_modules', '[]');
-            modules = '[]';
-        }
-
-        return JSON.parse(modules);
-    }
-
-
-    static saveActivatedModules(selection) {
-        window.localStorage.setItem('activated_modules', JSON.stringify(selection));
-    }
 }
 /* harmony export (immutable) */ __webpack_exports__["default"] = P0weruser;
 
 
+
+// Load script
 window.p0weruser = new P0weruser();
+
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class Utils {
+    static waitForElement(selector) {
+        return new Promise((resolve, reject) => {
+            let element = [];
+            let check = () => {
+                if (!element[0]) {
+                    element = document.querySelectorAll(selector);
+
+                    setTimeout(() => {
+                        check();
+                    }, 10);
+                } else {
+                    resolve(element);
+                }
+            };
+
+            check();
+        });
+    }
+
+
+    static changeLocation(newLocation) {
+        p.location = newLocation;
+        window.history.pushState({}, 'pr0gramm.com', newLocation);
+    }
+
+    
+    static getUrlParams(url) {
+        let result = {};
+        url = url.split('?');
+        let params = url[1].split('&');
+
+        for (let i = 0; i < params.length; i++) {
+            let param = params[i].split('=');
+            result[param[0]] = param[1];
+        }
+
+        return {
+            url: url[0],
+            params: result
+        };
+    }
+
+
+    static getUrlFromParams(url, params) {
+        let result = url + '?';
+
+        for (let key in params) {
+            if (params.hasOwnProperty(key)) {
+                if (result !== url + '?') {
+                    result += '&';
+                }
+                result += key + '=' + params[key];
+            }
+        }
+
+        return result;
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Utils;
+
 
 
 /***/ }),
@@ -694,8 +697,8 @@ window.p0weruser = new P0weruser();
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__template_settingsTab_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__template_settingsTab_html__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__style_settings_less__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__style_settings_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__style_settings_less__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Utils__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__P0weruser__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Utils__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__P0weruser__ = __webpack_require__(2);
 
 
 
@@ -709,6 +712,30 @@ class Settings {
         this.tabContent = {};
 
         this.addListeners();
+    }
+
+
+    static clearSettings() {
+        // clear module settings
+        window.localStorage.setItem('activated_modules', '[]');
+
+        // Reload pr0gramm
+        p.reload();
+    }
+
+
+    static saveSettings(moduleList) {
+        let result = [];
+        let actives = moduleList.querySelectorAll(':checked');
+
+        // Get list of checked modules
+        for (let i = 0; i < actives.length; i++) {
+            result.push(actives[i].dataset.module);
+        }
+        __WEBPACK_IMPORTED_MODULE_3__P0weruser__["default"].saveActivatedModules(result);
+
+        // Reload pr0gramm
+        p.reload();
     }
 
 
@@ -771,7 +798,7 @@ class Settings {
         // Add listener to clear-button
         let clearButton = this.tabContent.getElementsByClassName('clear-settings-button')[0];
         clearButton.addEventListener('click', () => {
-            if(window.confirm('Einstellungen wirklich zurücksetzen?')) {
+            if (window.confirm('Einstellungen wirklich zurücksetzen?')) {
                 Settings.clearSettings();
             }
         });
@@ -781,28 +808,6 @@ class Settings {
         saveButton.addEventListener('click', () => {
             Settings.saveSettings(moduleList);
         })
-    }
-
-    static clearSettings() {
-        // clear module settings
-        window.localStorage.setItem('activated_modules', '[]');
-
-        // Reload pr0gramm
-        p.reload();
-    }
-
-    static saveSettings(moduleList) {
-        let result = [];
-        let actives = moduleList.querySelectorAll(':checked');
-
-        // Get list of checked modules
-        for (let i = 0; i < actives.length; i++) {
-            result.push(actives[i].dataset.module);
-        }
-        __WEBPACK_IMPORTED_MODULE_3__P0weruser__["default"].saveActivatedModules(result);
-
-        // Reload pr0gramm
-        p.reload();
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Settings;
@@ -963,30 +968,31 @@ module.exports = function (css) {
 class EventHandler {
     constructor() {
         this.settingsLoaded = new Event('settingsLoaded');
-        this.commentsLoaded = new Event('commentsLoaded');
+        this.locationChange = new Event('locationChange');
 
         this.addEvents();
     }
+
 
     addEvents() {
         let _this = this;
 
         // Add settings-event
-        (function(render) {
-            p.View.Settings.prototype.render = function(params) {
+        (function (render) {
+            p.View.Settings.prototype.render = function (params) {
                 render.call(this, params);
                 window.dispatchEvent(_this.settingsLoaded);
             };
         }(p.View.Settings.prototype.render));
 
-        // Add settings-event
-        (function(render) {
-            p.View.Stream.Comments.prototype.render = function() {
-                render.call(this);
-                window.dispatchEvent(_this.commentsLoaded);
-
+        // Add locationchange event
+        (function (navigate) {
+            p.navigateTo = function (location, mode) {
+                navigate.call(this, location, mode);
+                _this.locationChange.mode = mode;
+                window.dispatchEvent(_this.locationChange);
             };
-        }(p.View.Stream.Comments.prototype.render));
+        }(p.navigateTo));
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = EventHandler;
@@ -1000,41 +1006,94 @@ class EventHandler {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bower_components_simplebar_dist_simplebar_js__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bower_components_simplebar_dist_simplebar_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__bower_components_simplebar_dist_simplebar_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Utils__ = __webpack_require__(2);
-
 
 
 class WidescreenMode {
     constructor() {
         this.name = 'Widescreen Mode';
-        this.bar = null;
         this.container = {};
         this.commentsContainer = {};
         this.resized = false;
-        this.commentSwitch = null;
         this.listenerAdded = false;
         this.description = 'Stellt das pr0 im Breitbildmodus dar.'
     }
 
+    static handleWheelChange(deltaY) {
+        let el = {};
+
+        if (deltaY < 0) {
+            el = document.getElementsByClassName('stream-prev')[0];
+        } else {
+            el = document.getElementsByClassName('stream-next')[0];
+        }
+
+        el.click();
+    }
 
     load() {
+        this.commentsWide = window.localStorage.getItem('comments_wide') === 'true';
         this.styles = __webpack_require__(12);
         this.header = document.getElementById('head-content');
         this.nav = {
             button: null,
             container: document.getElementById('footer-links')
         };
-        WidescreenMode.overrideTemplates();
-        this.addListener();
+        this.overrideViews();
         this.addNavigation();
     }
 
+    overrideViews() {
+        // Override Item-View
+        let _this = this;
 
-    static overrideTemplates() {
-        // Replace templates
-        p.View.Stream.Item.prototype.template = __webpack_require__(14);
-        p.View.Stream.Comments.prototype.template = __webpack_require__(15);
+        p.View.Base = p.View.Base.extend({
+            showLoader: function () {
+                console.log('te');
+            }
+        });
 
+        p.View.Stream.Item = p.View.Stream.Item.extend({
+            template: __webpack_require__(14),
+            show: function (rowIndex, itemData, defaultHeight, jumpToComment) {
+                this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
+
+                _this.addItemListener(this.$image, itemData);
+                document.body.classList.add('fixed');
+            },
+            remove: function () {
+                this.parent();
+                document.body.classList.remove('fixed');
+            }
+        });
+
+        // Fix audio-controls
+        p.View.Stream.Item.TARGET = {
+            NOTHING: 0,
+            SEEK_CONTROLS: 1,
+            VOLUME_CONTROLS: 2
+        };
+
+        // Extend comments-rendering and template
+        p.View.Stream.Comments = p.View.Stream.Comments.extend({
+            template: __webpack_require__(15),
+            render: function () {
+                this.parent();
+                _this.commentsContainer = this.$container;
+                _this.commentsContainer[0].classList.toggle('wide', _this.commentsWide);
+                new __WEBPACK_IMPORTED_MODULE_0__bower_components_simplebar_dist_simplebar_js___default.a(this.$container[0]);
+
+                let commentSwitch = this.$container.find('.comments-switch')[0];
+                commentSwitch.addEventListener('click', () => {
+                    this.$container[0].classList.add('toggled');
+                    this.$container[0].classList.toggle('wide');
+                    _this.commentsWide = this.$container[0].classList.contains('wide');
+
+                    window.localStorage.setItem('comments_wide', _this.commentsWide);
+                });
+            }
+        });
+
+        // Handle stream-building
         p.View.Stream.Main.prototype.buildItemRows = function (items) {
             let result = '';
             for (let i = 0; i < items.length; i++) {
@@ -1045,75 +1104,61 @@ class WidescreenMode {
         };
     }
 
+    addItemListener(image, itemData) {
+        this.img = image;
+        this.container = this.img[0].parentNode;
+        this.resized = (itemData.height > this.container.offsetHeight || itemData.width > this.container.offsetWidth);
+        this.container.classList.toggle('resized', this.resized);
 
-    addListener() {
-        window.addEventListener('commentsLoaded', () => {
-            this.img = $('.item-image');
-            this.commentsContainer = $('.item-comments');
-            this.container = this.img[0].parentNode;
-            this.resized = (this.img.height() > this.container.offsetHeight || this.img.width() > this.container.offsetWidth);
-            this.container.classList.toggle('resized', this.resized);
-            this.isMoveable = false;
+        // Enable draggable
+        if (this.resized) {
+            this.container.classList.add('oversize');
+            this.img.draggable();
+            this.img.draggable('disable');
+        }
 
-            // Apply custom scrollbar
-            __WEBPACK_IMPORTED_MODULE_1__Utils__["a" /* default */].waitForElement('.item-comments').then((el) => {
-                this.bar = new __WEBPACK_IMPORTED_MODULE_0__bower_components_simplebar_dist_simplebar_js___default.a(el[0]);
+        // Handle wheel-change
+        this.container.addEventListener('mousewheel', (e) => {
+            e.preventDefault();
 
-                // Add switch-listener
-                this.commentSwitch = this.commentsContainer.find('.comments-switch')[0];
-                this.commentSwitch.addEventListener('click', () => {
-                    this.commentsContainer[0].classList.toggle('wide');
-                });
-            });
-
-            // Enable draggable
-            if(this.resized) {
-                this.img.draggable();
-                this.img.draggable('disable');
-            }
-
-            // Handle wheel-change
-            this.container.addEventListener('mousewheel', (e) => {
-                e.preventDefault();
-
-                WidescreenMode.handleWheelChange(e.deltaY);
-            });
+            WidescreenMode.handleWheelChange(e.deltaY);
         });
 
-        // Add keydown listener to handle arrowkeys and spacebar
-        if(! this.listenerAdded) {
+        if (!this.listenerAdded) {
             this.listenerAdded = true;
             document.addEventListener('keydown', (e) => {
-                if(document.activeElement.tagName !== 'TEXTAREA' && document.activeElement.tagName !== 'INPUT') {
+                if (document.activeElement.tagName !== 'TEXTAREA' && document.activeElement.tagName !== 'INPUT') {
                     this.handleKeypress(e);
                 }
             });
+
+            window.addEventListener('locationChange', (e) => {
+                if (e.mode === 0) {
+                    document.body.classList.remove('fixed');
+                }
+            })
         }
     }
 
-
     handleKeypress(e) {
-        switch(e.code) {
+        switch (e.code) {
             case 'Space':
                 e.preventDefault();
-                if(this.resized) {
-                    this.img.unbind('click');
-                    this.container.classList.add('oversize');
-                    this.container.classList.toggle('resized');
-                    this.isMoveable = ! this.container.classList.contains('resized');
-                    this.img.draggable(this.isMoveable  ? 'enable' : 'disable');
-                    this.img.attr('tabindex', -1).focus();
+                this.toggleMove();
+                break;
+            case 'Escape':
+                if (this.resized && p.currentView.$itemContainer) {
+                    p.currentView.hideItem();
                 }
                 break;
-
             case 'ArrowUp':
             case 'ArrowDown':
-                if(this.isMoveable) {
+                if (this.isMoveable) {
                     this.img.animate({
                         top: e.code === 'ArrowDown' ? '-=20' : '+=20'
                     }, 0);
                 } else {
-                    let elem = $(this.commentsContainer).find('.simplebar-content');
+                    let elem = this.commentsContainer.find('.simplebar-content');
                     if (!elem.is(':focus')) {
                         elem.attr('tabindex', -1).focus();
                     }
@@ -1122,19 +1167,21 @@ class WidescreenMode {
         }
     }
 
+    toggleMove() {
+        if (this.resized) {
+            this.img.unbind('click');
+            this.container.classList.toggle('resized');
+            this.isMoveable = !this.container.classList.contains('resized');
+            this.img.draggable(this.isMoveable ? 'enable' : 'disable');
+            this.img.attr('tabindex', -1).focus();
 
-    static handleWheelChange(deltaY) {
-        let el = {};
+            if (!this.img.resizeInit) {
+                this.container.style.alignItems = 'flex-start';
+            }
 
-        if(deltaY < 0) {
-            el = document.getElementsByClassName('stream-prev')[0];
-        } else {
-            el = document.getElementsByClassName('stream-next')[0];
+            this.img.resizeInit = true;
         }
-
-        el.click();
     }
-
 
     addNavigation() {
         this.nav.button = document.createElement('a');
@@ -1215,7 +1262,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "body[class] > .side-wide-skyscraper {\n  display: none;\n}\nbody[class] #page.desktop,\nbody[class] #page #head {\n  padding: 0 20px;\n  width: 100% !important;\n}\nbody[class] #page.desktop #pr0-miner,\nbody[class] #page #head #pr0-miner {\n  display: none;\n}\nbody[class] #page #stream {\n  text-align: center;\n}\nbody[class] #page #stream a.thumb {\n  display: inline-block;\n  float: none;\n}\nbody[class] #page #head {\n  background: rgba(0, 0, 0, 0.8);\n}\nbody[class] #page #head #head-content {\n  background: none;\n  display: flex;\n  align-items: center;\n}\nbody[class] #page #head #head-content > .user-info {\n  order: 3;\n  margin: 0;\n}\nbody[class] #page #head #head-content > #head-menu {\n  padding: 0;\n  flex-grow: 1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\nbody[class] #page #head #head-content > #pr0gramm-logo-link {\n  height: 24px;\n  margin: 0;\n}\nbody[class] #page #head #head-content .sidebar-toggle {\n  color: #fff;\n  font-size: 20px;\n  margin-right: 10px;\n}\nbody[class] #page #head #head-content .sidebar-toggle.active {\n  color: #ee4d2e;\n}\nbody[class] > #footer-links {\n  width: 250px;\n  left: -250px !important;\n  position: fixed;\n  margin: 0;\n  top: 52px;\n  border-right: 3px solid #2a2e31;\n  background: #161618;\n  transition: left .2s linear;\n  z-index: 500;\n}\nbody[class] > #footer-links.open {\n  left: 0 !important;\n  box-shadow: 2px 0 10px #000;\n}\nbody[class] > #footer-links a {\n  color: #fff;\n  display: block;\n  text-align: left;\n  padding: 10px 20px;\n  margin-right: 0;\n  font-size: 16px;\n}\nbody[class] > #footer-links a:hover {\n  color: #ee4d2e;\n}\n#stream .item-container {\n  margin: 0;\n  max-height: calc(100vh - 52px);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: rgba(0, 0, 0, 0.9);\n  position: fixed;\n  top: 52px;\n  right: 0;\n  left: -20px;\n  bottom: -20px;\n  padding: 0;\n  z-index: 10;\n}\n#stream .item-container .item-pointer {\n  display: none;\n}\n#stream .item-container .item-container-content {\n  display: flex;\n  height: 100%;\n  width: 100%;\n}\n#stream .item-container .item-container-content .image-main {\n  display: flex;\n  width: 100%;\n  flex-direction: column;\n}\n#stream .item-container .item-container-content .image-main .item-info {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100px;\n}\n#stream .item-container .item-container-content .image-main .item-info > div {\n  position: relative;\n  width: 90%;\n  max-width: 980px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper {\n  flex-grow: 1;\n  overflow: hidden;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 40px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper.resized .item-image {\n  max-height: calc(100vh - 180px);\n  top: auto !important;\n  left: auto !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper.oversize:not(.resized) .item-image {\n  cursor: move;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev,\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next {\n  display: flex;\n  height: 50px;\n  align-items: center;\n  justify-content: center;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev span:before,\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next span:before {\n  opacity: .2;\n  font-size: 70px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev:hover span:before,\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next:hover span:before {\n  opacity: .6;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev {\n  padding: 0 0 0 20px !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next {\n  right: 20px;\n  padding: 0 5px !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .video-controls {\n  width: 100% !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .video-controls .video-position-bar-background {\n  min-height: 2px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .item-image {\n  height: auto !important;\n  width: auto !important;\n  outline: none;\n}\n#stream .item-container .item-container-content .item-comments {\n  background: #161618;\n  width: 30vw;\n  flex-grow: 0;\n  flex-shrink: 0;\n  border-right: 3px solid #2a2e31;\n  transition: width 0.2s ease-out;\n}\n#stream .item-container .item-container-content .item-comments.wide {\n  width: 40vw;\n}\n#stream .item-container .item-container-content .item-comments.wide .comments-switch:before {\n  content: \"\\F053\";\n}\n#stream .item-container .item-container-content .item-comments .comments-head {\n  padding: 12px 8px 14px 30px;\n}\n#stream .item-container .item-container-content .item-comments .comments-head .comment-content,\n#stream .item-container .item-container-content .item-comments .comments-head .comment-foot,\n#stream .item-container .item-container-content .item-comments .comments-head .comment {\n  max-width: 100%;\n}\n#stream .item-container .item-container-content .item-comments .comment-count {\n  display: flex;\n  align-items: center;\n  background-color: #2a2e31;\n  text-align: left;\n  position: sticky;\n  padding: 10px 10px 10px 35px;\n  top: 0;\n  z-index: 400;\n}\n#stream .item-container .item-container-content .item-comments .comment-count > div:first-child {\n  flex-grow: 1;\n}\n#stream .item-container .item-container-content .item-comments .comment-count .comments-switch {\n  cursor: pointer;\n}\n#stream .item-container .item-container-content .item-comments textarea.comment:focus,\n#stream .item-container .item-container-content .item-comments textarea.comment:valid,\n#stream .item-container .item-container-content .item-comments textarea.reply {\n  height: 75px;\n}\n#stream .item-container .item-container-content .item-comments .simplebar-scrollbar {\n  background: #2a2e31;\n  border-radius: 0;\n  right: 0;\n}\n#stream .item-container .item-container-content .item-comments .simplebar-scrollbar.visible {\n  opacity: 1;\n}\n#stream .item-container .item-container-content .item-comments .simplebar-content {\n  outline: none;\n}\n", ""]);
+exports.push([module.i, "body[class].fixed {\n  overflow: hidden;\n}\nbody[class] > .side-wide-skyscraper {\n  display: none;\n}\nbody[class] #page.desktop,\nbody[class] #page #head {\n  padding: 0 20px;\n  width: 100% !important;\n}\nbody[class] #page.desktop #pr0-miner,\nbody[class] #page #head #pr0-miner {\n  display: none;\n}\nbody[class] #page #stream {\n  text-align: center;\n}\nbody[class] #page #stream a.thumb {\n  display: inline-block;\n  float: none;\n}\nbody[class] #page #head {\n  background: rgba(0, 0, 0, 0.8);\n}\nbody[class] #page #head #head-content {\n  background: none;\n  display: flex;\n  align-items: center;\n}\nbody[class] #page #head #head-content > .user-info {\n  order: 3;\n  margin: 0;\n}\nbody[class] #page #head #head-content > #head-menu {\n  padding: 0;\n  flex-grow: 1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\nbody[class] #page #head #head-content > #pr0gramm-logo-link {\n  height: 24px;\n  margin: 0;\n}\nbody[class] #page #head #head-content .sidebar-toggle {\n  color: #fff;\n  font-size: 20px;\n  margin-right: 10px;\n}\nbody[class] #page #head #head-content .sidebar-toggle.active {\n  color: #ee4d2e;\n}\nbody[class] > #footer-links {\n  width: 250px;\n  left: -250px !important;\n  position: fixed;\n  margin: 0;\n  top: 52px;\n  border-right: 3px solid #2a2e31;\n  background: #161618;\n  transition: left .2s linear;\n  z-index: 500;\n}\nbody[class] > #footer-links.open {\n  left: 0 !important;\n  box-shadow: 2px 0 10px #000;\n}\nbody[class] > #footer-links a {\n  color: #fff;\n  display: block;\n  text-align: left;\n  padding: 10px 20px;\n  margin-right: 0;\n  font-size: 16px;\n}\nbody[class] > #footer-links a:hover {\n  color: #ee4d2e;\n}\nbody[class] > #footer-links a:before {\n  font-family: 'FontAwesome';\n  margin-right: 10px;\n}\nbody[class] > #footer-links a[href=\"/faq\"]:before {\n  content: \"\\F059\";\n}\nbody[class] > #footer-links a[href=\"/contact\"]:before {\n  content: \"\\F0E0\";\n}\nbody[class] > #footer-links a[href=\"http://app.pr0gramm.com\"]:before {\n  content: \"\\F10B\";\n}\nbody[class] > #footer-links a[href=\"https://twitter.com/pr0gramm\"]:before {\n  content: \"\\F099\";\n}\n#stream .item-container {\n  margin: 0;\n  max-height: calc(100vh - 52px);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: rgba(0, 0, 0, 0.9);\n  position: fixed;\n  top: 52px;\n  right: 0;\n  left: -20px;\n  bottom: -20px;\n  padding: 0;\n  z-index: 10;\n}\n#stream .item-container .item-pointer {\n  display: none;\n}\n#stream .item-container .item-container-content {\n  display: flex;\n  height: 100%;\n  width: 100%;\n}\n#stream .item-container .item-container-content .image-main {\n  display: flex;\n  width: 100%;\n  flex-direction: column;\n}\n#stream .item-container .item-container-content .image-main .item-info {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100px;\n}\n#stream .item-container .item-container-content .image-main .item-info > div {\n  position: relative;\n  display: flex;\n  width: 90%;\n  max-width: 980px;\n}\n#stream .item-container .item-container-content .image-main .item-info > div .item-details,\n#stream .item-container .item-container-content .image-main .item-info > div .item-tags {\n  padding: 5px 20px 5px 40px;\n}\n#stream .item-container .item-container-content .image-main .item-info > div .item-vote {\n  display: flex;\n  align-items: center;\n  left: 0;\n  top: 0;\n  position: relative;\n}\n#stream .item-container .item-container-content .image-main .item-info > div .item-vote .vote-fav {\n  position: relative;\n  margin-left: 20px;\n  font-size: 32px;\n  left: 0;\n  top: 0;\n}\n#stream .item-container .item-container-content .image-main .item-info > div .item-vote .score {\n  position: relative;\n  top: 0;\n  left: 10px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper {\n  flex-grow: 1;\n  overflow: hidden;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 40px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .video-controls {\n  height: 64px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .video-controls .audio-controls {\n  left: 20px;\n  bottom: 20px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper.resized .item-image {\n  max-height: calc(100vh - 200px);\n  top: auto !important;\n  left: auto !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper.oversize:not(.resized) .item-image {\n  cursor: move;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev,\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next {\n  display: flex;\n  height: 50px;\n  align-items: center;\n  justify-content: center;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev span:before,\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next span:before {\n  opacity: .2;\n  font-size: 70px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev:hover span:before,\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next:hover span:before {\n  opacity: .6;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev {\n  padding: 0 0 0 20px !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next {\n  right: 20px;\n  padding: 0 5px !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .video-controls {\n  width: 100% !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .video-controls .video-position-bar-background {\n  min-height: 2px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .item-image {\n  height: auto !important;\n  width: auto !important;\n  outline: none;\n}\n#stream .item-container .item-container-content .item-comments {\n  background: #161618;\n  width: 30vw;\n  flex-grow: 0;\n  flex-shrink: 0;\n  padding-top: 30px;\n  border-right: 3px solid #2a2e31;\n}\n#stream .item-container .item-container-content .item-comments.toggled {\n  transition: width 0.2s ease-out;\n}\n#stream .item-container .item-container-content .item-comments.wide {\n  width: 40vw;\n}\n#stream .item-container .item-container-content .item-comments.wide .comments-switch:before {\n  content: \"\\F053\";\n}\n#stream .item-container .item-container-content .item-comments.wide .comment-count {\n  width: 40vw;\n}\n#stream .item-container .item-container-content .item-comments .comments-head {\n  padding: 10px 10px 10px 30px;\n}\n#stream .item-container .item-container-content .item-comments .comments-head .comment-content,\n#stream .item-container .item-container-content .item-comments .comments-head .comment-foot,\n#stream .item-container .item-container-content .item-comments .comments-head .comment {\n  max-width: 100%;\n}\n#stream .item-container .item-container-content .item-comments .comment-count {\n  display: flex;\n  align-items: center;\n  background-color: #2a2e31;\n  text-align: left;\n  padding: 10px 10px 10px 35px;\n  transition: width 0.2s ease-out;\n  z-index: 400;\n  position: fixed;\n  top: 52px;\n  width: 30vw;\n}\n#stream .item-container .item-container-content .item-comments .comment-count > div:first-child {\n  flex-grow: 1;\n}\n#stream .item-container .item-container-content .item-comments .comment-count .comments-switch {\n  cursor: pointer;\n}\n#stream .item-container .item-container-content .item-comments textarea {\n  transition: height 0.2s ease-out;\n}\n#stream .item-container .item-container-content .item-comments textarea.comment:focus,\n#stream .item-container .item-container-content .item-comments textarea.comment:valid,\n#stream .item-container .item-container-content .item-comments textarea.reply {\n  height: 75px;\n}\n#stream .item-container .item-container-content .item-comments .simplebar-scrollbar {\n  background: #2a2e31;\n  border-radius: 0;\n  right: 0;\n}\n#stream .item-container .item-container-content .item-comments .simplebar-scrollbar.visible {\n  opacity: 1;\n}\n#stream .item-container .item-container-content .item-comments .simplebar-content {\n  outline: none;\n}\n", ""]);
 
 // exports
 
@@ -1224,7 +1271,7 @@ exports.push([module.i, "body[class] > .side-wide-skyscraper {\n  display: none;
 /* 14 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=item-pointer></div> <div class=item-container-content> <?js if( p.user.admin ) {?> <svg class=\"flags flags-{item.flags}\" viewBox=\"0 0 10 10\"> <polygon points=\"0,0 10,0 0,10\"></polygon> </svg> <?js } ?> <div class=item-comments data-simplebar></div> <div class=image-main> <div class=item-image-wrapper> <?js if( item.video ) { ?> <?js if(supportsAutoplay) {?> <video class=item-image src={item.image} type=video/mp4 loop autoplay preload=auto></video> <?js } else { ?> <video class=item-image webkit-playsinline playsinline poster={item.thumb} src={item.image} type=video/mp4 loop preload=metadata></video> <svg class=video-play-button viewBox=\"0 0 200 200\"> <circle cx=100 cy=100 r=90 fill=none stroke-width=15 stroke=#fff></circle> <polygon points=\"70, 55 70, 145 145, 100\" fill=#fff></polygon> </svg> <?js } ?> <div class=\"video-controls<?js if(item.audio){?> has-audio<?js}?>\"> <div class=video-position-bar-background> <div class=video-position></div> </div> <?js if(item.audio) {?> <div class=audio-controls> <svg class=audio-state viewBox=\"0 0 75 75\"> <polygon class=audio-speaker points=\"39.389,13.769 22.235,28.606 6,28.606 6,47.699 21.989,47.699 39.389,62.75 39.389,13.769\"/> <g class=audio-x> <path d=\"M 49,50 69,26\"/> <path d=\"M 69,50 49,26\"/> </g> <g class=audio-wave> <path class=audio-wave-1 d=\"M 48,49 C 50,46 51,42 51,38 C 51,34 50,31 48,28\"/> <path class=audio-wave-2 d=\"M 55,21 C 59,26 61,32 61,38 C 61,45 59,51 55,56\"/> <path class=audio-wave-3 d=\"M 62,63 C 67,56 70,48 70,38 C 70,29 67,21 62,14\"/> </g> </svg> <div class=audio-volume-controls> <div class=audio-volume-bar></div> <div class=audio-volume-slider></div> </div> </div> <?js } ?> </div> <?js } else { ?> <img class=item-image src={item.image} /> <?js if(item.fullsize) { ?> <a href={item.fullsize} target=_blank class=item-fullsize-link>+</a> <?js } ?> <?js } ?> <?js if( p.user.showAds ) { ?> <div class=stream-prev title=Neuer> <span class=\"fa fa-angle-left\"></span> </div> <div class=stream-next title=Älter> <span class=\"fa fa-angle-right\"></span> </div> <?js } else { ?> <div class=\"stream-prev arrow pict\" title=Neuer>&lt;</div> <div class=\"stream-next arrow pict\" title=Älter>&gt;</div> <?js } ?> </div> <div class=item-info> <div> <div class=item-vote{p.voteClass(item.vote)}> <span class=\"pict vote-up\">+</span> <span class=\"pict vote-down\">-</span> <?js if( p.shouldShowScore(item) ) {?> <span class=\"score<?js if(!p.olderThanMinAge(item)){?> score-young<?js}?>\" title=\"{item.up} up, {item.down} down\"> <?js print(item.up - item.down)?> </span> <?js } else { ?> <span class=score-hidden title=\"Score noch unsichtbar\">●●●</span> <?js } ?> </div> <?js if( item.user != p.user.name ) {?> <span class=\"pict vote-fav{p.favClass(item.vote)}\">*</span> <?js } ?> <div class=item-details> <a class=time title={item.date.readableTime()} href=/new/{item.id}>{item.date.relativeTime(true)}</a> <span class=time>von</span> <a href=#user/{item.user} class=\"user um{item.mark}\">{item.user}</a> <span class=item-source> <?js if( item.source ) {?> <span class=pict>s</span>&nbsp;<a href={{item.source}} target=_blank>{{item.source.hostName()}}</a> <?js } else { ?> <span class=pict>s</span>upload</span> <?js } ?>  <?js if( !item.video ) {?> <span class=item-google-search> <span class=pict>g</span>&nbsp; <a href=\"https://www.google.com/searchbyimage?hl=en&amp;safe=off&amp;site=search&amp;image_url=http:{item.image}\" target=_blank> Bild googeln </a> </span> <?js } ?> <?js if( p.user.admin ) { ?> [<span class=action id=item-delete data-id={item.id}>del</span>] [<a href=/new/phash.{item.id}.12>phash</a>] <?js } ?> </div> <div class=item-tags></div> </div> </div> </div> </div> ";
+module.exports = "<div class=item-pointer></div> <div class=item-container-content> <?js if( p.user.admin ) {?> <svg class=\"flags flags-{item.flags}\" viewBox=\"0 0 10 10\"> <polygon points=\"0,0 10,0 0,10\"></polygon> </svg> <?js } ?> <div class=item-comments data-simplebar></div> <div class=image-main> <div class=item-image-wrapper> <?js if( item.video ) { ?> <?js if(supportsAutoplay) {?> <video class=item-image src={item.image} type=video/mp4 loop autoplay preload=auto></video> <?js } else { ?> <video class=item-image webkit-playsinline playsinline poster={item.thumb} src={item.image} type=video/mp4 loop preload=metadata></video> <svg class=video-play-button viewBox=\"0 0 200 200\"> <circle cx=100 cy=100 r=90 fill=none stroke-width=15 stroke=#fff></circle> <polygon points=\"70, 55 70, 145 145, 100\" fill=#fff></polygon> </svg> <?js } ?> <div class=\"video-controls<?js if(item.audio){?> has-audio<?js}?>\"> <div class=video-position-bar-background> <div class=video-position></div> </div> <?js if(item.audio) {?> <div class=audio-controls> <svg class=audio-state viewBox=\"0 0 75 75\"> <polygon class=audio-speaker points=\"39.389,13.769 22.235,28.606 6,28.606 6,47.699 21.989,47.699 39.389,62.75 39.389,13.769\"/> <g class=audio-x> <path d=\"M 49,50 69,26\"/> <path d=\"M 69,50 49,26\"/> </g> <g class=audio-wave> <path class=audio-wave-1 d=\"M 48,49 C 50,46 51,42 51,38 C 51,34 50,31 48,28\"/> <path class=audio-wave-2 d=\"M 55,21 C 59,26 61,32 61,38 C 61,45 59,51 55,56\"/> <path class=audio-wave-3 d=\"M 62,63 C 67,56 70,48 70,38 C 70,29 67,21 62,14\"/> </g> </svg> <div class=audio-volume-controls> <div class=audio-volume-bar></div> <div class=audio-volume-slider></div> </div> </div> <?js } ?> </div> <?js } else { ?> <img class=item-image src={item.image} /> <?js if(item.fullsize) { ?> <a href={item.fullsize} target=_blank class=item-fullsize-link>+</a> <?js } ?> <?js } ?> <?js if( p.user.showAds ) { ?> <div class=stream-prev title=Neuer> <span class=\"fa fa-angle-left\"></span> </div> <div class=stream-next title=Älter> <span class=\"fa fa-angle-right\"></span> </div> <?js } else { ?> <div class=\"stream-prev arrow pict\" title=Neuer>&lt;</div> <div class=\"stream-next arrow pict\" title=Älter>&gt;</div> <?js } ?> </div> <div class=item-info> <div> <div class=item-vote{p.voteClass(item.vote)}> <div> <span class=\"pict vote-up\">+</span> <span class=\"pict vote-down\">-</span> </div> <span class=\"score<?js if(!p.olderThanMinAge(item)){?> score-young<?js}?>\" title=\"{item.up} up, {item.down} down\"> <?js print(item.up - item.down)?> </span> <?js if( item.user != p.user.name ) {?> <span class=\"pict vote-fav{p.favClass(item.vote)}\">*</span> <?js } ?> </div> <div> <div class=item-details> <a class=time title={item.date.readableTime()} href=/new/{item.id}>{item.date.relativeTime(true)}</a> <span class=time>von</span> <a href=#user/{item.user} class=\"user um{item.mark}\">{item.user}</a> <span class=item-source> <?js if( item.source ) {?> <span class=pict>s</span>&nbsp;<a href={{item.source}} target=_blank>{{item.source.hostName()}}</a> <?js } else { ?> <span class=pict>s</span>upload</span> <?js } ?>  <?js if( !item.video ) {?> <span class=item-google-search> <span class=pict>g</span>&nbsp; <a href=\"https://www.google.com/searchbyimage?hl=en&amp;safe=off&amp;site=search&amp;image_url=http:{item.image}\" target=_blank> Bild googeln </a> </span> <?js } ?> <?js if( p.user.admin ) { ?> [<span class=action id=item-delete data-id={item.id}>del</span>] [<a href=/new/phash.{item.id}.12>phash</a>] <?js } ?> </div> <div class=item-tags></div> </div> </div> </div> </div> </div> ";
 
 /***/ }),
 /* 15 */
@@ -1237,7 +1284,7 @@ module.exports = "<div class=comment-count> <div><span class=pict>c</span> {\"Ko
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Utils__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Utils__ = __webpack_require__(3);
 
 
 // Inspired by Mopsalarms repost-script
@@ -1246,6 +1293,15 @@ class RepostMarker {
     constructor() {
         this.name = 'Repost Markierung';
         this.description = 'Markiert Reposts in der Übersicht'
+    }
+
+
+    static markRepost(id) {
+        let elem = document.getElementById('item-' + id);
+
+        if (elem) {
+            elem.classList.add('repost');
+        }
     }
 
 
@@ -1272,15 +1328,6 @@ class RepostMarker {
         });
 
         p.currentView.buildItem = this.buildItem;
-    }
-
-
-    static markRepost(id) {
-        let elem = document.getElementById('item-' + id);
-
-        if (elem) {
-            elem.classList.add('repost');
-        }
     }
 
 
