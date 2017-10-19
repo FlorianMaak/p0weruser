@@ -9,7 +9,7 @@
 #notification-center {
   display: none;
   position: fixed;
-  right: 40px;
+  right: 20px;
   top: 52px;
   z-index: 100;
   border: 3px solid #2a2e31;
@@ -68,6 +68,14 @@
 
         .headline {
           color: var(--theme-main-color);
+        }
+      }
+
+      &.new {
+        opacity: 1;
+
+        .message:before {
+          content: '\f0e0';
         }
       }
 

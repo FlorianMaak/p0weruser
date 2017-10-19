@@ -17,7 +17,7 @@ export default class NotificationCenter {
         this.elem.innerHTML = this.template;
 
         this.elem.id = 'notification-center';
-        document.body.appendChild(this.elem);
+        document.querySelectorAll('.user-info.user-only')[0].appendChild(this.elem);
         this.messageContainer = document.getElementById('new-messages');
 
         this.addListener();
@@ -50,13 +50,13 @@ export default class NotificationCenter {
         this.messageContainer.innerHTML = '<span class="fa fa-spinner fa-spin"></span>';
         this.messageContainer.classList.add('loading');
 
-        this.getNotifications().then((notifications) => {
-            p.user.setInboxLink(0);
+        this.getNotifications(true).then((notifications) => {
             let messages = notifications.messages;
             this.messageContainer.innerHTML = '';
             this.messageContainer.classList.remove('loading');
+            p.user.setInboxLink(0);
 
-            if(messages <= 0) {
+            if(messages.length <= 0) {
                 let elem = document.createElement('li');
                 elem.innerText = 'Keine neuen Benachrichtigungen!';
                 elem.className = 'no-notifications';
@@ -76,8 +76,20 @@ export default class NotificationCenter {
                     messages[i].message
                 );
             }
-
             new SimpleBar(this.messageContainer);
+
+            this.getNotifications(false).then((notifications) => {
+                let messages = notifications.messages;
+
+                if(messages.length <= 0) {
+                    return false;
+                }
+
+                for(let i = 0; i < messages.length; i++) {
+                    console.log($(this.messageContainer).find(`notification-${messages[i].id}`));
+                    $(this.messageContainer).find(`#notification-${messages[i].id}`)[0].classList.add('new');
+                }
+            });
         });
     }
 
@@ -87,20 +99,21 @@ export default class NotificationCenter {
     }
 
 
-    getNotifications() {
+    getNotifications(all = false) {
         return new Promise((resolve, reject) => {
-            p.api.get('inbox.all', {}, resolve, reject);
+            p.api.get(all ? 'inbox.all' : 'inbox.unread', {}, resolve, reject);
         });
     }
 
 
     addEntry(title, user, date, image, mark, id, cId, msg) {
         let elem = document.createElement('li');
+        elem.id = `notification-${cId}`;
         let img = '<img src="//thumb.pr0gramm.com/##THUMB##" class="comment-thumb">';
         let url = image ? `/new/${id}:comment${cId}` : `/inbox/messages`;
 
         if(! image) {
-            img = '<span class="message fa fa-envelope"></span>';
+            img = '<span class="message fa fa-envelope-open"></span>';
         } else {
             img = img.replace('##THUMB', image);
         }
