@@ -9,9 +9,10 @@ it using settings.
 * Current benis in header
 * Notification Center
 * Advanced Comments
+* Desktop Notifications
 * (planed) Integration of Rene8888s repost-check
 * (planed) Highlighting of previously visited posts
-* (planed) A poor man's "stelz"
+* (planed) Cheap "stelz"
 * (planed) Slideshow mode
 * (planed) Improved search
 
