@@ -1,9 +1,9 @@
 ## Allgemeine Informationen
-*Browser:* Chrome|Firefox
+**Browser:** Chrome|Firefox
 
-*Version:* Version des UserScripts
+**Version:** Version des UserScripts
 
-*Modul:* Wenn du weißt, welches Modul das Problem auslöst, so nenne dieses hier.
+**Modul:** Wenn du weißt, welches Modul das Problem auslöst, so nenne dieses hier.
 
 ## Fehlerbeschreibung
 > Bitte beschreibe den Fehler so genau wie möglich.
