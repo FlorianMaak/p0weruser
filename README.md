@@ -10,15 +10,16 @@ it using settings.
 * Notification Center
 * Advanced Comments
 * Desktop Notifications
-* (planed) Integration of Rene8888s repost-check
-* (planed) Highlighting of previously visited posts
-* (planed) Cheap "stelz"
-* (planed) Slideshow mode
-* (planed) Improved search
+* (ToDo) Integration of Rene8888s repost-check
+* (ToDo) Highlighting of previously visited posts
+* (ToDo) Cheap "stelz"
+* (ToDo) Slideshow mode
+* (ToDo) Improved search
 
 ## Installation
 Just install Greasemonkey or Tapermonkey and install the script by a simple
 click on one of the following urls:
+
 ### Release [![Build Status](https://travis-ci.org/FlorianMaak/p0weruser.svg?branch=master)](https://travis-ci.org/FlorianMaak/p0weruser)
 [https://github.com/FlorianMaak/p0weruser/raw/master/dist/p0weruser.user.js](https://github.com/FlorianMaak/p0weruser/raw/master/dist/p0weruser.user.js)
 
@@ -40,6 +41,9 @@ click on one of the following urls:
 
 ![notifications](https://user-images.githubusercontent.com/6325146/31791529-1e6bd46c-b519-11e7-8527-d620f50b07f2.jpg)
 > Access your notifications directly from any page
+
+## Missing Feature?
+Just open an issue and describe your request as accurately as possible. If you like to do script it on your own, feel free to fork and open a Pull Request.
 
 ## Contribution
 Feel free to fork this project. If you like to contribute, please use git-flow
