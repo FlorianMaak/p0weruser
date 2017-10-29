@@ -108,4 +108,13 @@ export default class Settings {
             Settings.saveSettings(moduleList);
         })
     }
+
+    static addHint() {
+        let header = document.getElementById('head-content');
+        let hint = document.createElement('div');
+        hint.id = 'settings_hint';
+        hint.innerText = 'Bitte öffne die Einstellungen um p0weruser zu konfigurieren!';
+
+        header.appendChild(hint);
+    }
 }

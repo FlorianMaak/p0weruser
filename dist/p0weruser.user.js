@@ -5,7 +5,7 @@
 // @description	Erweitert pr0gramm.com um weitere Funktionen
 // @include		/^https?://pr0gramm.com/.*$/
 // @icon		https://pr0gramm.com/media/pr0gramm-favicon.png
-// @version		0.4.2
+// @version		0.4.3
 // @grant		GM_notification
 // @require     https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
 // @updateURL	https://github.com/FlorianMaak/p0weruser/raw/master/dist/p0weruser.js
@@ -676,6 +676,10 @@ class P0weruser {
             modules = '[]';
         }
 
+        if(modules === '[]') {
+            __WEBPACK_IMPORTED_MODULE_0__Settings__["a" /* default */].addHint();
+        }
+
         return JSON.parse(modules);
     }
 
@@ -859,6 +863,15 @@ class Settings {
             Settings.saveSettings(moduleList);
         })
     }
+
+    static addHint() {
+        let header = document.getElementById('head-content');
+        let hint = document.createElement('div');
+        hint.id = 'settings_hint';
+        hint.innerText = 'Bitte öffne die Einstellungen um p0weruser zu konfigurieren!';
+
+        header.appendChild(hint);
+    }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Settings;
 
@@ -910,7 +923,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "#addon-list label {\n  margin-bottom: 10px;\n}\n#addon-list label span {\n  display: block;\n  color: #888;\n}\n", ""]);
+exports.push([module.i, "#addon-list label {\n  margin-bottom: 10px;\n}\n#addon-list label span {\n  display: block;\n  color: #888;\n}\n#settings_hint {\n  background-color: var(--theme-main-color);\n  text-align: center;\n  position: absolute;\n  top: 52px;\n  width: 100%;\n  padding: 10px;\n}\n", ""]);
 
 // exports
 
