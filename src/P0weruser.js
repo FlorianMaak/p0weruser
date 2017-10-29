@@ -44,6 +44,10 @@ export default class P0weruser {
             modules = '[]';
         }
 
+        if(modules === '[]') {
+            Settings.addHint();
+        }
+
         return JSON.parse(modules);
     }
 
