@@ -27,12 +27,37 @@ export default class WidescreenMode {
         this.commentsWide = window.localStorage.getItem('comments_wide') === 'true';
         this.styles = require('../style/widescreenMode.less');
         this.header = document.getElementById('head-content');
+        this.logoLink = document.getElementById('pr0gramm-logo-link');
         this.nav = {
             button: null,
             container: document.getElementById('footer-links')
         };
+
         this.overrideViews();
         this.addNavigation();
+        this.modifyLogo();
+    }
+
+    modifyLogo() {
+        this.logoLink.href = '/new';
+        this.logoLink.isNew = false;
+
+        this.logoLink.addEventListener('click', () => {
+            if(this.logoLink.isNew) {
+                p.reload();
+            }
+        });
+
+        window.addEventListener('beforeLocationChange', (e) => {
+            if(e.srcElement.location.href.endsWith(this.logoLink.href)) {
+                e.preventDefault();
+                this.logoLink.isNew = true;
+
+                return false;
+            } else {
+                this.logoLink.isNew = false;
+            }
+        });
     }
 
     overrideViews() {
