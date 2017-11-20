@@ -30,6 +30,7 @@ export default class WidescreenMode {
         this.logoLink = document.getElementById('pr0gramm-logo-link');
         this.nav = {
             button: null,
+            links: null,
             container: document.getElementById('footer-links')
         };
 
@@ -214,12 +215,19 @@ export default class WidescreenMode {
 
     addNavigation() {
         this.nav.button = document.createElement('a');
+        this.nav.links = this.nav.container.querySelectorAll('a');
         this.nav.button.className = 'fa fa-bars sidebar-toggle';
         this.header.insertBefore(this.nav.button, this.header.firstChild);
 
         this.nav.button.addEventListener('click', () => {
             this.toggleNavigation();
         });
+
+        for(let i = 0; i < this.nav.links.length; i++) {
+            this.nav.links[i].addEventListener('click', () => {
+                this.toggleNavigation();
+            });
+        }
 
         // Init additional menuitems
         this.addMenuItem('pr0p0ll', 'https://pr0p0ll.com', ' fa-bar-chart');
