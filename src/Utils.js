@@ -71,4 +71,13 @@ export default class Utils {
             return replaceString;
         };
     }
+
+    // Add constants, related to video-controls
+    static addVideoConstants() {
+        p.View.Stream.Item.TARGET = {
+            NOTHING: 0,
+            SEEK_CONTROLS: 1,
+            VOLUME_CONTROLS: 2
+        };
+    }
 }

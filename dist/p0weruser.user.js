@@ -5,7 +5,7 @@
 // @description	Erweitert pr0gramm.com um weitere Funktionen
 // @include		/^https?://pr0gramm.com/.*$/
 // @icon		https://pr0gramm.com/media/pr0gramm-favicon.png
-// @version		0.4.4
+// @version		0.4.5
 // @grant		GM_notification
 // @require     https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
 // @updateURL	https://github.com/FlorianMaak/p0weruser/raw/master/dist/p0weruser.js
@@ -608,6 +608,15 @@ class Utils {
             return replaceString;
         };
     }
+
+    // Add constants, related to video-controls
+    static addVideoConstants() {
+        p.View.Stream.Item.TARGET = {
+            NOTHING: 0,
+            SEEK_CONTROLS: 1,
+            VOLUME_CONTROLS: 2
+        };
+    }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Utils;
 
@@ -630,6 +639,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__module_AdvancedComments__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__module_NotificationCenter__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__module_DesktopNotifications__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__module_filterMarks__ = __webpack_require__(33);
+
 
 
 
@@ -707,7 +718,8 @@ class P0weruser {
                 'BenisInNavbar': new __WEBPACK_IMPORTED_MODULE_5__module_BenisInNavbar__["a" /* default */](),
                 'AdvancedComments': new __WEBPACK_IMPORTED_MODULE_7__module_AdvancedComments__["a" /* default */](),
                 'NotificationCenter': new __WEBPACK_IMPORTED_MODULE_8__module_NotificationCenter__["a" /* default */](),
-                'DesktopNotifications': new __WEBPACK_IMPORTED_MODULE_9__module_DesktopNotifications__["a" /* default */]()
+                'DesktopNotifications': new __WEBPACK_IMPORTED_MODULE_9__module_DesktopNotifications__["a" /* default */](),
+                'FilterMarks': new __WEBPACK_IMPORTED_MODULE_10__module_filterMarks__["a" /* default */]()
             };
         }
 
@@ -1185,11 +1197,7 @@ class WidescreenMode {
         });
 
         // Fix audio-controls
-        p.View.Stream.Item.TARGET = {
-            NOTHING: 0,
-            SEEK_CONTROLS: 1,
-            VOLUME_CONTROLS: 2
-        };
+        __WEBPACK_IMPORTED_MODULE_1__Utils__["a" /* default */].addVideoConstants();
 
         // Extend comments-rendering and template
         p.View.Stream.Comments = p.View.Stream.Comments.extend({
@@ -1408,7 +1416,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "body[class].fixed {\n  overflow: hidden;\n}\nbody[class] > .side-wide-skyscraper {\n  display: none;\n}\nbody[class] #page.desktop,\nbody[class] #page #head {\n  padding: 0 20px;\n  width: 100% !important;\n}\nbody[class] #page.desktop #pr0-miner,\nbody[class] #page #head #pr0-miner {\n  display: none;\n}\nbody[class] #page #stream {\n  text-align: center;\n}\nbody[class] #page #stream a.thumb {\n  display: inline-block;\n  float: none;\n}\nbody[class] #page #head {\n  background: rgba(0, 0, 0, 0.8);\n}\nbody[class] #page #head #head-content {\n  background: none;\n  display: flex;\n  align-items: center;\n}\nbody[class] #page #head #head-content #loader {\n  left: -20px;\n  right: -20px;\n}\nbody[class] #page #head #head-content > .user-info {\n  order: 20;\n  margin: 0;\n}\nbody[class] #page #head #head-content > #head-menu {\n  padding: 0;\n  order: 3;\n  flex-grow: 1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\nbody[class] #page #head #head-content > #pr0gramm-logo-link {\n  order: 1;\n  height: 24px;\n  margin: 0;\n}\nbody[class] #page #head #head-content .sidebar-toggle {\n  order: 0;\n  color: #fff;\n  font-size: 20px;\n  margin-right: 10px;\n}\nbody[class] #page #head #head-content .sidebar-toggle.active {\n  color: #ee4d2e;\n}\nbody[class] #page #head #head-content .sidebar-toggle + a {\n  order: 2;\n  position: relative;\n  top: 0;\n  left: 0;\n  margin-left: 10px;\n}\nbody[class] > #footer-links {\n  width: 250px;\n  left: -250px !important;\n  position: fixed;\n  margin: 0;\n  top: 52px;\n  border-right: 3px solid #2a2e31;\n  background: #161618;\n  transition: left .2s linear;\n  z-index: 500;\n}\nbody[class] > #footer-links.open {\n  left: 0 !important;\n  box-shadow: 2px 0 10px #000;\n}\nbody[class] > #footer-links a {\n  color: #fff;\n  display: block;\n  text-align: left;\n  padding: 10px 20px;\n  margin-right: 0;\n  font-size: 16px;\n}\nbody[class] > #footer-links a:hover {\n  color: #ee4d2e;\n}\nbody[class] > #footer-links a:before {\n  font-family: 'FontAwesome';\n  margin-right: 10px;\n  display: inline-block;\n  width: 20px;\n}\nbody[class] > #footer-links a[href=\"/faq\"]:before {\n  content: \"\\F059\";\n}\nbody[class] > #footer-links a[href=\"/contact\"]:before {\n  content: \"\\F0E0\";\n}\nbody[class] > #footer-links a[href*=\"//miner.pr0gramm.com\"]:before {\n  content: \"\\F15A\";\n}\nbody[class] > #footer-links a[href=\"http://app.pr0gramm.com\"]:before {\n  content: \"\\F10B\";\n}\nbody[class] > #footer-links a[href=\"https://twitter.com/pr0gramm\"]:before {\n  content: \"\\F099\";\n}\n#stream .item-container {\n  margin: 0;\n  max-height: calc(100vh - 52px);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: rgba(0, 0, 0, 0.9);\n  position: fixed;\n  top: 52px;\n  right: 0;\n  left: -20px;\n  bottom: -20px;\n  padding: 0;\n  z-index: 10;\n}\n#stream .item-container .item-pointer {\n  display: none;\n}\n#stream .item-container .item-container-content {\n  display: flex;\n  height: 100%;\n  width: 100%;\n}\n#stream .item-container .item-container-content .image-main {\n  display: flex;\n  width: 100%;\n  flex-direction: column;\n}\n#stream .item-container .item-container-content .image-main .item-info {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100px;\n}\n#stream .item-container .item-container-content .image-main .item-info > div {\n  position: relative;\n  display: flex;\n  width: 90%;\n  max-width: 980px;\n}\n#stream .item-container .item-container-content .image-main .item-info > div .item-details,\n#stream .item-container .item-container-content .image-main .item-info > div .item-tags {\n  padding: 5px 20px 5px 40px;\n}\n#stream .item-container .item-container-content .image-main .item-info > div .item-vote {\n  display: flex;\n  align-items: center;\n  left: 0;\n  top: 0;\n  position: relative;\n}\n#stream .item-container .item-container-content .image-main .item-info > div .item-vote .vote-fav {\n  position: relative;\n  margin-left: 20px;\n  font-size: 32px;\n  left: 0;\n  top: 0;\n}\n#stream .item-container .item-container-content .image-main .item-info > div .item-vote .score {\n  position: relative;\n  top: 0;\n  left: 10px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper {\n  flex-grow: 1;\n  overflow: hidden;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 40px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .video-controls {\n  height: 64px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .video-controls .audio-controls {\n  left: 20px;\n  bottom: 20px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper.resized .item-image {\n  max-height: calc(100vh - 200px);\n  top: auto !important;\n  left: auto !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper.oversize:not(.resized) .item-image {\n  cursor: move;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev,\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next {\n  display: flex;\n  height: 50px;\n  align-items: center;\n  justify-content: center;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev span:before,\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next span:before {\n  opacity: .2;\n  font-size: 70px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev:hover span:before,\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next:hover span:before {\n  opacity: .6;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev {\n  padding: 0 0 0 20px !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next {\n  right: 20px;\n  padding: 0 5px !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .video-controls {\n  width: 100% !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .video-controls .video-position-bar-background {\n  min-height: 2px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .item-image {\n  height: auto !important;\n  width: auto !important;\n  outline: none;\n}\n#stream .item-container .item-container-content .item-comments {\n  background: #161618;\n  width: 30vw;\n  flex-grow: 0;\n  flex-shrink: 0;\n  padding-top: 30px;\n  border-right: 3px solid #2a2e31;\n}\n#stream .item-container .item-container-content .item-comments.toggled {\n  transition: width 0.2s ease-out;\n}\n#stream .item-container .item-container-content .item-comments.wide {\n  width: 40vw;\n}\n#stream .item-container .item-container-content .item-comments.wide .comments-switch:before {\n  content: \"\\F053\";\n}\n#stream .item-container .item-container-content .item-comments.wide .comment-count {\n  width: 40vw;\n}\n#stream .item-container .item-container-content .item-comments .comments-head {\n  padding: 10px 10px 10px 30px;\n}\n#stream .item-container .item-container-content .item-comments .comments-head .comment-content,\n#stream .item-container .item-container-content .item-comments .comments-head .comment-foot,\n#stream .item-container .item-container-content .item-comments .comments-head .comment {\n  max-width: 100%;\n}\n#stream .item-container .item-container-content .item-comments .comment-count {\n  display: flex;\n  align-items: center;\n  background-color: #2a2e31;\n  text-align: left;\n  padding: 10px 10px 10px 35px;\n  transition: width 0.2s ease-out;\n  z-index: 400;\n  position: fixed;\n  top: 52px;\n  width: 30vw;\n}\n#stream .item-container .item-container-content .item-comments .comment-count > div:first-child {\n  flex-grow: 1;\n}\n#stream .item-container .item-container-content .item-comments .comment-count .comments-switch {\n  cursor: pointer;\n}\n#stream .item-container .item-container-content .item-comments textarea {\n  transition: height 0.2s ease-out;\n}\n#stream .item-container .item-container-content .item-comments textarea.comment:focus,\n#stream .item-container .item-container-content .item-comments textarea.comment:valid,\n#stream .item-container .item-container-content .item-comments textarea.reply {\n  height: 75px;\n}\n#stream .item-container .item-container-content .item-comments .simplebar-scrollbar {\n  background: #2a2e31;\n  border-radius: 0;\n  right: 0;\n}\n#stream .item-container .item-container-content .item-comments .simplebar-scrollbar.visible {\n  opacity: 1;\n}\n#stream .item-container .item-container-content .item-comments .simplebar-content {\n  outline: none;\n}\n", ""]);
+exports.push([module.i, "body[class].fixed {\n  overflow: hidden;\n}\nbody[class] > .side-wide-skyscraper {\n  display: none;\n}\nbody[class] #page.desktop,\nbody[class] #page #head {\n  padding: 0 20px;\n  width: 100% !important;\n}\nbody[class] #page.desktop #pr0-miner,\nbody[class] #page #head #pr0-miner {\n  display: none;\n}\nbody[class] #page #stream {\n  text-align: center;\n}\nbody[class] #page #stream a.thumb {\n  display: inline-block;\n  float: none;\n}\nbody[class] #page #head {\n  background: rgba(0, 0, 0, 0.8);\n}\nbody[class] #page #head #head-content {\n  background: none;\n  display: flex;\n  align-items: center;\n}\nbody[class] #page #head #head-content #loader {\n  left: -20px;\n  right: -20px;\n}\nbody[class] #page #head #head-content > .user-info {\n  order: 20;\n  margin: 0;\n}\nbody[class] #page #head #head-content > #head-menu {\n  padding: 0;\n  order: 3;\n  flex-grow: 1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\nbody[class] #page #head #head-content > #pr0gramm-logo-link {\n  order: 1;\n  height: 24px;\n  margin: 0;\n}\nbody[class] #page #head #head-content .sidebar-toggle {\n  order: 0;\n  color: #fff;\n  font-size: 20px;\n  margin-right: 10px;\n}\nbody[class] #page #head #head-content .sidebar-toggle.active {\n  color: #ee4d2e;\n}\nbody[class] #page #head #head-content .sidebar-toggle + a {\n  order: 2;\n  position: relative;\n  top: 0;\n  left: 0;\n  margin-left: 5px;\n  transform: scale(0.75);\n}\nbody[class] > #footer-links {\n  width: 250px;\n  left: -250px !important;\n  position: fixed;\n  margin: 0;\n  top: 52px;\n  border-right: 3px solid #2a2e31;\n  background: #161618;\n  transition: left .2s linear;\n  z-index: 500;\n}\nbody[class] > #footer-links.open {\n  left: 0 !important;\n  box-shadow: 2px 0 10px #000;\n}\nbody[class] > #footer-links a {\n  color: #fff;\n  display: block;\n  text-align: left;\n  padding: 10px 20px;\n  margin-right: 0;\n  font-size: 16px;\n}\nbody[class] > #footer-links a:hover {\n  color: #ee4d2e;\n}\nbody[class] > #footer-links a:before {\n  font-family: 'FontAwesome';\n  margin-right: 10px;\n  display: inline-block;\n  width: 20px;\n}\nbody[class] > #footer-links a[href=\"/faq\"]:before {\n  content: \"\\F059\";\n}\nbody[class] > #footer-links a[href=\"/contact\"]:before {\n  content: \"\\F0E0\";\n}\nbody[class] > #footer-links a[href*=\"//miner.pr0gramm.com\"]:before {\n  content: \"\\F15A\";\n}\nbody[class] > #footer-links a[href=\"http://app.pr0gramm.com\"]:before {\n  content: \"\\F10B\";\n}\nbody[class] > #footer-links a[href=\"https://twitter.com/pr0gramm\"]:before {\n  content: \"\\F099\";\n}\n#stream .item-container {\n  margin: 0;\n  max-height: calc(100vh - 52px);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: rgba(0, 0, 0, 0.9);\n  position: fixed;\n  top: 52px;\n  right: 0;\n  left: -20px;\n  bottom: -20px;\n  padding: 0;\n  z-index: 10;\n}\n#stream .item-container .item-pointer {\n  display: none;\n}\n#stream .item-container .item-container-content {\n  display: flex;\n  height: 100%;\n  width: 100%;\n}\n#stream .item-container .item-container-content .image-main {\n  display: flex;\n  width: 100%;\n  flex-direction: column;\n}\n#stream .item-container .item-container-content .image-main .item-info {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100px;\n}\n#stream .item-container .item-container-content .image-main .item-info > div {\n  position: relative;\n  display: flex;\n  width: 90%;\n  max-width: 980px;\n}\n#stream .item-container .item-container-content .image-main .item-info > div .item-details,\n#stream .item-container .item-container-content .image-main .item-info > div .item-tags {\n  padding: 5px 20px 5px 40px;\n}\n#stream .item-container .item-container-content .image-main .item-info > div .item-vote {\n  display: flex;\n  align-items: center;\n  left: 0;\n  top: 0;\n  position: relative;\n}\n#stream .item-container .item-container-content .image-main .item-info > div .item-vote .vote-fav {\n  position: relative;\n  margin-left: 20px;\n  font-size: 32px;\n  left: 0;\n  top: 0;\n}\n#stream .item-container .item-container-content .image-main .item-info > div .item-vote .score {\n  position: relative;\n  top: 0;\n  left: 10px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper {\n  flex-grow: 1;\n  overflow: hidden;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 40px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .video-controls {\n  height: 64px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .video-controls .audio-controls {\n  left: 20px;\n  bottom: 20px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper.resized .item-image {\n  max-height: calc(100vh - 200px);\n  top: auto !important;\n  left: auto !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper.oversize:not(.resized) .item-image {\n  cursor: move;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev,\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next {\n  display: flex;\n  height: 50px;\n  align-items: center;\n  justify-content: center;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev span:before,\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next span:before {\n  opacity: .2;\n  font-size: 70px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev:hover span:before,\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next:hover span:before {\n  opacity: .6;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev {\n  padding: 0 0 0 20px !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next {\n  right: 20px;\n  padding: 0 5px !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .video-controls {\n  width: 100% !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .video-controls .video-position-bar-background {\n  min-height: 2px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .item-image {\n  height: auto !important;\n  width: auto !important;\n  outline: none;\n}\n#stream .item-container .item-container-content .item-comments {\n  background: #161618;\n  width: 30vw;\n  flex-grow: 0;\n  flex-shrink: 0;\n  padding-top: 30px;\n  border-right: 3px solid #2a2e31;\n}\n#stream .item-container .item-container-content .item-comments.toggled {\n  transition: width 0.2s ease-out;\n}\n#stream .item-container .item-container-content .item-comments.wide {\n  width: 40vw;\n}\n#stream .item-container .item-container-content .item-comments.wide .comments-switch:before {\n  content: \"\\F053\";\n}\n#stream .item-container .item-container-content .item-comments.wide .comment-count {\n  width: 40vw;\n}\n#stream .item-container .item-container-content .item-comments .comments-head {\n  padding: 10px 10px 10px 30px;\n}\n#stream .item-container .item-container-content .item-comments .comments-head .comment-content,\n#stream .item-container .item-container-content .item-comments .comments-head .comment-foot,\n#stream .item-container .item-container-content .item-comments .comments-head .comment {\n  max-width: 100%;\n}\n#stream .item-container .item-container-content .item-comments .comment-count {\n  display: flex;\n  align-items: center;\n  background-color: #2a2e31;\n  text-align: left;\n  padding: 10px 10px 10px 35px;\n  transition: width 0.2s ease-out;\n  z-index: 400;\n  position: fixed;\n  top: 52px;\n  width: 30vw;\n}\n#stream .item-container .item-container-content .item-comments .comment-count > div:first-child {\n  flex-grow: 1;\n}\n#stream .item-container .item-container-content .item-comments .comment-count .comments-switch {\n  cursor: pointer;\n}\n#stream .item-container .item-container-content .item-comments textarea {\n  transition: height 0.2s ease-out;\n}\n#stream .item-container .item-container-content .item-comments textarea.comment:focus,\n#stream .item-container .item-container-content .item-comments textarea.comment:valid,\n#stream .item-container .item-container-content .item-comments textarea.reply {\n  height: 75px;\n}\n#stream .item-container .item-container-content .item-comments .simplebar-scrollbar {\n  background: #2a2e31;\n  border-radius: 0;\n  right: 0;\n}\n#stream .item-container .item-container-content .item-comments .simplebar-scrollbar.visible {\n  opacity: 1;\n}\n#stream .item-container .item-container-content .item-comments .simplebar-content {\n  outline: none;\n}\n", ""]);
 
 // exports
 
@@ -2024,6 +2032,117 @@ class DesktopNotifications {
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = DesktopNotifications;
 
+
+
+/***/ }),
+/* 33 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Utils__ = __webpack_require__(2);
+
+
+class FilterMarks {
+    constructor() {
+        this.name = 'Filtermarkierung';
+        this.description = 'Markiert Medien entsprechend ihres Filters.'
+    }
+
+
+    load() {
+        this.styles = __webpack_require__(34);
+        this.overrideViews();
+    }
+
+
+    overrideViews() {
+        let _this = this;
+
+        // Handle detail-view
+        p.View.Stream.Item = p.View.Stream.Item.extend({
+            show: function (rowIndex, itemData, defaultHeight, jumpToComment) {
+                this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
+                FilterMarks.displayFilterLabel(itemData, this.$container);
+            }
+        });
+
+        // Fix audio-controls
+        __WEBPACK_IMPORTED_MODULE_0__Utils__["a" /* default */].addVideoConstants();
+    }
+
+
+    static displayFilterLabel(itemData, $container) {
+        let filter = FilterMarks.getFilter(itemData);
+        let badge = document.createElement('span');
+        badge.className = 'badge';
+
+        badge.classList.toggle(filter);
+        badge.innerText = filter.toUpperCase();
+
+        $container.find('.item-details')[0].appendChild(badge);
+    }
+
+
+    static getFilter(itemData) {
+        switch(itemData.flags) {
+            case 1:
+                return 'sfw';
+            case 2:
+                return 'nsfw';
+            case 4:
+                return 'nsfl';
+            case 8:
+                return 'nsfp';
+        }
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = FilterMarks;
+
+
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(35);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/less-loader/dist/cjs.js!./filterMarks.less", function() {
+			var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/less-loader/dist/cjs.js!./filterMarks.less");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, ".item-details .badge {\n  padding: 3px 5px;\n  font-size: 10px;\n  margin-left: 10px;\n  border-radius: 3px;\n}\n.item-details .badge.sfw {\n  background-color: #5cb85c;\n}\n.item-details .badge.nsfw {\n  background-color: #f0ad4e;\n}\n.item-details .badge.nsfl {\n  background-color: #d9534f;\n}\n.item-details .badge.nsfp {\n  background-color: #ee4d2e;\n}\n", ""]);
+
+// exports
 
 
 /***/ })
