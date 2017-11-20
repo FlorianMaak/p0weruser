@@ -5,7 +5,7 @@
 // @description	Erweitert pr0gramm.com um weitere Funktionen
 // @include		/^https?://pr0gramm.com/.*$/
 // @icon		https://pr0gramm.com/media/pr0gramm-favicon.png
-// @version		0.4.3
+// @version		0.4.4
 // @grant		GM_notification
 // @require     https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
 // @updateURL	https://github.com/FlorianMaak/p0weruser/raw/master/dist/p0weruser.js
@@ -1108,10 +1108,17 @@ class WidescreenMode {
         this.description = 'Stellt das pr0 im Breitbildmodus dar.'
     }
 
-    static handleWheelChange(deltaY) {
-        let el = {};
+    handleWheelChange(e) {
+        if(this.hasUnsentComments()) {
+            let state = window.confirm('Du hast noch nicht abgeschickte Kommentare! Willst du dieses Medium wirklich verlassen?');
 
-        if (deltaY < 0) {
+            if(! state) {
+                return false;
+            }
+        }
+
+        let el = {};
+        if (e.deltaY < 0) {
             el = document.getElementsByClassName('stream-prev')[0];
         } else {
             el = document.getElementsByClassName('stream-next')[0];
@@ -1121,6 +1128,7 @@ class WidescreenMode {
     }
 
     load() {
+        this.comments = [];
         this.commentsWide = window.localStorage.getItem('comments_wide') === 'true';
         this.styles = __webpack_require__(12);
         this.header = document.getElementById('head-content');
@@ -1194,6 +1202,7 @@ class WidescreenMode {
             template: __webpack_require__(15),
             render: function () {
                 this.parent();
+                _this.comments = [this.$commentForm.find('textarea')[0]];
                 _this.commentsContainer = this.$container;
                 _this.commentsContainer[0].classList.toggle('wide', _this.commentsWide);
                 new __WEBPACK_IMPORTED_MODULE_0__bower_components_simplebar_dist_simplebar_js___default.a(this.$container[0]);
@@ -1217,6 +1226,11 @@ class WidescreenMode {
                         target.highlight(180, 180, 180, 1);
                     });
                 }
+            },
+            showReplyForm(ev) {
+                this.parent(ev);
+                let id = ev.currentTarget.href.split(':comment')[1];
+                _this.comments.push(document.querySelectorAll(`#comment${id} textarea`)[0]);
             }
         });
 
@@ -1248,7 +1262,7 @@ class WidescreenMode {
         this.container.addEventListener('mousewheel', (e) => {
             e.preventDefault();
 
-            WidescreenMode.handleWheelChange(e.deltaY);
+            this.handleWheelChange(e);
         });
 
         if (!this.listenerAdded) {
@@ -1292,6 +1306,16 @@ class WidescreenMode {
                 }
                 break;
         }
+    }
+
+    hasUnsentComments() {
+        for(let i = 0; i < this.comments.length; i++) {
+            if(this.comments[i].value !== '') {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     toggleMove() {

@@ -11,10 +11,17 @@ export default class WidescreenMode {
         this.description = 'Stellt das pr0 im Breitbildmodus dar.'
     }
 
-    static handleWheelChange(deltaY) {
-        let el = {};
+    handleWheelChange(e) {
+        if(this.hasUnsentComments()) {
+            let state = window.confirm('Du hast noch nicht abgeschickte Kommentare! Willst du dieses Medium wirklich verlassen?');
 
-        if (deltaY < 0) {
+            if(! state) {
+                return false;
+            }
+        }
+
+        let el = {};
+        if (e.deltaY < 0) {
             el = document.getElementsByClassName('stream-prev')[0];
         } else {
             el = document.getElementsByClassName('stream-next')[0];
@@ -24,6 +31,7 @@ export default class WidescreenMode {
     }
 
     load() {
+        this.comments = [];
         this.commentsWide = window.localStorage.getItem('comments_wide') === 'true';
         this.styles = require('../style/widescreenMode.less');
         this.header = document.getElementById('head-content');
@@ -97,6 +105,7 @@ export default class WidescreenMode {
             template: require('../template/streamItemComments.html'),
             render: function () {
                 this.parent();
+                _this.comments = [this.$commentForm.find('textarea')[0]];
                 _this.commentsContainer = this.$container;
                 _this.commentsContainer[0].classList.toggle('wide', _this.commentsWide);
                 new SimpleBar(this.$container[0]);
@@ -120,6 +129,11 @@ export default class WidescreenMode {
                         target.highlight(180, 180, 180, 1);
                     });
                 }
+            },
+            showReplyForm(ev) {
+                this.parent(ev);
+                let id = ev.currentTarget.href.split(':comment')[1];
+                _this.comments.push(document.querySelectorAll(`#comment${id} textarea`)[0]);
             }
         });
 
@@ -151,7 +165,7 @@ export default class WidescreenMode {
         this.container.addEventListener('mousewheel', (e) => {
             e.preventDefault();
 
-            WidescreenMode.handleWheelChange(e.deltaY);
+            this.handleWheelChange(e);
         });
 
         if (!this.listenerAdded) {
@@ -195,6 +209,16 @@ export default class WidescreenMode {
                 }
                 break;
         }
+    }
+
+    hasUnsentComments() {
+        for(let i = 0; i < this.comments.length; i++) {
+            if(this.comments[i].value !== '') {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     toggleMove() {
