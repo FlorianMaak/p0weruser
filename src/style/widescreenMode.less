@@ -36,13 +36,19 @@ body[class] {
         display: flex;
         align-items: center;
 
+        #loader {
+          left: -20px;
+          right: -20px;
+        }
+
         > .user-info {
-          order: 3;
+          order: 20;
           margin: 0;
         }
 
         > #head-menu {
           padding: 0;
+          order: 3;
           flex-grow: 1;
           display: flex;
           align-items: center;
@@ -50,11 +56,13 @@ body[class] {
         }
 
         > #pr0gramm-logo-link {
+          order: 1;
           height: 24px;
           margin: 0;
         }
 
         .sidebar-toggle {
+          order: 0;
           color: #fff;
           font-size: 20px;
           margin-right: 10px;
@@ -64,7 +72,12 @@ body[class] {
           }
 
           & + a {
-            display: none;
+            order: 2;
+            position: relative;
+            top: 0;
+            left: 0;
+            margin-left: 5px;
+            transform: scale(0.75);
           }
         }
       }

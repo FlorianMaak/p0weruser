@@ -8,6 +8,7 @@ import scrollbarCSS from '../bower_components/simplebar/dist/simplebar.css';
 import AdvancedComments from './module/AdvancedComments';
 import NotificationCenter from './module/NotificationCenter';
 import DesktopNotifications from './module/DesktopNotifications';
+import FilterMarks from './module/filterMarks';
 
 export default class P0weruser {
     constructor() {
@@ -75,7 +76,8 @@ export default class P0weruser {
                 'BenisInNavbar': new BenisInNavbar(),
                 'AdvancedComments': new AdvancedComments(),
                 'NotificationCenter': new NotificationCenter(),
-                'DesktopNotifications': new DesktopNotifications()
+                'DesktopNotifications': new DesktopNotifications(),
+                'FilterMarks': new FilterMarks()
             };
         }
 

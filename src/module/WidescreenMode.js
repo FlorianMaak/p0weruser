@@ -73,12 +73,6 @@ export default class WidescreenMode {
         // Override Item-View
         let _this = this;
 
-        p.View.Base = p.View.Base.extend({
-            showLoader: function () {
-                console.log('te');
-            }
-        });
-
         p.View.Stream.Item = p.View.Stream.Item.extend({
             template: require('../template/streamItem.html'),
             show: function (rowIndex, itemData, defaultHeight, jumpToComment) {
@@ -94,11 +88,7 @@ export default class WidescreenMode {
         });
 
         // Fix audio-controls
-        p.View.Stream.Item.TARGET = {
-            NOTHING: 0,
-            SEEK_CONTROLS: 1,
-            VOLUME_CONTROLS: 2
-        };
+        Utils.addVideoConstants();
 
         // Extend comments-rendering and template
         p.View.Stream.Comments = p.View.Stream.Comments.extend({
