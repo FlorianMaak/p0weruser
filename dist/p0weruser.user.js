@@ -1170,12 +1170,6 @@ class WidescreenMode {
         // Override Item-View
         let _this = this;
 
-        p.View.Base = p.View.Base.extend({
-            showLoader: function () {
-                console.log('te');
-            }
-        });
-
         p.View.Stream.Item = p.View.Stream.Item.extend({
             template: __webpack_require__(14),
             show: function (rowIndex, itemData, defaultHeight, jumpToComment) {

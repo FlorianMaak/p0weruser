@@ -73,12 +73,6 @@ export default class WidescreenMode {
         // Override Item-View
         let _this = this;
 
-        p.View.Base = p.View.Base.extend({
-            showLoader: function () {
-                console.log('te');
-            }
-        });
-
         p.View.Stream.Item = p.View.Stream.Item.extend({
             template: require('../template/streamItem.html'),
             show: function (rowIndex, itemData, defaultHeight, jumpToComment) {
