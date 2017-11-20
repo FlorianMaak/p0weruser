@@ -11,10 +11,17 @@ export default class WidescreenMode {
         this.description = 'Stellt das pr0 im Breitbildmodus dar.'
     }
 
-    static handleWheelChange(deltaY) {
-        let el = {};
+    handleWheelChange(e) {
+        if(this.hasUnsentComments()) {
+            let state = window.confirm('Du hast noch nicht abgeschickte Kommentare! Willst du dieses Medium wirklich verlassen?');
 
-        if (deltaY < 0) {
+            if(! state) {
+                return false;
+            }
+        }
+
+        let el = {};
+        if (e.deltaY < 0) {
             el = document.getElementsByClassName('stream-prev')[0];
         } else {
             el = document.getElementsByClassName('stream-next')[0];
@@ -24,15 +31,42 @@ export default class WidescreenMode {
     }
 
     load() {
+        this.comments = [];
         this.commentsWide = window.localStorage.getItem('comments_wide') === 'true';
         this.styles = require('../style/widescreenMode.less');
         this.header = document.getElementById('head-content');
+        this.logoLink = document.getElementById('pr0gramm-logo-link');
         this.nav = {
             button: null,
+            links: null,
             container: document.getElementById('footer-links')
         };
+
         this.overrideViews();
         this.addNavigation();
+        this.modifyLogo();
+    }
+
+    modifyLogo() {
+        this.logoLink.href = '/new';
+        this.logoLink.isNew = false;
+
+        this.logoLink.addEventListener('click', () => {
+            if(this.logoLink.isNew) {
+                p.reload();
+            }
+        });
+
+        window.addEventListener('beforeLocationChange', (e) => {
+            if(e.srcElement.location.href.endsWith(this.logoLink.href)) {
+                e.preventDefault();
+                this.logoLink.isNew = true;
+
+                return false;
+            } else {
+                this.logoLink.isNew = false;
+            }
+        });
     }
 
     overrideViews() {
@@ -71,6 +105,7 @@ export default class WidescreenMode {
             template: require('../template/streamItemComments.html'),
             render: function () {
                 this.parent();
+                _this.comments = [this.$commentForm.find('textarea')[0]];
                 _this.commentsContainer = this.$container;
                 _this.commentsContainer[0].classList.toggle('wide', _this.commentsWide);
                 new SimpleBar(this.$container[0]);
@@ -94,6 +129,11 @@ export default class WidescreenMode {
                         target.highlight(180, 180, 180, 1);
                     });
                 }
+            },
+            showReplyForm(ev) {
+                this.parent(ev);
+                let id = ev.currentTarget.href.split(':comment')[1];
+                _this.comments.push(document.querySelectorAll(`#comment${id} textarea`)[0]);
             }
         });
 
@@ -125,7 +165,7 @@ export default class WidescreenMode {
         this.container.addEventListener('mousewheel', (e) => {
             e.preventDefault();
 
-            WidescreenMode.handleWheelChange(e.deltaY);
+            this.handleWheelChange(e);
         });
 
         if (!this.listenerAdded) {
@@ -171,6 +211,16 @@ export default class WidescreenMode {
         }
     }
 
+    hasUnsentComments() {
+        for(let i = 0; i < this.comments.length; i++) {
+            if(this.comments[i].value !== '') {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     toggleMove() {
         if (this.resized) {
             this.img.unbind('click');
@@ -189,12 +239,19 @@ export default class WidescreenMode {
 
     addNavigation() {
         this.nav.button = document.createElement('a');
+        this.nav.links = this.nav.container.querySelectorAll('a');
         this.nav.button.className = 'fa fa-bars sidebar-toggle';
         this.header.insertBefore(this.nav.button, this.header.firstChild);
 
         this.nav.button.addEventListener('click', () => {
             this.toggleNavigation();
         });
+
+        for(let i = 0; i < this.nav.links.length; i++) {
+            this.nav.links[i].addEventListener('click', () => {
+                this.toggleNavigation();
+            });
+        }
 
         // Init additional menuitems
         this.addMenuItem('pr0p0ll', 'https://pr0p0ll.com', ' fa-bar-chart');

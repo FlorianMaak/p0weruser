@@ -3,6 +3,7 @@ export default class EventHandler {
         this.settingsLoaded = new Event('settingsLoaded');
         this.commentsLoaded = new Event('commentsLoaded');
         this.locationChange = new Event('locationChange');
+        this.beforeLocationChange = new Event('beforeLocationChange');
         this.userSync = new Event('userSync');
 
         this.addEvents();
@@ -23,7 +24,12 @@ export default class EventHandler {
         // Add locationchange event
         (function (navigate) {
             p.navigateTo = function (location, mode) {
+                _this.beforeLocationChange.mode = mode;
+                window.dispatchEvent(_this.beforeLocationChange);
+
+                // Call original
                 navigate.call(this, location, mode);
+
                 _this.locationChange.mode = mode;
                 window.dispatchEvent(_this.locationChange);
             };
