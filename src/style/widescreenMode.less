@@ -65,6 +65,15 @@ body[class] {
           margin: 0;
         }
 
+        a[id*="badge"] {
+          order: 2;
+          position: relative;
+          top: 0;
+          left: 0;
+          margin-left: 5px;
+          transform: scale(0.75);
+        }
+
         .sidebar-toggle {
           order: 0;
           color: #fff;
@@ -73,15 +82,6 @@ body[class] {
 
           &.active {
             color: #ee4d2e;
-          }
-
-          & + a {
-            order: 2;
-            position: relative;
-            top: 0;
-            left: 0;
-            margin-left: 5px;
-            transform: scale(0.75);
           }
         }
       }
