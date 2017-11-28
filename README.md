@@ -10,6 +10,7 @@ it using settings.
 * Notification Center
 * Advanced Comments
 * Desktop Notifications
+* Filter-Labels
 * (ToDo) Integration of Rene8888s repost-check
 * (ToDo) Highlighting of previously visited posts
 * (ToDo) Cheap "stelz"
