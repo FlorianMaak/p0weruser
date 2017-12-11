@@ -20,6 +20,9 @@ export default class AdvancedComments {
 
 
     prepareComments() {
+        p.shouldShowScore = () => {
+            return true;
+        };
         window.addEventListener('commentsLoaded', () => {
             const comments = $('.comments .comment-box .comment');
             comments.tooltip();
