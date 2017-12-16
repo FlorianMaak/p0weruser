@@ -2188,6 +2188,11 @@ class Rep0st {
                 this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
 
                 _this.addButton(this.$container);
+            },
+            remove: function() {
+                this.parent();
+
+                _this.visible = false;
             }
         });
 
