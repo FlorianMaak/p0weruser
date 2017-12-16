@@ -2165,6 +2165,9 @@ exports.push([module.i, ".item-details .badge {\n  padding: 3px 5px;\n  font-siz
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Utils__ = __webpack_require__(2);
+
+
 class Rep0st {
     constructor() {
         this.name = 'Rep0st Check';
@@ -2183,24 +2186,55 @@ class Rep0st {
                 _this.addButton(this.$container);
             }
         });
+
+        __WEBPACK_IMPORTED_MODULE_0__Utils__["a" /* default */].addVideoConstants();
     }
 
 
     addButton(container) {
-        const template = $(`<a class="repost-link"><span class="fa fa-copy"></span> rep0st?</a>`);
-        let sourceElement = container.find('.item-source');
-        sourceElement.after(template);
+        const imgElement = container.find('.item-image');
 
-        template[0].addEventListener('click', () => {
-            this.checkImage(container);
-        });
+        if(imgElement[0].tagName !== 'VIDEO') {
+            const template = $(`<a class="repost-link"><span class="fa fa-copy"></span> rep0st?</a>`);
+            let sourceElement = container.find('.item-source');
+            sourceElement.after(template);
+
+            template[0].addEventListener('click', () => {
+                this.checkImage(imgElement);
+            });
+        }
     }
 
 
-    checkImage(container) {
-        const src = container.find('.item-image')[0].src;
+    checkImage(imgElement) {
+        let form = new FormData();
 
-        // Add action
+        // FormData
+        form.append("filter", "sfw");
+        form.append("filter", "nsfw");
+        form.append("filter", "nsfl");
+        form.append("image", new Blob([], {type:"application/octet-stream"}), '');
+        form.append("url", imgElement[0].src);
+
+        let settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://rep0st.rene8888.at/",
+            "method": "POST",
+            "headers": {
+                "cache-control": "no-cache",
+                "Upgrade-Insecure-Requests": 1,
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8"
+            },
+            "processData": false,
+            "contentType": false,
+            "mimeType": "multipart/form-data",
+            "data": form
+        };
+
+        $.ajax(settings).done((response) => {
+            // Add logic
+        });
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Rep0st;
