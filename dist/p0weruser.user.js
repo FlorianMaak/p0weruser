@@ -4,9 +4,11 @@
 // @author		Florian Maak
 // @description	Erweitert pr0gramm.com um weitere Funktionen
 // @include		/^https?://pr0gramm.com/.*$/
+// @include		/^https://prep0st.rene8888.at.*$/
 // @icon		https://pr0gramm.com/media/pr0gramm-favicon.png
 // @version		0.4.8
 // @grant		GM_notification
+// @grant       GM_xmlhttpRequest
 // @require     https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
 // @updateURL	https://github.com/FlorianMaak/p0weruser/raw/master/dist/p0weruser.js
 // ==/UserScript==
@@ -640,6 +642,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__module_NotificationCenter__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__module_DesktopNotifications__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__module_filterMarks__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__module_Rep0st__ = __webpack_require__(36);
+
 
 
 
@@ -719,7 +723,8 @@ class P0weruser {
                 'AdvancedComments': new __WEBPACK_IMPORTED_MODULE_7__module_AdvancedComments__["a" /* default */](),
                 'NotificationCenter': new __WEBPACK_IMPORTED_MODULE_8__module_NotificationCenter__["a" /* default */](),
                 'DesktopNotifications': new __WEBPACK_IMPORTED_MODULE_9__module_DesktopNotifications__["a" /* default */](),
-                'FilterMarks': new __WEBPACK_IMPORTED_MODULE_10__module_filterMarks__["a" /* default */]()
+                'FilterMarks': new __WEBPACK_IMPORTED_MODULE_10__module_filterMarks__["a" /* default */](),
+                'Rep0st': new __WEBPACK_IMPORTED_MODULE_11__module_Rep0st__["a" /* default */]()
             };
         }
 
@@ -2151,6 +2156,98 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 // module
 exports.push([module.i, ".item-details .badge {\n  padding: 3px 5px;\n  font-size: 10px;\n  margin-left: 10px;\n  border-radius: 3px;\n}\n.item-details .badge.sfw {\n  background-color: #5cb85c;\n}\n.item-details .badge.nsfw {\n  background-color: #f0ad4e;\n}\n.item-details .badge.nsfl {\n  background-color: #d9534f;\n}\n.item-details .badge.nsfp {\n  background-color: #ee4d2e;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 36 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class Rep0st {
+    constructor() {
+        this.name = 'Rep0st Check';
+        this.description = 'Frage rene888, ob es sich um einen rep0st handelt.';
+    }
+
+
+    load() {
+        let _this = this;
+        this.styles = __webpack_require__(37);
+
+        p.View.Stream.Item = p.View.Stream.Item.extend({
+            show: function (rowIndex, itemData, defaultHeight, jumpToComment) {
+                this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
+
+                _this.addButton(this.$container);
+            }
+        });
+    }
+
+
+    addButton(container) {
+        const template = $(`<a class="repost-link"><span class="fa fa-copy"></span> rep0st?</a>`);
+        let sourceElement = container.find('.item-source');
+        sourceElement.after(template);
+
+        template[0].addEventListener('click', () => {
+            this.checkImage(container);
+        });
+    }
+
+
+    checkImage(container) {
+        const src = container.find('.item-image')[0].src;
+
+        // Add action
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Rep0st;
+
+
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(38);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../node_modules/css-loader/index.js!../../node_modules/less-loader/dist/cjs.js!./rep0st.less", function() {
+			var newContent = require("!!../../node_modules/css-loader/index.js!../../node_modules/less-loader/dist/cjs.js!./rep0st.less");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, ".repost-link {\n  margin-left: 15px;\n}\n.repost-link .fa {\n  color: #f2f5f4;\n  margin-right: 5px;\n}\n", ""]);
 
 // exports
 
