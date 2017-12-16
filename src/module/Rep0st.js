@@ -3,6 +3,7 @@ import Utils from '../Utils';
 
 export default class Rep0st {
     constructor() {
+        this.closeBtn = {};
         this.name = 'Rep0st Check';
         this.description = 'Frage rene888, ob es sich um einen rep0st handelt.';
     }
@@ -45,15 +46,15 @@ export default class Rep0st {
 
     checkImage(container, imgElement) {
         container.append(this.loader);
-        let form = new FormData();
+        let dta = new FormData();
         let result = $('<div></div>');
 
         // FormData
-        form.append("filter", "sfw");
-        form.append("filter", "nsfw");
-        form.append("filter", "nsfl");
-        form.append("image", new Blob([], {type:"application/octet-stream"}), '');
-        form.append("url", imgElement[0].src);
+        dta.append("filter", "sfw");
+        dta.append("filter", "nsfw");
+        dta.append("filter", "nsfl");
+        dta.append("image", new Blob([], {type:"application/octet-stream"}), '');
+        dta.append("url", imgElement[0].src);
 
         let settings = {
             "async": true,
@@ -68,17 +69,17 @@ export default class Rep0st {
             "processData": false,
             "contentType": false,
             "mimeType": "multipart/form-data",
-            "data": form
+            "data": dta
         };
 
         $.ajax(settings).done((response) => {
-            this.loader.remove();
-            this.visible = true;
-            result.html($(response));
             let output = [];
+            this.visible = true;
+            this.loader.remove();
+            result.html($(response));
             const images = result.find('.result-list a');
 
-            for(let i = 0; i < images.length; i++) {
+            for(let i = 1; i < images.length; i++) {
                 output.push({
                     url: images[i].href,
                     img: images[i].style.backgroundImage.match(/\(([^)]+)\)/)[1]
@@ -104,7 +105,7 @@ export default class Rep0st {
 
         closeBtn[0].addEventListener('click', () => {
             this.visible = false;
-            bar.remove();
+            bar.html('');
         });
     }
 }
