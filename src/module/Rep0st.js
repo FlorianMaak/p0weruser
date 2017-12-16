@@ -1,3 +1,4 @@
+import SimpleBar from '../../bower_components/simplebar/dist/simplebar.js';
 import Utils from '../Utils';
 
 export default class Rep0st {
@@ -9,6 +10,7 @@ export default class Rep0st {
 
     load() {
         let _this = this;
+        this.visible = false;
         this.styles = require('../style/rep0st.less');
 
         p.View.Stream.Item = p.View.Stream.Item.extend({
@@ -25,6 +27,7 @@ export default class Rep0st {
 
     addButton(container) {
         const imgElement = container.find('.item-image');
+        this.loader = $(`<span class="fa fa-spinner fa-spin loader"></span>`);
 
         if(imgElement[0].tagName !== 'VIDEO') {
             const template = $(`<a class="repost-link"><span class="fa fa-copy"></span> rep0st?</a>`);
@@ -32,14 +35,18 @@ export default class Rep0st {
             sourceElement.after(template);
 
             template[0].addEventListener('click', () => {
-                this.checkImage(imgElement);
+                if(! this.visible) {
+                    this.checkImage(container, imgElement);
+                }
             });
         }
     }
 
 
-    checkImage(imgElement) {
+    checkImage(container, imgElement) {
+        container.append(this.loader);
         let form = new FormData();
+        let result = $('<div></div>');
 
         // FormData
         form.append("filter", "sfw");
@@ -65,7 +72,39 @@ export default class Rep0st {
         };
 
         $.ajax(settings).done((response) => {
-            // Add logic
+            this.loader.remove();
+            this.visible = true;
+            result.html($(response));
+            let output = [];
+            const images = result.find('.result-list a');
+
+            for(let i = 0; i < images.length; i++) {
+                output.push({
+                    url: images[i].href,
+                    img: images[i].style.backgroundImage.match(/\(([^)]+)\)/)[1]
+                });
+            }
+
+            this.displayImages(container, output);
+        });
+    }
+
+
+    displayImages(container, urls) {
+        let bar = $('<div class="rep0sts"></div>');
+        let closeBtn = $(`<span class=" fa fa-close close"></span>`);
+        bar.append(closeBtn);
+
+        for(let i = 0; i < urls.length; i++) {
+            bar.append($(`<a href=${urls[i].url} target="_blank"><img src=${urls[i].img} class="rep0st-thumb" /></a>`));
+        }
+
+        container.find('.image-main').after(bar);
+        new SimpleBar(bar[0]);
+
+        closeBtn[0].addEventListener('click', () => {
+            this.visible = false;
+            bar.remove();
         });
     }
 }

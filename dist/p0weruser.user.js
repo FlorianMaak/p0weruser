@@ -2165,7 +2165,10 @@ exports.push([module.i, ".item-details .badge {\n  padding: 3px 5px;\n  font-siz
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Utils__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bower_components_simplebar_dist_simplebar_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bower_components_simplebar_dist_simplebar_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__bower_components_simplebar_dist_simplebar_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Utils__ = __webpack_require__(2);
+
 
 
 class Rep0st {
@@ -2177,6 +2180,7 @@ class Rep0st {
 
     load() {
         let _this = this;
+        this.visible = false;
         this.styles = __webpack_require__(37);
 
         p.View.Stream.Item = p.View.Stream.Item.extend({
@@ -2187,12 +2191,13 @@ class Rep0st {
             }
         });
 
-        __WEBPACK_IMPORTED_MODULE_0__Utils__["a" /* default */].addVideoConstants();
+        __WEBPACK_IMPORTED_MODULE_1__Utils__["a" /* default */].addVideoConstants();
     }
 
 
     addButton(container) {
         const imgElement = container.find('.item-image');
+        this.loader = $(`<span class="fa fa-spinner fa-spin loader"></span>`);
 
         if(imgElement[0].tagName !== 'VIDEO') {
             const template = $(`<a class="repost-link"><span class="fa fa-copy"></span> rep0st?</a>`);
@@ -2200,14 +2205,18 @@ class Rep0st {
             sourceElement.after(template);
 
             template[0].addEventListener('click', () => {
-                this.checkImage(imgElement);
+                if(! this.visible) {
+                    this.checkImage(container, imgElement);
+                }
             });
         }
     }
 
 
-    checkImage(imgElement) {
+    checkImage(container, imgElement) {
+        container.append(this.loader);
         let form = new FormData();
+        let result = $('<div></div>');
 
         // FormData
         form.append("filter", "sfw");
@@ -2233,7 +2242,39 @@ class Rep0st {
         };
 
         $.ajax(settings).done((response) => {
-            // Add logic
+            this.loader.remove();
+            this.visible = true;
+            result.html($(response));
+            let output = [];
+            const images = result.find('.result-list a');
+
+            for(let i = 0; i < images.length; i++) {
+                output.push({
+                    url: images[i].href,
+                    img: images[i].style.backgroundImage.match(/\(([^)]+)\)/)[1]
+                });
+            }
+
+            this.displayImages(container, output);
+        });
+    }
+
+
+    displayImages(container, urls) {
+        let bar = $('<div class="rep0sts"></div>');
+        let closeBtn = $(`<span class=" fa fa-close close"></span>`);
+        bar.append(closeBtn);
+
+        for(let i = 0; i < urls.length; i++) {
+            bar.append($(`<a href=${urls[i].url} target="_blank"><img src=${urls[i].img} class="rep0st-thumb" /></a>`));
+        }
+
+        container.find('.image-main').after(bar);
+        new __WEBPACK_IMPORTED_MODULE_0__bower_components_simplebar_dist_simplebar_js___default.a(bar[0]);
+
+        closeBtn[0].addEventListener('click', () => {
+            this.visible = false;
+            bar.remove();
         });
     }
 }
@@ -2281,7 +2322,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, ".repost-link {\n  margin-left: 15px;\n}\n.repost-link .fa {\n  color: #f2f5f4;\n  margin-right: 5px;\n}\n", ""]);
+exports.push([module.i, ".repost-link {\n  margin-left: 15px;\n}\n.repost-link .fa {\n  color: #f2f5f4;\n  margin-right: 5px;\n}\n.rep0sts {\n  max-width: 33vw;\n  padding: 10px 10px 10px 25px;\n}\n.rep0sts .close {\n  position: absolute;\n  left: 0;\n  font-size: 24px;\n  top: 5px;\n  cursor: pointer;\n}\n.rep0sts .close:hover {\n  color: #ee4d2e;\n}\n.rep0sts a {\n  display: block;\n}\n.rep0sts a img {\n  max-width: 100%;\n}\n.item-container .loader {\n  font-size: 45px;\n  width: 15vw;\n}\n", ""]);
 
 // exports
 
