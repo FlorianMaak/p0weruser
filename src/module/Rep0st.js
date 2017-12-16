@@ -77,21 +77,33 @@ export default class Rep0st {
             "data": dta
         };
 
-        $.ajax(settings).done((response) => {
-            let output = [];
-            this.visible = true;
-            this.loader.remove();
-            result.html($(response));
-            const images = result.find('.result-list a');
 
-            for(let i = 1; i < images.length; i++) {
-                output.push({
-                    url: images[i].href,
-                    img: images[i].style.backgroundImage.match(/\(([^)]+)\)/)[1]
-                });
-            }
+       GM_xmlhttpRequest({
+           url: "https://rep0st.rene8888.at/",
+           method: "POST",
+           headers: {
+                "cache-control": "no-cache",
+                "Upgrade-Insecure-Requests": 1,
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8"
+            },
+           overrideMimeType: "multipart/form-data",
+           data: dta,
+           onload: (res) => {
+               let output = [];
+               this.visible = true;
+               this.loader.remove();
+               result.html($(res.responseText));
+               const images = result.find('.result-list a');
 
-            this.displayImages(container, output);
+               for(let i = 1; i < images.length; i++) {
+                   output.push({
+                       url: images[i].href,
+                       img: images[i].style.backgroundImage.match(/\(([^)]+)\)/)[1]
+                   });
+               }
+
+               this.displayImages(container, output);
+           }
         });
     }
 

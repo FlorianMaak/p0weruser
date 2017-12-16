@@ -6,8 +6,10 @@
 // @include		/^https?://pr0gramm.com/.*$/
 // @include		/^https://prep0st.rene8888.at.*$/
 // @icon		https://pr0gramm.com/media/pr0gramm-favicon.png
+// @connect     https://rep0st.rene8888.at
 // @version		0.5.0
 // @grant		GM_notification
+// @grant       GM_xmlhttpRequest
 // @require     https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
 // @updateURL	https://github.com/FlorianMaak/p0weruser/raw/master/dist/p0weruser.js
 // ==/UserScript==
@@ -2246,21 +2248,33 @@ class Rep0st {
             "data": dta
         };
 
-        $.ajax(settings).done((response) => {
-            let output = [];
-            this.visible = true;
-            this.loader.remove();
-            result.html($(response));
-            const images = result.find('.result-list a');
 
-            for(let i = 1; i < images.length; i++) {
-                output.push({
-                    url: images[i].href,
-                    img: images[i].style.backgroundImage.match(/\(([^)]+)\)/)[1]
-                });
-            }
+       GM_xmlhttpRequest({
+           url: "https://rep0st.rene8888.at/",
+           method: "POST",
+           headers: {
+                "cache-control": "no-cache",
+                "Upgrade-Insecure-Requests": 1,
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8"
+            },
+           overrideMimeType: "multipart/form-data",
+           data: dta,
+           onload: (res) => {
+               let output = [];
+               this.visible = true;
+               this.loader.remove();
+               result.html($(res.responseText));
+               const images = result.find('.result-list a');
 
-            this.displayImages(container, output);
+               for(let i = 1; i < images.length; i++) {
+                   output.push({
+                       url: images[i].href,
+                       img: images[i].style.backgroundImage.match(/\(([^)]+)\)/)[1]
+                   });
+               }
+
+               this.displayImages(container, output);
+           }
         });
     }
 
