@@ -9,6 +9,7 @@ import AdvancedComments from './module/AdvancedComments';
 import NotificationCenter from './module/NotificationCenter';
 import DesktopNotifications from './module/DesktopNotifications';
 import FilterMarks from './module/filterMarks';
+import Rep0st from './module/Rep0st';
 
 export default class P0weruser {
     constructor() {
@@ -77,7 +78,8 @@ export default class P0weruser {
                 'AdvancedComments': new AdvancedComments(),
                 'NotificationCenter': new NotificationCenter(),
                 'DesktopNotifications': new DesktopNotifications(),
-                'FilterMarks': new FilterMarks()
+                'FilterMarks': new FilterMarks(),
+                'Rep0st': new Rep0st()
             };
         }
 
