@@ -7,7 +7,7 @@
 // @include		/^https://prep0st.rene8888.at.*$/
 // @icon		https://pr0gramm.com/media/pr0gramm-favicon.png
 // @connect     https://rep0st.rene8888.at
-// @version		0.5.0
+// @version		0.5.2
 // @grant		GM_notification
 // @grant       GM_xmlhttpRequest
 // @require     https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
@@ -1828,7 +1828,7 @@ exports.push([module.i, ".comments .comment + .comment-box {\n  padding-left: 0;
 
 class NotificationCenter {
     constructor() {
-        this.name = 'Nachriten Schnellzugriff';
+        this.name = 'Nachrichten Schnellzugriff';
         this.description = 'Öffnet neue Benachrichtigungen in einem kleinen Menü';
     }
 
@@ -2221,9 +2221,22 @@ class Rep0st {
 
 
     checkImage(container, imgElement) {
-        container.append(this.loader);
         let dta = new FormData();
         let result = $('<div></div>');
+        let bar = $('<div class="rep0sts"></div>');
+        let template = $(`<div class="sidebar-head"><span class="fa fa-copy"></span><span class="sidebar-label">Reposts</span></div>`);
+        let closeBtn = $(`<span class=" fa fa-close close"></span>`);
+        template.append(closeBtn);
+        bar.append(template);
+        bar.append(this.loader);
+        container.find('.image-main').after(bar);
+
+        new __WEBPACK_IMPORTED_MODULE_0__bower_components_simplebar_dist_simplebar_js___default.a(bar[0]);
+
+        closeBtn[0].addEventListener('click', () => {
+            this.visible = false;
+            bar.remove();
+        });
 
         // FormData
         dta.append("filter", "sfw");
@@ -2273,28 +2286,18 @@ class Rep0st {
                    });
                }
 
-               this.displayImages(container, output);
+               this.displayImages(bar, output);
            }
         });
     }
 
 
-    displayImages(container, urls) {
-        let bar = $('<div class="rep0sts"></div>');
-        let closeBtn = $(`<span class=" fa fa-close close"></span>`);
-        bar.append(closeBtn);
+    displayImages(bar, urls) {
+        bar = bar.find('.simplebar-content');
 
         for(let i = 0; i < urls.length; i++) {
             bar.append($(`<a href=${urls[i].url} target="_blank"><img src=${urls[i].img} class="rep0st-thumb" /></a>`));
         }
-
-        container.find('.image-main').after(bar);
-        new __WEBPACK_IMPORTED_MODULE_0__bower_components_simplebar_dist_simplebar_js___default.a(bar[0]);
-
-        closeBtn[0].addEventListener('click', () => {
-            this.visible = false;
-            bar.html('');
-        });
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Rep0st;
@@ -2341,7 +2344,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, ".repost-link {\n  margin-left: 15px;\n}\n.repost-link .fa {\n  color: #f2f5f4;\n  margin-right: 5px;\n}\n.rep0sts {\n  max-width: 33vw;\n  padding: 10px 10px 10px 25px;\n}\n.rep0sts .close {\n  position: absolute;\n  left: 0;\n  font-size: 24px;\n  top: 5px;\n  cursor: pointer;\n}\n.rep0sts .close:hover {\n  color: #ee4d2e;\n}\n.rep0sts a {\n  display: block;\n}\n.rep0sts a img {\n  max-width: 100%;\n  margin-bottom: 5px;\n}\n.item-container .loader {\n  font-size: 45px;\n  width: 15vw;\n}\n", ""]);
+exports.push([module.i, ".repost-link {\n  margin-left: 15px;\n}\n.repost-link .fa {\n  color: #f2f5f4;\n  margin-right: 5px;\n}\n.rep0sts {\n  width: 33vw;\n  background-color: #161618;\n  border-left: 3px solid #2a2e31;\n}\n.rep0sts .simplebar-scrollbar {\n  background: #2a2e31;\n  border-radius: 0;\n  right: 0;\n}\n.rep0sts .simplebar-scrollbar.visible {\n  opacity: 1;\n}\n.rep0sts .simplebar-content {\n  outline: none;\n}\n.rep0sts .simplebar-content {\n  padding: 50px 10px 10px 10px;\n}\n.rep0sts .sidebar-head {\n  display: flex;\n  align-items: center;\n  background-color: #2a2e31;\n  text-align: left;\n  padding: 10px 10px 10px 10px;\n  transition: width 0.2s ease-out;\n  z-index: 400;\n  position: fixed;\n  top: 52px;\n  width: 30vw;\n  margin-left: -10px;\n}\n.rep0sts .sidebar-head .sidebar-label {\n  margin-left: 5px;\n}\n.rep0sts .sidebar-head .close {\n  cursor: pointer;\n  position: fixed;\n  right: 10px;\n}\n.rep0sts a {\n  display: block;\n}\n.rep0sts a img {\n  max-width: 100%;\n  margin-bottom: 5px;\n}\n.item-container .loader {\n  font-size: 45px;\n  margin-top: 30px;\n  width: 15vw;\n}\n", ""]);
 
 // exports
 

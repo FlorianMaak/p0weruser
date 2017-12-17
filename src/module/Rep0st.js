@@ -50,9 +50,22 @@ export default class Rep0st {
 
 
     checkImage(container, imgElement) {
-        container.append(this.loader);
         let dta = new FormData();
         let result = $('<div></div>');
+        let bar = $('<div class="rep0sts"></div>');
+        let template = $(`<div class="sidebar-head"><span class="fa fa-copy"></span><span class="sidebar-label">Reposts</span></div>`);
+        let closeBtn = $(`<span class=" fa fa-close close"></span>`);
+        template.append(closeBtn);
+        bar.append(template);
+        bar.append(this.loader);
+        container.find('.image-main').after(bar);
+
+        new SimpleBar(bar[0]);
+
+        closeBtn[0].addEventListener('click', () => {
+            this.visible = false;
+            bar.remove();
+        });
 
         // FormData
         dta.append("filter", "sfw");
@@ -102,27 +115,17 @@ export default class Rep0st {
                    });
                }
 
-               this.displayImages(container, output);
+               this.displayImages(bar, output);
            }
         });
     }
 
 
-    displayImages(container, urls) {
-        let bar = $('<div class="rep0sts"></div>');
-        let closeBtn = $(`<span class=" fa fa-close close"></span>`);
-        bar.append(closeBtn);
+    displayImages(bar, urls) {
+        bar = bar.find('.simplebar-content');
 
         for(let i = 0; i < urls.length; i++) {
             bar.append($(`<a href=${urls[i].url} target="_blank"><img src=${urls[i].img} class="rep0st-thumb" /></a>`));
         }
-
-        container.find('.image-main').after(bar);
-        new SimpleBar(bar[0]);
-
-        closeBtn[0].addEventListener('click', () => {
-            this.visible = false;
-            bar.html('');
-        });
     }
 }
