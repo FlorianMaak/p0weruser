@@ -1,13 +1,12 @@
 // ==UserScript==
-// @name		p0weruser
-// @namespace	https://github.com/FlorianMaak/p0weruser
-// @author		Florian Maak
-// @description	Erweitert pr0gramm.com um weitere Funktionen
+// @name		p0weruser dev
+// @namespace	https://github.com/Seglormeister/Pr0gramm.com-by-Seglor
+// @author		FlorianMaak
+// @description	Verbessert das pr0gramm mit einigen Erweiterungen
 // @include		/^https?://pr0gramm.com/.*$/
-// @include		/^https://prep0st.rene8888.at.*$/
+// @connect     rep0st.rene8888.at
 // @icon		https://pr0gramm.com/media/pr0gramm-favicon.png
-// @connect     https://rep0st.rene8888.at
-// @version		0.5.2
+// @version		1.6.0.6
 // @grant		GM_notification
 // @grant       GM_xmlhttpRequest
 // @require     https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
