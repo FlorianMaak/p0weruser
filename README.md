@@ -11,11 +11,14 @@ it using settings.
 * Advanced Comments
 * Desktop Notifications
 * Filter-Labels
-* (ToDo) Integration of Rene8888s repost-check
+* Integration of Rene8888s repost-check
 * (ToDo) Highlighting of previously visited posts
 * (ToDo) Cheap "stelz"
 * (ToDo) Slideshow mode
 * (ToDo) Improved search
+
+## Instructions / Controls
+Help and instructions can be found on this repositorys [wiki-pages](https://github.com/FlorianMaak/p0weruser/wiki).
 
 ## Installation
 Just install Greasemonkey or Tapermonkey and install the script by a simple
@@ -31,7 +34,7 @@ click on one of the following urls:
 ![repost](https://user-images.githubusercontent.com/6325146/31791525-1e0a84b4-b519-11e7-90f8-c5306afcc485.jpg)
 > Repost-Highlighting
 
-![settings](https://user-images.githubusercontent.com/6325146/31791526-1e25664e-b519-11e7-9974-0187f606ed62.jpg)
+![settings](https://user-images.githubusercontent.com/6325146/34079134-8a6ad848-e327-11e7-8536-857474b03fc5.jpg)
 > Enable or diasble modules via settings
 
 ![widescreen](https://user-images.githubusercontent.com/6325146/31791527-1e3d0fa6-b519-11e7-9ded-b6d9720b5708.jpg)
@@ -42,6 +45,12 @@ click on one of the following urls:
 
 ![notifications](https://user-images.githubusercontent.com/6325146/31791529-1e6bd46c-b519-11e7-8527-d620f50b07f2.jpg)
 > Access your notifications directly from any page
+
+![filterlabel](https://user-images.githubusercontent.com/6325146/34079132-8a060c7e-e327-11e7-8809-54e8ad811faa.jpg)
+> See the images filter as a colored label
+
+![rep0st](https://user-images.githubusercontent.com/6325146/34079133-8a446b5e-e327-11e7-8f08-0efc74179b02.jpg)
+> Check if an image is a rep0st, by using the check on rep0st.rene8888.at
 
 ## Missing Feature?
 Just open an issue and describe your request as accurately as possible. If you like to do script it on your own, feel free to fork and open a Pull Request.
