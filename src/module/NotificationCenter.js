@@ -2,7 +2,7 @@ import SimpleBar from '../../bower_components/simplebar/dist/simplebar.js';
 
 export default class NotificationCenter {
     constructor() {
-        this.name = 'Nachriten Schnellzugriff';
+        this.name = 'Nachrichten Schnellzugriff';
         this.description = 'Öffnet neue Benachrichtigungen in einem kleinen Menü';
     }
 

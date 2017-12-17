@@ -8,18 +8,49 @@
 }
 
 .rep0sts {
-  max-width: 33vw;
-  padding: 10px 10px 10px 25px;
+  width: 33vw;
+  background-color: #161618;
+  border-left: 3px solid #2a2e31;
 
-  .close {
-    position: absolute;
-    left: 0;
-    font-size: 24px;
-    top: 5px;
-    cursor: pointer;
+  .simplebar-scrollbar {
+    background: #2a2e31;
+    border-radius: 0;
+    right: 0;
 
-    &:hover {
-      color: #ee4d2e;
+    &.visible {
+      opacity: 1;
+    }
+  }
+
+  .simplebar-content {
+    outline: none;
+  }
+
+  .simplebar-content {
+    padding: 50px 10px 10px 10px;
+  }
+
+  .sidebar-head {
+    display: flex;
+    align-items: center;
+    background-color: #2a2e31;
+    text-align: left;
+    padding: 10px 10px 10px 10px;
+    transition: width 0.2s ease-out;
+    z-index: 400;
+    position: fixed;
+    top: 52px;
+    width: 30vw;
+    margin-left: -10px;
+
+    .sidebar-label {
+      margin-left: 5px;
+    }
+
+    .close {
+      cursor: pointer;
+      position: fixed;
+      right: 10px;
     }
   }
 
@@ -35,5 +66,6 @@
 
 .item-container .loader {
   font-size: 45px;
+  margin-top: 30px;
   width: 15vw;
 }
