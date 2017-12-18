@@ -12,10 +12,10 @@ export default class WidescreenMode {
     }
 
     handleWheelChange(e) {
-        if(this.hasUnsentComments()) {
+        if (this.hasUnsentComments()) {
             let state = window.confirm('Du hast noch nicht abgeschickte Kommentare! Willst du dieses Medium wirklich verlassen?');
 
-            if(! state) {
+            if (!state) {
                 return false;
             }
         }
@@ -52,13 +52,13 @@ export default class WidescreenMode {
         this.logoLink.isNew = false;
 
         this.logoLink.addEventListener('click', () => {
-            if(this.logoLink.isNew) {
+            if (this.logoLink.isNew) {
                 p.reload();
             }
         });
 
         window.addEventListener('beforeLocationChange', (e) => {
-            if(e.srcElement.location.href.endsWith(this.logoLink.href)) {
+            if (e.srcElement.location.href.endsWith(this.logoLink.href)) {
                 e.preventDefault();
                 this.logoLink.isNew = true;
 
@@ -152,7 +152,7 @@ export default class WidescreenMode {
         }
 
         // Handle wheel-change
-        this.container.addEventListener('mousewheel', (e) => {
+        this.container.addEventListener('wheel', (e) => {
             e.preventDefault();
 
             this.handleWheelChange(e);
@@ -202,8 +202,8 @@ export default class WidescreenMode {
     }
 
     hasUnsentComments() {
-        for(let i = 0; i < this.comments.length; i++) {
-            if(this.comments[i].value !== '') {
+        for (let i = 0; i < this.comments.length; i++) {
+            if (this.comments[i].value !== '') {
                 return true;
             }
         }
@@ -237,7 +237,7 @@ export default class WidescreenMode {
             this.toggleNavigation();
         });
 
-        for(let i = 0; i < this.nav.links.length; i++) {
+        for (let i = 0; i < this.nav.links.length; i++) {
             this.nav.links[i].addEventListener('click', () => {
                 this.toggleNavigation();
             });

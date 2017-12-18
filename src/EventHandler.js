@@ -36,8 +36,8 @@ export default class EventHandler {
         }(p.navigateTo));
 
         // Add commentsloaded-event
-        (function(render) {
-            p.View.Stream.Comments.prototype.render = function() {
+        (function (render) {
+            p.View.Stream.Comments.prototype.render = function () {
                 render.call(this);
                 window.dispatchEvent(_this.commentsLoaded);
 
