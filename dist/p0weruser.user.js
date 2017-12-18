@@ -1,12 +1,13 @@
 // ==UserScript==
-// @name		p0weruser dev
-// @namespace	https://github.com/Seglormeister/Pr0gramm.com-by-Seglor
-// @author		FlorianMaak
-// @description	Verbessert das pr0gramm mit einigen Erweiterungen
+// @name		p0weruser
+// @namespace	https://github.com/FlorianMaak/p0weruser
+// @author		Florian Maak
+// @description	Erweitert pr0gramm.com um weitere Funktionen
 // @include		/^https?://pr0gramm.com/.*$/
-// @connect     rep0st.rene8888.at
+// @include		/^https://prep0st.rene8888.at.*$/
 // @icon		https://pr0gramm.com/media/pr0gramm-favicon.png
-// @version		1.6.0.6
+// @connect     https://rep0st.rene8888.at
+// @version		0.5.3
 // @grant		GM_notification
 // @grant       GM_xmlhttpRequest
 // @require     https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
@@ -2190,7 +2191,7 @@ class Rep0st {
 
                 _this.addButton(this.$container);
             },
-            remove: function() {
+            remove: function () {
                 this.parent();
 
                 _this.visible = false;
@@ -2202,16 +2203,16 @@ class Rep0st {
 
 
     addButton(container) {
-        const imgElement = container.find('.item-image');
+        const imgElement = container.find('.item-image:not([src*=".gif"])');
         this.loader = $(`<span class="fa fa-spinner fa-spin loader"></span>`);
 
-        if(imgElement[0].tagName !== 'VIDEO') {
+        if (imgElement[0] && imgElement[0].tagName !== 'VIDEO') {
             const template = $(`<a class="repost-link"><span class="fa fa-copy"></span> rep0st?</a>`);
-            let sourceElement = container.find('.item-source');
+            let sourceElement = container.find('.item-details .user');
             sourceElement.after(template);
 
             template[0].addEventListener('click', () => {
-                if(! this.visible) {
+                if (!this.visible) {
                     this.checkImage(container, imgElement);
                 }
             });
@@ -2237,56 +2238,58 @@ class Rep0st {
             bar.remove();
         });
 
-        // FormData
-        dta.append("filter", "sfw");
-        dta.append("filter", "nsfw");
-        dta.append("filter", "nsfl");
-        dta.append("image", new Blob([], {type:"application/octet-stream"}), '');
-        dta.append("url", imgElement[0].src);
+        // Image Data
+        dta.append('image', new Blob([], {type: 'application/octet-stream'}), '');
+        dta.append('url', imgElement[0].src);
+
+        // Filters
+        dta.append('filter', 'sfw');
+        dta.append('filter', 'nsfw');
+        dta.append('filter', 'nsfl');
 
         let settings = {
-            "async": true,
-            "crossDomain": true,
-            "url": "https://rep0st.rene8888.at/",
-            "method": "POST",
-            "headers": {
-                "cache-control": "no-cache",
-                "Upgrade-Insecure-Requests": 1,
-                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8"
+            'async': true,
+            'crossDomain': true,
+            'url': 'https://rep0st.rene8888.at/',
+            'method': 'POST',
+            'headers': {
+                'cache-control': 'no-cache',
+                'Upgrade-Insecure-Requests': 1,
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
             },
-            "processData": false,
-            "contentType": false,
-            "mimeType": "multipart/form-data",
-            "data": dta
+            'processData': false,
+            'contentType': false,
+            'mimeType': 'multipart/form-data',
+            'data': dta
         };
 
 
-       GM_xmlhttpRequest({
-           url: "https://rep0st.rene8888.at/",
-           method: "POST",
-           headers: {
-                "cache-control": "no-cache",
-                "Upgrade-Insecure-Requests": 1,
-                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8"
+        GM_xmlhttpRequest({
+            url: 'https://rep0st.rene8888.at/',
+            method: 'POST',
+            headers: {
+                'cache-control': 'no-cache',
+                'Upgrade-Insecure-Requests': 1,
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
             },
-           overrideMimeType: "multipart/form-data",
-           data: dta,
-           onload: (res) => {
-               let output = [];
-               this.visible = true;
-               this.loader.remove();
-               result.html($(res.responseText));
-               const images = result.find('.result-list a');
+            overrideMimeType: 'multipart/form-data',
+            data: dta,
+            onload: (res) => {
+                let output = [];
+                this.visible = true;
+                this.loader.remove();
+                result.html($(res.responseText));
+                const images = result.find('.result-list a');
 
-               for(let i = 1; i < images.length; i++) {
-                   output.push({
-                       url: images[i].href,
-                       img: images[i].style.backgroundImage.match(/\(([^)]+)\)/)[1]
-                   });
-               }
+                for (let i = 1; i < images.length; i++) {
+                    output.push({
+                        url: images[i].href,
+                        img: images[i].style.backgroundImage.match(/\(([^)]+)\)/)[1]
+                    });
+                }
 
-               this.displayImages(bar, output);
-           }
+                this.displayImages(bar, output);
+            }
         });
     }
 
@@ -2294,7 +2297,7 @@ class Rep0st {
     displayImages(bar, urls) {
         bar = bar.find('.simplebar-content');
 
-        for(let i = 0; i < urls.length; i++) {
+        for (let i = 0; i < urls.length; i++) {
             bar.append($(`<a href=${urls[i].url} target="_blank"><img src=${urls[i].img} class="rep0st-thumb" /></a>`));
         }
     }
