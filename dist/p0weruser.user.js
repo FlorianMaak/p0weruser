@@ -6,7 +6,7 @@
 // @include		/^https?://pr0gramm.com/.*$/
 // @include		/^https://prep0st.rene8888.at.*$/
 // @icon		https://pr0gramm.com/media/pr0gramm-favicon.png
-// @connect     https://rep0st.rene8888.at
+// @connect     rep0st.rene8888.at
 // @version		0.5.3
 // @grant		GM_notification
 // @grant       GM_xmlhttpRequest
