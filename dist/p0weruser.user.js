@@ -7,7 +7,7 @@
 // @include		/^https://prep0st.rene8888.at.*$/
 // @icon		https://pr0gramm.com/media/pr0gramm-favicon.png
 // @connect     rep0st.rene8888.at
-// @version		0.5.5
+// @version		0.5.6
 // @grant		GM_notification
 // @grant       GM_xmlhttpRequest
 // @require     https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
@@ -2303,11 +2303,15 @@ class Rep0st {
 
             comment.addEventListener('click', (e) => {
                 e.preventDefault();
+                let body = $(document.body);
                 const comment = `Re: ${urls[i].url}`;
-                let commentField = $(document.body).find('.comment:not(.reply)');
+                let commentField = body.find('.comment:not(.reply)');
+                let tagsForm = body.find('.tag-form');
 
                 commentField[0].value = comment;
                 commentField.parent().find('input[type="submit"]')[0].click();
+                tagsForm.find('.item-tagsinput')[0].value = 'repost';
+                tagsForm.find('input[type="submit"]').click();
             });
         }
     }
