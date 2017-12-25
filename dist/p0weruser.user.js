@@ -2207,7 +2207,7 @@ class Rep0st {
         this.loader = $(`<span class="fa fa-spinner fa-spin loader"></span>`);
 
         if (imgElement[0] && imgElement[0].tagName !== 'VIDEO') {
-            const template = $(`<a class="repost-link"><span class="fa fa-copy"></span> rep0st?</a>`);
+            const template = $(`<a title="Prüfe, ob es sich um einen Repost handelt" class="repost-link"><span class="fa fa-copy"></span> rep0st?</a>`);
             let sourceElement = container.find('.item-details .user');
             sourceElement.after(template);
 
@@ -2298,7 +2298,17 @@ class Rep0st {
         bar = bar.find('.simplebar-content');
 
         for (let i = 0; i < urls.length; i++) {
-            bar.append($(`<a href=${urls[i].url} target="_blank"><img src=${urls[i].img} class="rep0st-thumb" /></a>`));
+            let container = bar.append($(`<a href=${urls[i].url} target="_blank"><img src=${urls[i].img} class="rep0st-thumb" /><span title="Als Repost markieren" class="fa fa-comment"></span></a>`));
+            let comment = container.find(`img[src=${urls[i].img}] + span`)[0];
+
+            comment.addEventListener('click', (e) => {
+                e.preventDefault();
+                const comment = `Re: ${urls[i].url}`;
+                let commentField = $(document.body).find('.comment:not(.reply)');
+
+                commentField[0].value = comment;
+                commentField.parent().find('input[type="submit"]')[0].click();
+            });
         }
     }
 }
@@ -2346,7 +2356,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, ".repost-link {\n  margin-left: 15px;\n}\n.repost-link .fa {\n  color: #f2f5f4;\n  margin-right: 5px;\n}\n.rep0sts {\n  width: 33vw;\n  background-color: #161618;\n  border-left: 3px solid #2a2e31;\n}\n.rep0sts .simplebar-scrollbar {\n  background: #2a2e31;\n  border-radius: 0;\n  right: 0;\n}\n.rep0sts .simplebar-scrollbar.visible {\n  opacity: 1;\n}\n.rep0sts .simplebar-content {\n  outline: none;\n}\n.rep0sts .simplebar-content {\n  padding: 50px 10px 10px 10px;\n}\n.rep0sts .sidebar-head {\n  display: flex;\n  align-items: center;\n  background-color: #2a2e31;\n  text-align: left;\n  padding: 10px 10px 10px 10px;\n  transition: width 0.2s ease-out;\n  z-index: 400;\n  position: fixed;\n  top: 52px;\n  width: 30vw;\n  margin-left: -10px;\n}\n.rep0sts .sidebar-head .sidebar-label {\n  margin-left: 5px;\n}\n.rep0sts .sidebar-head .close {\n  cursor: pointer;\n  position: fixed;\n  right: 10px;\n}\n.rep0sts a {\n  display: block;\n}\n.rep0sts a img {\n  max-width: 100%;\n  margin-bottom: 5px;\n}\n.item-container .loader {\n  font-size: 45px;\n  margin-top: 30px;\n  width: 15vw;\n}\n", ""]);
+exports.push([module.i, ".repost-link {\n  margin-left: 15px;\n}\n.repost-link .fa {\n  color: #f2f5f4;\n  margin-right: 5px;\n}\n.rep0sts {\n  width: 33vw;\n  background-color: #161618;\n  border-left: 3px solid #2a2e31;\n}\n.rep0sts .simplebar-scrollbar {\n  background: #2a2e31;\n  border-radius: 0;\n  right: 0;\n}\n.rep0sts .simplebar-scrollbar.visible {\n  opacity: 1;\n}\n.rep0sts .simplebar-content {\n  outline: none;\n}\n.rep0sts .simplebar-content {\n  padding: 50px 10px 10px 10px;\n}\n.rep0sts .sidebar-head {\n  display: flex;\n  align-items: center;\n  background-color: #2a2e31;\n  text-align: left;\n  padding: 10px 10px 10px 10px;\n  transition: width 0.2s ease-out;\n  z-index: 400;\n  position: fixed;\n  top: 52px;\n  width: 30vw;\n  margin-left: -10px;\n}\n.rep0sts .sidebar-head .sidebar-label {\n  margin-left: 5px;\n}\n.rep0sts .sidebar-head .close {\n  cursor: pointer;\n  position: fixed;\n  right: 10px;\n}\n.rep0sts a {\n  display: block;\n  margin-bottom: 5px;\n  position: relative;\n}\n.rep0sts a img {\n  max-width: 100%;\n}\n.rep0sts a span {\n  position: absolute;\n  left: 5px;\n  bottom: 10px;\n  text-shadow: 1px 1px 0px black;\n  color: #f2f5f4;\n}\n.rep0sts a span:hover {\n  color: #75c0c7;\n}\n.item-container .loader {\n  font-size: 45px;\n  margin-top: 30px;\n  width: 15vw;\n}\n", ""]);
 
 // exports
 

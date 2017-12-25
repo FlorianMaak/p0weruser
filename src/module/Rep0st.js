@@ -36,7 +36,7 @@ export default class Rep0st {
         this.loader = $(`<span class="fa fa-spinner fa-spin loader"></span>`);
 
         if (imgElement[0] && imgElement[0].tagName !== 'VIDEO') {
-            const template = $(`<a class="repost-link"><span class="fa fa-copy"></span> rep0st?</a>`);
+            const template = $(`<a title="Prüfe, ob es sich um einen Repost handelt" class="repost-link"><span class="fa fa-copy"></span> rep0st?</a>`);
             let sourceElement = container.find('.item-details .user');
             sourceElement.after(template);
 
@@ -127,7 +127,17 @@ export default class Rep0st {
         bar = bar.find('.simplebar-content');
 
         for (let i = 0; i < urls.length; i++) {
-            bar.append($(`<a href=${urls[i].url} target="_blank"><img src=${urls[i].img} class="rep0st-thumb" /></a>`));
+            let container = bar.append($(`<a href=${urls[i].url} target="_blank"><img src=${urls[i].img} class="rep0st-thumb" /><span title="Als Repost markieren" class="fa fa-comment"></span></a>`));
+            let comment = container.find(`img[src=${urls[i].img}] + span`)[0];
+
+            comment.addEventListener('click', (e) => {
+                e.preventDefault();
+                const comment = `Re: ${urls[i].url}`;
+                let commentField = $(document.body).find('.comment:not(.reply)');
+
+                commentField[0].value = comment;
+                commentField.parent().find('input[type="submit"]')[0].click();
+            });
         }
     }
 }
