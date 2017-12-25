@@ -132,11 +132,15 @@ export default class Rep0st {
 
             comment.addEventListener('click', (e) => {
                 e.preventDefault();
+                let body = $(document.body);
                 const comment = `Re: ${urls[i].url}`;
-                let commentField = $(document.body).find('.comment:not(.reply)');
+                let commentField = body.find('.comment:not(.reply)');
+                let tagsForm = body.find('.tag-form');
 
                 commentField[0].value = comment;
                 commentField.parent().find('input[type="submit"]')[0].click();
+                tagsForm.find('.item-tagsinput')[0].value = 'repost';
+                tagsForm.find('input[type="submit"]').click();
             });
         }
     }
