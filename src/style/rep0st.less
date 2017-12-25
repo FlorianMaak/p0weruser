@@ -56,10 +56,23 @@
 
   a {
     display: block;
+    margin-bottom: 5px;
+    position: relative;
 
     img {
       max-width: 100%;
-      margin-bottom: 5px;
+    }
+
+    span {
+      position: absolute;
+      left: 5px;
+      bottom: 10px;
+      text-shadow: 1px 1px 0px black;
+      color: #f2f5f4;
+
+      &:hover {
+        color: #75c0c7;
+      }
     }
   }
 }
