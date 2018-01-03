@@ -7,7 +7,7 @@
 // @include		/^https://prep0st.rene8888.at.*$/
 // @icon		https://pr0gramm.com/media/pr0gramm-favicon.png
 // @connect     rep0st.rene8888.at
-// @version		0.5.6
+// @version		0.5.7
 // @grant		GM_notification
 // @grant       GM_xmlhttpRequest
 // @require     https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
@@ -556,6 +556,11 @@ class Utils {
 
             check();
         });
+    }
+
+
+    static escapeHtml(input) {
+        return String(input).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
 
@@ -1150,7 +1155,7 @@ class WidescreenMode {
         this.commentsWide = window.localStorage.getItem('comments_wide') === 'true';
         this.styles = __webpack_require__(12);
         this.header = document.getElementById('head-content');
-        this.logoLink = document.getElementById('pr0gramm-logo-link');
+
         this.nav = {
             button: null,
             links: null,
@@ -1163,23 +1168,18 @@ class WidescreenMode {
     }
 
     modifyLogo() {
+        let originalLink = document.getElementById('pr0gramm-logo-link');
+
+        this.logoLink = originalLink.cloneNode(true);
+        originalLink.parentNode.replaceChild(this.logoLink, originalLink);
         this.logoLink.href = '/new';
-        this.logoLink.isNew = false;
 
-        this.logoLink.addEventListener('click', () => {
-            if (this.logoLink.isNew) {
+        this.logoLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (p.location === 'new') {
                 p.reload();
-            }
-        });
-
-        window.addEventListener('beforeLocationChange', (e) => {
-            if (e.srcElement.location.href.endsWith(this.logoLink.href)) {
-                e.preventDefault();
-                this.logoLink.isNew = true;
-
-                return false;
             } else {
-                this.logoLink.isNew = false;
+                p.navigateTo('new', p.NAVIGATE.DEFAULT);
             }
         });
     }
@@ -1824,6 +1824,8 @@ exports.push([module.i, ".comments .comment + .comment-box {\n  padding-left: 0;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bower_components_simplebar_dist_simplebar_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bower_components_simplebar_dist_simplebar_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__bower_components_simplebar_dist_simplebar_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Utils__ = __webpack_require__(2);
+
 
 
 class NotificationCenter {
@@ -1946,7 +1948,7 @@ class NotificationCenter {
 
         elem.innerHTML = this.templateEntry.replaceArray(
             ['##TITLE##', '##USER##', '##TIME##', '##THUMB##', '##URL##', '##MARK##', '##TEXT##'],
-            [title, user, new Date(date * 1000).relativeTime(), img, url, mark, msg]
+            [title, user, new Date(date * 1000).relativeTime(), img, url, mark, __WEBPACK_IMPORTED_MODULE_1__Utils__["a" /* default */].escapeHtml(msg)]
         );
 
         this.messageContainer.appendChild(elem);

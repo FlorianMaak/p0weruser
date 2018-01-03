@@ -1,4 +1,5 @@
 import SimpleBar from '../../bower_components/simplebar/dist/simplebar.js';
+import Utils from '../Utils';
 
 export default class NotificationCenter {
     constructor() {
@@ -120,7 +121,7 @@ export default class NotificationCenter {
 
         elem.innerHTML = this.templateEntry.replaceArray(
             ['##TITLE##', '##USER##', '##TIME##', '##THUMB##', '##URL##', '##MARK##', '##TEXT##'],
-            [title, user, new Date(date * 1000).relativeTime(), img, url, mark, msg]
+            [title, user, new Date(date * 1000).relativeTime(), img, url, mark, Utils.escapeHtml(msg)]
         );
 
         this.messageContainer.appendChild(elem);

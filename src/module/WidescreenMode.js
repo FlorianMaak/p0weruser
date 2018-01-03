@@ -35,7 +35,7 @@ export default class WidescreenMode {
         this.commentsWide = window.localStorage.getItem('comments_wide') === 'true';
         this.styles = require('../style/widescreenMode.less');
         this.header = document.getElementById('head-content');
-        this.logoLink = document.getElementById('pr0gramm-logo-link');
+
         this.nav = {
             button: null,
             links: null,
@@ -48,23 +48,18 @@ export default class WidescreenMode {
     }
 
     modifyLogo() {
+        let originalLink = document.getElementById('pr0gramm-logo-link');
+
+        this.logoLink = originalLink.cloneNode(true);
+        originalLink.parentNode.replaceChild(this.logoLink, originalLink);
         this.logoLink.href = '/new';
-        this.logoLink.isNew = false;
 
-        this.logoLink.addEventListener('click', () => {
-            if (this.logoLink.isNew) {
+        this.logoLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (p.location === 'new') {
                 p.reload();
-            }
-        });
-
-        window.addEventListener('beforeLocationChange', (e) => {
-            if (e.srcElement.location.href.endsWith(this.logoLink.href)) {
-                e.preventDefault();
-                this.logoLink.isNew = true;
-
-                return false;
             } else {
-                this.logoLink.isNew = false;
+                p.navigateTo('new', p.NAVIGATE.DEFAULT);
             }
         });
     }
