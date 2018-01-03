@@ -559,6 +559,11 @@ class Utils {
     }
 
 
+    static escapeHtml(input) {
+        return String(input).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+
     static changeLocation(newLocation) {
         p.location = newLocation;
         window.history.pushState({}, 'pr0gramm.com', newLocation);
@@ -1824,6 +1829,8 @@ exports.push([module.i, ".comments .comment + .comment-box {\n  padding-left: 0;
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bower_components_simplebar_dist_simplebar_js__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bower_components_simplebar_dist_simplebar_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__bower_components_simplebar_dist_simplebar_js__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Utils__ = __webpack_require__(2);
+
 
 
 class NotificationCenter {
@@ -1946,7 +1953,7 @@ class NotificationCenter {
 
         elem.innerHTML = this.templateEntry.replaceArray(
             ['##TITLE##', '##USER##', '##TIME##', '##THUMB##', '##URL##', '##MARK##', '##TEXT##'],
-            [title, user, new Date(date * 1000).relativeTime(), img, url, mark, msg]
+            [title, user, new Date(date * 1000).relativeTime(), img, url, mark, __WEBPACK_IMPORTED_MODULE_1__Utils__["a" /* default */].escapeHtml(msg)]
         );
 
         this.messageContainer.appendChild(elem);

@@ -19,6 +19,11 @@ export default class Utils {
     }
 
 
+    static escapeHtml(input) {
+        return String(input).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+
     static changeLocation(newLocation) {
         p.location = newLocation;
         window.history.pushState({}, 'pr0gramm.com', newLocation);
