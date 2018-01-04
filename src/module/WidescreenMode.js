@@ -82,6 +82,14 @@ export default class WidescreenMode {
             }
         });
 
+        // Add fixed container-width
+        Utils.waitForElement('#stream').then((el) => {
+            WidescreenMode.handleResize(el[0]);
+        });
+        $(window).resize(() => {
+            WidescreenMode.handleResize(document.getElementById('stream'));
+        });
+
         // Fix audio-controls
         Utils.addVideoConstants();
 
@@ -131,6 +139,13 @@ export default class WidescreenMode {
 
             return `<div class="item-row">${result}</div>`;
         };
+    }
+
+    static handleResize(element) {
+        let container = document.getElementById('main-view');
+        let newWidth = Math.floor($(container).innerWidth() / 132) * 132;
+
+        element.style = `width: ${newWidth}px;`;
     }
 
     addItemListener(image, itemData) {
