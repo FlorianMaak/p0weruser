@@ -950,7 +950,7 @@ class Settings {
 /* 6 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"form-section settings-tab\"> <h2>Addon Einstellungen</h2> <h3>Aktionen</h3> <div class=\"form-row actions\"> <a class=\"action clear-settings-button\">Einstellungen zurücksetzen</a> </div> <h3>Versionsinformationen</h3> <div id=versioninfo> <dl> <dt>Installiert</dt> <dd id=installed_version></dd> <dt>Latest</dt> <dd id=release_version></dd> <dt>Beta</dt> <dd id=beta_version><span></span> <a class=\"action install-beta-button\" href=https://github.com/FlorianMaak/p0weruser/raw/develop/dist/p0weruser.user.js target=_blank>Beta installieren</a> </dd> </dl> </div> <h3>Verfügbare Module</h3> <div id=addon-list></div> <div class=form-row> <input type=submit id=save-addon-settings value=\"Einstellungen speichern\" class=\"confirm settings-save\"> </div> </div> ";
+module.exports = "<div class=\"form-section settings-tab\"> <h2>Addon Einstellungen</h2> <h3>Aktionen</h3> <div class=\"form-row actions\"> <a class=\"action clear-settings-button\">Einstellungen zurücksetzen</a> </div> <h3>Verfügbare Module</h3> <div id=addon-list></div> <div class=form-row> <input type=submit id=save-addon-settings value=\"Einstellungen speichern\" class=\"confirm settings-save\"> </div> <h3>Versionsinformationen</h3> <div id=versioninfo> <dl> <dt>Installiert</dt> <dd id=installed_version></dd> <dt>Latest Release</dt> <dd id=release_version></dd> <dt>Latest Beta</dt> <dd id=beta_version><span></span> <a class=\"action install-beta-button\" href=https://github.com/FlorianMaak/p0weruser/raw/develop/dist/p0weruser.user.js target=_blank>Beta installieren</a> </dd> </dl> </div> </div> ";
 
 /***/ }),
 /* 7 */
