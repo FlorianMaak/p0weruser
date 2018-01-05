@@ -7,7 +7,7 @@
 // @include		/^https://prep0st.rene8888.at.*$/
 // @icon		https://pr0gramm.com/media/pr0gramm-favicon.png
 // @connect     rep0st.rene8888.at
-// @version		0.5.7
+// @version		0.6.0
 // @grant		GM_notification
 // @grant       GM_xmlhttpRequest
 // @require     https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
@@ -659,15 +659,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Utils__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__EventHandler__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__module_WidescreenMode__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__module_RepostMarker__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__module_BenisInNavbar__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__bower_components_simplebar_dist_simplebar_css__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__module_RepostMarker__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__module_BenisInNavbar__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__bower_components_simplebar_dist_simplebar_css__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__bower_components_simplebar_dist_simplebar_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__bower_components_simplebar_dist_simplebar_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__module_AdvancedComments__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__module_NotificationCenter__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__module_DesktopNotifications__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__module_filterMarks__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__module_Rep0st__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__module_AdvancedComments__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__module_NotificationCenter__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__module_DesktopNotifications__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__module_filterMarks__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__module_Rep0st__ = __webpack_require__(36);
 
 
 
@@ -1189,7 +1189,7 @@ class WidescreenMode {
         let _this = this;
 
         p.View.Stream.Item = p.View.Stream.Item.extend({
-            template: __webpack_require__(38),
+            template: __webpack_require__(14),
             show: function (rowIndex, itemData, defaultHeight, jumpToComment) {
                 this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
                 this.syncVotes(p.user.voteCache.votes);
@@ -1216,7 +1216,7 @@ class WidescreenMode {
 
         // Extend comments-rendering and template
         p.View.Stream.Comments = p.View.Stream.Comments.extend({
-            template: __webpack_require__(14),
+            template: __webpack_require__(15),
             render: function () {
                 this.parent();
                 _this.comments = [this.$commentForm.find('textarea')[0]];
@@ -1438,7 +1438,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "body[class] #head-content:after {\n  left: 15px;\n}\nbody[class].fixed {\n  overflow: hidden;\n}\nbody[class] > .side-wide-skyscraper {\n  display: none;\n}\nbody[class] #page.desktop,\nbody[class] #page #head {\n  padding: 0 20px;\n  width: 100% !important;\n}\nbody[class] #page.desktop #pr0-miner,\nbody[class] #page #head #pr0-miner {\n  display: none;\n}\nbody[class] #page #main-view #stream {\n  text-align: center;\n  display: block;\n  margin: 0 auto;\n}\nbody[class] #page #main-view #stream a.thumb {\n  display: inline-block;\n  float: left;\n}\nbody[class] #page #head {\n  background: rgba(0, 0, 0, 0.8);\n}\nbody[class] #page #head #head-content {\n  background: none;\n  display: flex;\n  align-items: center;\n}\nbody[class] #page #head #head-content #loader {\n  left: -20px;\n  right: -20px;\n}\nbody[class] #page #head #head-content #filter-menu {\n  left: calc(50% - 135px);\n}\nbody[class] #page #head #head-content > .user-info {\n  order: 20;\n  margin: 0;\n}\nbody[class] #page #head #head-content > #head-menu {\n  padding: 0;\n  order: 3;\n  flex-grow: 1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\nbody[class] #page #head #head-content > #pr0gramm-logo-link {\n  order: 1;\n  height: 24px;\n  margin: 0;\n}\nbody[class] #page #head #head-content a[id*=\"badge\"] {\n  order: 2;\n  position: relative;\n  top: 0;\n  left: 0;\n  margin-left: 5px;\n  transform: scale(0.75);\n}\nbody[class] #page #head #head-content .sidebar-toggle {\n  order: 0;\n  color: #fff;\n  font-size: 20px;\n  margin-right: 10px;\n}\nbody[class] #page #head #head-content .sidebar-toggle.active {\n  color: #ee4d2e;\n}\nbody[class] > #footer-links {\n  width: 250px;\n  left: -250px !important;\n  position: fixed;\n  margin: 0;\n  top: 52px;\n  border-right: 3px solid #2a2e31;\n  background: #161618;\n  transition: left .2s linear;\n  z-index: 500;\n}\nbody[class] > #footer-links.open {\n  left: 0 !important;\n  box-shadow: 2px 0 10px #000;\n}\nbody[class] > #footer-links a {\n  color: #fff;\n  display: block;\n  text-align: left;\n  padding: 10px 20px;\n  margin-right: 0;\n  font-size: 16px;\n}\nbody[class] > #footer-links a:hover {\n  color: #ee4d2e;\n}\nbody[class] > #footer-links a:before {\n  font-family: 'FontAwesome';\n  margin-right: 10px;\n  display: inline-block;\n  width: 20px;\n}\nbody[class] > #footer-links a[href=\"/faq\"]:before {\n  content: \"\\F059\";\n}\nbody[class] > #footer-links a[href=\"/contact\"]:before {\n  content: \"\\F0E0\";\n}\nbody[class] > #footer-links a[href*=\"//miner.pr0gramm.com\"]:before {\n  content: \"\\F15A\";\n}\nbody[class] > #footer-links a[href=\"http://app.pr0gramm.com\"]:before {\n  content: \"\\F10B\";\n}\nbody[class] > #footer-links a[href=\"https://twitter.com/pr0gramm\"]:before {\n  content: \"\\F099\";\n}\n#stream .item-container {\n  margin: 0;\n  max-height: calc(100vh - 52px);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: rgba(0, 0, 0, 0.9);\n  position: fixed;\n  top: 52px;\n  right: 0;\n  left: -20px;\n  bottom: -20px;\n  padding: 0;\n  z-index: 10;\n}\n#stream .item-container .item-pointer {\n  display: none;\n}\n#stream .item-container .item-container-content {\n  display: flex;\n  height: 100%;\n  width: 100%;\n}\n#stream .item-container .item-container-content .image-main {\n  display: flex;\n  width: 100%;\n  flex-direction: column;\n}\n#stream .item-container .item-container-content .image-main .item-info {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100px;\n}\n#stream .item-container .item-container-content .image-main .item-info > div {\n  position: relative;\n  display: flex;\n  width: 90%;\n  max-width: 980px;\n}\n#stream .item-container .item-container-content .image-main .item-info > div .item-details,\n#stream .item-container .item-container-content .image-main .item-info > div .item-tags {\n  padding: 5px 20px 5px 40px;\n}\n#stream .item-container .item-container-content .image-main .item-info > div .item-vote {\n  display: flex;\n  align-items: center;\n  left: 0;\n  top: 0;\n  position: relative;\n}\n#stream .item-container .item-container-content .image-main .item-info > div .item-vote .vote-fav {\n  position: relative;\n  margin-left: 20px;\n  font-size: 32px;\n  left: 0;\n  top: 0;\n}\n#stream .item-container .item-container-content .image-main .item-info > div .item-vote .score {\n  position: relative;\n  top: 0;\n  left: 10px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper {\n  flex-grow: 1;\n  overflow: hidden;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 40px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .video-controls {\n  height: 64px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .video-controls .audio-controls {\n  left: 20px;\n  bottom: 20px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper.resized .item-image {\n  max-height: calc(100vh - 200px);\n  top: auto !important;\n  left: auto !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper.oversize:not(.resized) .item-image {\n  cursor: move;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev,\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next {\n  display: flex;\n  height: 50px;\n  align-items: center;\n  justify-content: center;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev span:before,\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next span:before {\n  opacity: .2;\n  font-size: 70px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev:hover span:before,\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next:hover span:before {\n  opacity: .6;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev {\n  padding: 0 0 0 20px !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next {\n  right: 20px;\n  padding: 0 5px !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .video-controls {\n  width: 100% !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .video-controls .video-position-bar-background {\n  min-height: 2px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .item-image {\n  height: auto !important;\n  width: auto !important;\n  outline: none;\n}\n#stream .item-container .item-container-content .item-comments {\n  background: #161618;\n  width: 30vw;\n  flex-grow: 0;\n  flex-shrink: 0;\n  padding-top: 30px;\n  border-right: 3px solid #2a2e31;\n}\n#stream .item-container .item-container-content .item-comments.toggled {\n  transition: width 0.2s ease-out;\n}\n#stream .item-container .item-container-content .item-comments.wide {\n  width: 40vw;\n}\n#stream .item-container .item-container-content .item-comments.wide .comments-switch:before {\n  content: \"\\F053\";\n}\n#stream .item-container .item-container-content .item-comments.wide .comment-count {\n  width: 40vw;\n}\n#stream .item-container .item-container-content .item-comments .comments-head {\n  padding: 10px 10px 10px 30px;\n}\n#stream .item-container .item-container-content .item-comments .comments-head .comment-content,\n#stream .item-container .item-container-content .item-comments .comments-head .comment-foot,\n#stream .item-container .item-container-content .item-comments .comments-head .comment {\n  max-width: 100%;\n}\n#stream .item-container .item-container-content .item-comments .comment-count {\n  display: flex;\n  align-items: center;\n  background-color: #2a2e31;\n  text-align: left;\n  padding: 10px 10px 10px 35px;\n  transition: width 0.2s ease-out;\n  z-index: 400;\n  position: fixed;\n  top: 52px;\n  width: 30vw;\n}\n#stream .item-container .item-container-content .item-comments .comment-count > div:first-child {\n  flex-grow: 1;\n}\n#stream .item-container .item-container-content .item-comments .comment-count .comments-switch {\n  cursor: pointer;\n}\n#stream .item-container .item-container-content .item-comments textarea {\n  transition: height 0.2s ease-out;\n}\n#stream .item-container .item-container-content .item-comments textarea.comment:focus,\n#stream .item-container .item-container-content .item-comments textarea.comment:valid,\n#stream .item-container .item-container-content .item-comments textarea.reply {\n  height: 75px;\n}\n#stream .item-container .item-container-content .item-comments .simplebar-scrollbar {\n  background: #2a2e31;\n  border-radius: 0;\n  right: 0;\n}\n#stream .item-container .item-container-content .item-comments .simplebar-scrollbar.visible {\n  opacity: 1;\n}\n#stream .item-container .item-container-content .item-comments .simplebar-content {\n  outline: none;\n}\n", ""]);
+exports.push([module.i, "body[class] #head-content:after {\n  left: 15px;\n}\nbody[class].fixed {\n  overflow: hidden;\n}\nbody[class] > .side-wide-skyscraper {\n  display: none;\n}\nbody[class] #page.desktop,\nbody[class] #page #head {\n  padding: 0 20px;\n  width: 100% !important;\n}\nbody[class] #page.desktop #pr0-miner,\nbody[class] #page #head #pr0-miner {\n  display: none;\n}\nbody[class] #page #main-view #stream {\n  text-align: center;\n  display: block;\n  margin: 0 auto;\n}\nbody[class] #page #main-view #stream a.thumb {\n  display: inline-block;\n  float: left;\n}\nbody[class] #page #head {\n  background: rgba(0, 0, 0, 0.8);\n}\nbody[class] #page #head #head-content {\n  background: none;\n  display: flex;\n  align-items: center;\n}\nbody[class] #page #head #head-content #loader {\n  left: -20px;\n  right: -20px;\n}\nbody[class] #page #head #head-content #filter-menu {\n  left: calc(50% - 135px);\n}\nbody[class] #page #head #head-content > .user-info {\n  order: 20;\n  margin: 0;\n}\nbody[class] #page #head #head-content > #head-menu {\n  padding: 0;\n  order: 3;\n  flex-grow: 1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\nbody[class] #page #head #head-content > #pr0gramm-logo-link {\n  order: 1;\n  height: 24px;\n  margin: 0;\n}\nbody[class] #page #head #head-content a[id*=\"badge\"] {\n  order: 2;\n  position: relative;\n  top: 0;\n  left: 0;\n  margin-left: 5px;\n  transform: scale(0.75);\n}\nbody[class] #page #head #head-content .sidebar-toggle {\n  order: 0;\n  color: #fff;\n  font-size: 20px;\n  margin-right: 10px;\n}\nbody[class] #page #head #head-content .sidebar-toggle.active {\n  color: #ee4d2e;\n}\nbody[class] > #footer-links {\n  width: 250px;\n  left: -250px !important;\n  position: fixed;\n  margin: 0;\n  top: 52px;\n  border-right: 3px solid #2a2e31;\n  background: #161618;\n  transition: left .2s linear;\n  z-index: 500;\n}\nbody[class] > #footer-links.open {\n  left: 0 !important;\n  box-shadow: 2px 0 10px #000;\n}\nbody[class] > #footer-links a {\n  color: #fff;\n  display: block;\n  text-align: left;\n  padding: 10px 20px;\n  margin-right: 0;\n  font-size: 16px;\n}\nbody[class] > #footer-links a:hover {\n  color: #ee4d2e;\n}\nbody[class] > #footer-links a:before {\n  font-family: 'FontAwesome';\n  margin-right: 10px;\n  display: inline-block;\n  width: 20px;\n}\nbody[class] > #footer-links a[href=\"/faq\"]:before {\n  content: \"\\F059\";\n}\nbody[class] > #footer-links a[href=\"/contact\"]:before {\n  content: \"\\F0E0\";\n}\nbody[class] > #footer-links a[href*=\"//miner.pr0gramm.com\"]:before {\n  content: \"\\F15A\";\n}\nbody[class] > #footer-links a[href=\"http://app.pr0gramm.com\"]:before {\n  content: \"\\F10B\";\n}\nbody[class] > #footer-links a[href=\"https://twitter.com/pr0gramm\"]:before {\n  content: \"\\F099\";\n}\n#stream .item-container {\n  margin: 0;\n  max-height: calc(100vh - 52px);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: rgba(0, 0, 0, 0.9);\n  position: fixed;\n  top: 52px;\n  right: 0;\n  left: -20px;\n  bottom: -20px;\n  padding: 0;\n  z-index: 10;\n}\n#stream .item-container .item-pointer {\n  display: none;\n}\n#stream .item-container .item-container-content {\n  display: flex;\n  height: 100%;\n  width: 100%;\n}\n#stream .item-container .item-container-content .image-main {\n  display: flex;\n  width: 100%;\n  flex-direction: column;\n}\n#stream .item-container .item-container-content .image-main .item-info {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  min-height: 100px;\n}\n#stream .item-container .item-container-content .image-main .item-info > div {\n  position: relative;\n  display: flex;\n  width: 90%;\n  max-width: 980px;\n}\n#stream .item-container .item-container-content .image-main .item-info > div .item-details,\n#stream .item-container .item-container-content .image-main .item-info > div .item-tags {\n  padding: 5px 20px 5px 40px;\n}\n#stream .item-container .item-container-content .image-main .item-info > div .item-vote {\n  display: flex;\n  align-items: center;\n  left: 0;\n  top: 0;\n  position: relative;\n}\n#stream .item-container .item-container-content .image-main .item-info > div .item-vote .vote-fav {\n  position: relative;\n  margin-left: 20px;\n  font-size: 32px;\n  left: 0;\n  top: 0;\n}\n#stream .item-container .item-container-content .image-main .item-info > div .item-vote .score {\n  position: relative;\n  top: 0;\n  left: 10px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper {\n  flex-grow: 1;\n  overflow: hidden;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  padding: 40px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .video-controls {\n  height: 64px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .video-controls .audio-controls {\n  left: 20px;\n  bottom: 20px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper.resized .item-image {\n  max-height: calc(100vh - 200px);\n  top: auto !important;\n  left: auto !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper.oversize:not(.resized) .item-image {\n  cursor: move;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev,\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next {\n  display: flex;\n  height: 50px;\n  align-items: center;\n  justify-content: center;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev span:before,\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next span:before {\n  opacity: .2;\n  font-size: 70px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev:hover span:before,\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next:hover span:before {\n  opacity: .6;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-prev {\n  padding: 0 0 0 20px !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .stream-next {\n  right: 20px;\n  padding: 0 5px !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .video-controls {\n  width: 100% !important;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .video-controls .video-position-bar-background {\n  min-height: 2px;\n}\n#stream .item-container .item-container-content .image-main .item-image-wrapper .item-image {\n  height: auto !important;\n  width: auto !important;\n  outline: none;\n}\n#stream .item-container .item-container-content .item-comments {\n  background: #161618;\n  width: 30vw;\n  flex-grow: 0;\n  flex-shrink: 0;\n  padding-top: 30px;\n  border-right: 3px solid #2a2e31;\n}\n#stream .item-container .item-container-content .item-comments .comment[voted-up] .vote-up {\n  color: var(--theme-main-color);\n}\n#stream .item-container .item-container-content .item-comments .comment[voted-up] .vote-down {\n  color: #3c3c3c;\n}\n#stream .item-container .item-container-content .item-comments .comment[voted-down] .vote-up .vote-up {\n  color: #3c3c3c;\n}\n#stream .item-container .item-container-content .item-comments .comment[voted-down] .vote-up .vote-down {\n  color: var(--theme-main-color);\n}\n#stream .item-container .item-container-content .item-comments.toggled {\n  transition: width 0.2s ease-out;\n}\n#stream .item-container .item-container-content .item-comments.wide {\n  width: 40vw;\n}\n#stream .item-container .item-container-content .item-comments.wide .comments-switch:before {\n  content: \"\\F053\";\n}\n#stream .item-container .item-container-content .item-comments.wide .comment-count {\n  width: 40vw;\n}\n#stream .item-container .item-container-content .item-comments .comments-head {\n  padding: 10px 10px 10px 30px;\n}\n#stream .item-container .item-container-content .item-comments .comments-head .comment-content,\n#stream .item-container .item-container-content .item-comments .comments-head .comment-foot,\n#stream .item-container .item-container-content .item-comments .comments-head .comment {\n  max-width: 100%;\n}\n#stream .item-container .item-container-content .item-comments .comment-count {\n  display: flex;\n  align-items: center;\n  background-color: #2a2e31;\n  text-align: left;\n  padding: 10px 10px 10px 35px;\n  transition: width 0.2s ease-out;\n  z-index: 400;\n  position: fixed;\n  top: 52px;\n  width: 30vw;\n}\n#stream .item-container .item-container-content .item-comments .comment-count > div:first-child {\n  flex-grow: 1;\n}\n#stream .item-container .item-container-content .item-comments .comment-count .comments-switch {\n  cursor: pointer;\n}\n#stream .item-container .item-container-content .item-comments textarea {\n  transition: height 0.2s ease-out;\n}\n#stream .item-container .item-container-content .item-comments textarea.comment:focus,\n#stream .item-container .item-container-content .item-comments textarea.comment:valid,\n#stream .item-container .item-container-content .item-comments textarea.reply {\n  height: 75px;\n}\n#stream .item-container .item-container-content .item-comments .simplebar-scrollbar {\n  background: #2a2e31;\n  border-radius: 0;\n  right: 0;\n}\n#stream .item-container .item-container-content .item-comments .simplebar-scrollbar.visible {\n  opacity: 1;\n}\n#stream .item-container .item-container-content .item-comments .simplebar-content {\n  outline: none;\n}\n", ""]);
 
 // exports
 
@@ -1447,10 +1447,16 @@ exports.push([module.i, "body[class] #head-content:after {\n  left: 15px;\n}\nbo
 /* 14 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=comment-count> <div><span class=pict>c</span> {\"Kommentar\".inflect(commentCount)}</div> <div class=\"comments-switch fa fa-chevron-right\"></div> </div> <div class=comments-head> <form class=comment-form method=post> <textarea class=comment name=comment required placeholder=\"Kommentar schreiben…\"></textarea> <input type=hidden name=parentId value=0 /> <input type=hidden name=itemId value={params.id} /> <div> <input type=submit value=Abschicken /> <input type=button value=Abbrechen class=cancel /> </div> </form> <form class=comment-edit-form method=post> <textarea class=comment required name=comment></textarea> <input type=hidden name=commentId value=0 /> <div> <input type=submit value=Abschicken /> <input type=button value=Abbrechen class=cancel /> </div> </form> <div class=comments> <?js var recurseComments = function( comments, level ) { ?> <div class=comment-box> <?js for( var i = 0; i < comments.length; i++ ) { var c = comments[i]; ?> <div class=comment-box-inner> <div class=comment{p.voteClass(c.vote)} id=comment{c.id}> <div class=comment-vote> <span class=\"pict vote-up\">+</span> <span class=\"pict vote-down\">-</span> </div> <div class=comment-content> {c.content.format()}</div> <div class=comment-foot> <?js if(c.name == itemUser){?> <span class=user-comment-op>OP</span> <?js}?> <a href=#user/{c.name} class=\"user um{c.mark}\">{c.name}</a> <span class=score title=\"{c.up} up, {c.down} down\">{\"Punkt\".inflect(c.score)}</span> <a href=#{tab}/{itemId}:comment{c.id} class=\"time permalink\">{c.date.relativeTime(true)}</a> <?js if( level < CONFIG.COMMENTS_MAX_LEVELS ) {?> <a href=#{tab}/{itemId}:comment{c.id} class=\"comment-reply-link action\"> <span class=pict>r</span> antworten </a> <?js } ?> <?js if (c.children.length > 0) {?> <span class=\"fold fold-in action\" title=\"Kommentare einklappen\">[–]</span> <span class=\"fold fold-out action\" title=\"Kommentare ausklappen\">[+]</span> <span class=folded-comments-message> (<span class=folded-comments-count></span> eingeklappt) </span> <?js } ?> <?js if( p.user.admin ) {?> [ <span class=\"comment-delete action\">del</span> / <a href=#{tab}/{itemId}:comment{c.id} class=\"comment-edit-link action\">edit</a> ] <?js } ?> </div> </div> <?js if( c.children.length ) { recurseComments(c.children, level+1); } ?> </div> <?js } ?> </div> <?js }; ?> <?js recurseComments(comments, 1); ?> </div> </div> ";
+module.exports = "<div class=item-pointer></div> <div class=item-container-content> <?js if( p.user.admin ) {?> <svg class=\"flags flags-{item.flags}\" viewBox=\"0 0 10 10\"> <polygon points=\"0,0 10,0 0,10\"></polygon> </svg> <?js } ?> <div class=item-comments data-simplebar></div> <div class=image-main> <div class=item-image-wrapper> <?js if( item.video ) { ?> <?js if(supportsAutoplay) {?> <video class=item-image src={item.image} type=video/mp4 loop autoplay preload=auto></video> <?js } else { ?> <video class=item-image webkit-playsinline playsinline poster={item.thumb} src={item.image} type=video/mp4 loop preload=metadata></video> <svg class=video-play-button viewBox=\"0 0 200 200\"> <circle cx=100 cy=100 r=90 fill=none stroke-width=15 stroke=#fff></circle> <polygon points=\"70, 55 70, 145 145, 100\" fill=#fff></polygon> </svg> <?js } ?> <div class=\"video-controls<?js if(item.audio){?> has-audio<?js}?>\"> <div class=video-position-bar-background> <div class=video-position></div> </div> <?js if(item.audio) {?> <div class=audio-controls> <svg class=audio-state viewBox=\"0 0 75 75\"> <polygon class=audio-speaker points=\"39.389,13.769 22.235,28.606 6,28.606 6,47.699 21.989,47.699 39.389,62.75 39.389,13.769\"/> <g class=audio-x> <path d=\"M 49,50 69,26\"/> <path d=\"M 69,50 49,26\"/> </g> <g class=audio-wave> <path class=audio-wave-1 d=\"M 48,49 C 50,46 51,42 51,38 C 51,34 50,31 48,28\"/> <path class=audio-wave-2 d=\"M 55,21 C 59,26 61,32 61,38 C 61,45 59,51 55,56\"/> <path class=audio-wave-3 d=\"M 62,63 C 67,56 70,48 70,38 C 70,29 67,21 62,14\"/> </g> </svg> <div class=audio-volume-controls> <div class=audio-volume-bar></div> <div class=audio-volume-slider></div> </div> </div> <?js } ?> </div> <?js } else { ?> <img class=item-image src={item.image} /> <?js if(item.fullsize) { ?> <a href={item.fullsize} target=_blank class=item-fullsize-link>+</a> <?js } ?> <?js } ?> <?js if( p.user.showAds ) { ?> <div class=stream-prev title=Neuer> <span class=\"fa fa-angle-left\"></span> </div> <div class=stream-next title=Älter> <span class=\"fa fa-angle-right\"></span> </div> <?js } else { ?> <div class=\"stream-prev arrow pict\" title=Neuer>&lt;</div> <div class=\"stream-next arrow pict\" title=Älter>&gt;</div> <?js } ?> </div> <div class=item-info> <div> <div class=item-vote{p.voteClass(item.vote)}> <div> <span class=\"pict vote-up\">+</span> <span class=\"pict vote-down\">-</span> </div> <span class=\"score<?js if(!p.olderThanMinAge(item)){?> score-young<?js}?>\" title=\"{item.up} up, {item.down} down\"> <?js print(item.up - item.down)?> </span> <?js if( item.user != p.user.name ) {?> <span class=\"pict vote-fav{p.favClass(item.vote)}\">*</span> <?js } ?> </div> <div> <div class=item-details> <a class=time title={item.date.readableTime()} href=/new/{item.id}>{item.date.relativeTime(true)}</a> <span class=time>von</span> <a href=#user/{item.user} class=\"user um{item.mark}\">{item.user}</a> <span class=item-source> <?js if( item.source ) {?> <span class=pict>s</span>&nbsp;<a href={{item.source}} target=_blank>{{item.source.hostName()}}</a> <?js } else { ?> <span class=pict>s</span>upload</span> <?js } ?>  <?js if( !item.video ) {?> <span class=item-google-search> <span class=pict>g</span>&nbsp; <a href=\"https://www.google.com/searchbyimage?hl=en&amp;safe=off&amp;site=search&amp;image_url=http:{item.image}\" target=_blank> Bild googeln </a> </span> <?js } ?> <?js if( p.user.admin ) { ?> [<span class=action id=item-delete data-id={item.id}>del</span>] [<a href=/new/phash.{item.id}.12>phash</a>] <?js } ?> </div> <div class=item-tags></div> </div> </div> </div> </div> </div> ";
 
 /***/ }),
 /* 15 */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=comment-count> <div><span class=pict>c</span> {\"Kommentar\".inflect(commentCount)}</div> <div class=\"comments-switch fa fa-chevron-right\"></div> </div> <div class=comments-head> <form class=comment-form method=post> <textarea class=comment name=comment required placeholder=\"Kommentar schreiben…\"></textarea> <input type=hidden name=parentId value=0 /> <input type=hidden name=itemId value={params.id} /> <div> <input type=submit value=Abschicken /> <input type=button value=Abbrechen class=cancel /> </div> </form> <form class=comment-edit-form method=post> <textarea class=comment required name=comment></textarea> <input type=hidden name=commentId value=0 /> <div> <input type=submit value=Abschicken /> <input type=button value=Abbrechen class=cancel /> </div> </form> <div class=comments> <?js var recurseComments = function( comments, level ) { ?> <div class=comment-box> <?js for( var i = 0; i < comments.length; i++ ) { var c = comments[i]; ?> <div class=comment-box-inner> <div class=comment{p.voteClass(c.vote)} id=comment{c.id}> <div class=comment-vote> <span class=\"pict vote-up\">+</span> <span class=\"pict vote-down\">-</span> </div> <div class=comment-content> {c.content.format()}</div> <div class=comment-foot> <?js if(c.name == itemUser){?> <span class=user-comment-op>OP</span> <?js}?> <a href=#user/{c.name} class=\"user um{c.mark}\">{c.name}</a> <span class=score title=\"{c.up} up, {c.down} down\">{\"Punkt\".inflect(c.score)}</span> <a href=#{tab}/{itemId}:comment{c.id} class=\"time permalink\">{c.date.relativeTime(true)}</a> <?js if( level < CONFIG.COMMENTS_MAX_LEVELS ) {?> <a href=#{tab}/{itemId}:comment{c.id} class=\"comment-reply-link action\"> <span class=pict>r</span> antworten </a> <?js } ?> <?js if (c.children.length > 0) {?> <span class=\"fold fold-in action\" title=\"Kommentare einklappen\">[–]</span> <span class=\"fold fold-out action\" title=\"Kommentare ausklappen\">[+]</span> <span class=folded-comments-message> (<span class=folded-comments-count></span> eingeklappt) </span> <?js } ?> <?js if( p.user.admin ) {?> [ <span class=\"comment-delete action\">del</span> / <a href=#{tab}/{itemId}:comment{c.id} class=\"comment-edit-link action\">edit</a> ] <?js } ?> </div> </div> <?js if( c.children.length ) { recurseComments(c.children, level+1); } ?> </div> <?js } ?> </div> <?js }; ?> <?js recurseComments(comments, 1); ?> </div> </div> ";
+
+/***/ }),
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1476,7 +1482,7 @@ class RepostMarker {
 
 
     load() {
-        this.styles = __webpack_require__(16);
+        this.styles = __webpack_require__(17);
         this.overrideBuildItem();
 
         // Get reposts, if not searched before
@@ -1544,13 +1550,13 @@ class RepostMarker {
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(17);
+var content = __webpack_require__(18);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -1575,7 +1581,7 @@ if(false) {
 }
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(undefined);
@@ -1589,7 +1595,7 @@ exports.push([module.i, ".repost {\n  position: relative;\n}\n.repost:after {\n 
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1605,7 +1611,7 @@ class BenisInNavbar {
 
     load() {
         this.benis = '-';
-        this.styles = __webpack_require__(19);
+        this.styles = __webpack_require__(20);
         this.target = document.getElementById('user-profile-name');
         this.addListener();
 
@@ -1629,13 +1635,13 @@ class BenisInNavbar {
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(20);
+var content = __webpack_require__(21);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -1660,7 +1666,7 @@ if(false) {
 }
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(undefined);
@@ -1674,13 +1680,13 @@ exports.push([module.i, "#user-profile-name:before {\n  font-family: 'FontAwesom
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(22);
+var content = __webpack_require__(23);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -1705,7 +1711,7 @@ if(false) {
 }
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(undefined);
@@ -1719,7 +1725,7 @@ exports.push([module.i, "/*!\n * \n *             SimpleBar.js - v2.4.3\n *     
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1734,7 +1740,7 @@ class AdvancedComments {
 
 
     load() {
-        this.styles = __webpack_require__(24);
+        this.styles = __webpack_require__(25);
 
         this.prepareComments();
     }
@@ -1783,13 +1789,13 @@ class AdvancedComments {
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(25);
+var content = __webpack_require__(26);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -1814,7 +1820,7 @@ if(false) {
 }
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(undefined);
@@ -1828,7 +1834,7 @@ exports.push([module.i, ".comments .comment + .comment-box {\n  padding-left: 0;
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1847,9 +1853,9 @@ class NotificationCenter {
 
     load() {
         this.menuOpen = false;
-        this.template = __webpack_require__(27);
-        this.templateEntry = __webpack_require__(28);
-        this.style = __webpack_require__(29);
+        this.template = __webpack_require__(28);
+        this.templateEntry = __webpack_require__(29);
+        this.style = __webpack_require__(30);
         this.icon = $('#inbox-link');
         this.elem = document.createElement('div');
         this.elem.innerHTML = this.template;
@@ -1969,25 +1975,25 @@ class NotificationCenter {
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports) {
 
 module.exports = "<ul id=new-messages> </ul> <div> <a href=/inbox/all class=action>Alle Benachrichtigungen</a> </div> ";
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports) {
 
 module.exports = "<div> ##THUMB## </div> <a href=##URL## class=content> <div class=headline>##TITLE##</div> <div class=text>##TEXT##</div> <span class=\"user um##MARK##\">##USER##</span> <span class=\"time permalink\">##TIME##</span> </a> ";
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(30);
+var content = __webpack_require__(31);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -2012,7 +2018,7 @@ if(false) {
 }
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(undefined);
@@ -2026,7 +2032,7 @@ exports.push([module.i, "#inbox-link {\n  position: relative;\n}\n#inbox-link.ac
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2063,7 +2069,7 @@ class DesktopNotifications {
 
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2078,7 +2084,7 @@ class FilterMarks {
 
 
     load() {
-        this.styles = __webpack_require__(33);
+        this.styles = __webpack_require__(34);
         this.overrideViews();
     }
 
@@ -2129,13 +2135,13 @@ class FilterMarks {
 
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(34);
+var content = __webpack_require__(35);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -2160,7 +2166,7 @@ if(false) {
 }
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(undefined);
@@ -2174,7 +2180,7 @@ exports.push([module.i, ".item-details .badge {\n  padding: 3px 5px;\n  font-siz
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2195,7 +2201,7 @@ class Rep0st {
     load() {
         let _this = this;
         this.visible = false;
-        this.styles = __webpack_require__(36);
+        this.styles = __webpack_require__(37);
 
         p.View.Stream.Item = p.View.Stream.Item.extend({
             show: function (rowIndex, itemData, defaultHeight, jumpToComment) {
@@ -2333,13 +2339,13 @@ class Rep0st {
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(37);
+var content = __webpack_require__(38);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -2364,7 +2370,7 @@ if(false) {
 }
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(undefined);
@@ -2376,12 +2382,6 @@ exports.push([module.i, ".repost-link {\n  margin-left: 15px;\n}\n.repost-link .
 
 // exports
 
-
-/***/ }),
-/* 38 */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=item-pointer></div> <div class=item-container-content> <?js if( p.user.admin ) {?> <svg class=\"flags flags-{item.flags}\" viewBox=\"0 0 10 10\"> <polygon points=\"0,0 10,0 0,10\"></polygon> </svg> <?js } ?> <div class=item-comments data-simplebar></div> <div class=image-main> <div class=item-image-wrapper> <?js if( item.video ) { ?> <?js if(supportsAutoplay) {?> <video class=item-image src={item.image} type=video/mp4 loop autoplay preload=auto></video> <?js } else { ?> <video class=item-image webkit-playsinline playsinline poster={item.thumb} src={item.image} type=video/mp4 loop preload=metadata></video> <svg class=video-play-button viewBox=\"0 0 200 200\"> <circle cx=100 cy=100 r=90 fill=none stroke-width=15 stroke=#fff></circle> <polygon points=\"70, 55 70, 145 145, 100\" fill=#fff></polygon> </svg> <?js } ?> <div class=\"video-controls<?js if(item.audio){?> has-audio<?js}?>\"> <div class=video-position-bar-background> <div class=video-position></div> </div> <?js if(item.audio) {?> <div class=audio-controls> <svg class=audio-state viewBox=\"0 0 75 75\"> <polygon class=audio-speaker points=\"39.389,13.769 22.235,28.606 6,28.606 6,47.699 21.989,47.699 39.389,62.75 39.389,13.769\"/> <g class=audio-x> <path d=\"M 49,50 69,26\"/> <path d=\"M 69,50 49,26\"/> </g> <g class=audio-wave> <path class=audio-wave-1 d=\"M 48,49 C 50,46 51,42 51,38 C 51,34 50,31 48,28\"/> <path class=audio-wave-2 d=\"M 55,21 C 59,26 61,32 61,38 C 61,45 59,51 55,56\"/> <path class=audio-wave-3 d=\"M 62,63 C 67,56 70,48 70,38 C 70,29 67,21 62,14\"/> </g> </svg> <div class=audio-volume-controls> <div class=audio-volume-bar></div> <div class=audio-volume-slider></div> </div> </div> <?js } ?> </div> <?js } else { ?> <img class=item-image src={item.image} /> <?js if(item.fullsize) { ?> <a href={item.fullsize} target=_blank class=item-fullsize-link>+</a> <?js } ?> <?js } ?> <?js if( p.user.showAds ) { ?> <div class=stream-prev title=Neuer> <span class=\"fa fa-angle-left\"></span> </div> <div class=stream-next title=Älter> <span class=\"fa fa-angle-right\"></span> </div> <?js } else { ?> <div class=\"stream-prev arrow pict\" title=Neuer>&lt;</div> <div class=\"stream-next arrow pict\" title=Älter>&gt;</div> <?js } ?> </div> <div class=item-info> <div> <div class=item-vote{p.voteClass(item.vote)}> <div> <span class=\"pict vote-up\">+</span> <span class=\"pict vote-down\">-</span> </div> <span class=\"score<?js if(!p.olderThanMinAge(item)){?> score-young<?js}?>\" title=\"{item.up} up, {item.down} down\"> <?js print(item.up - item.down)?> </span> <?js if( item.user != p.user.name ) {?> <span class=\"pict vote-fav{p.favClass(item.vote)}\">*</span> <?js } ?> </div> <div> <div class=item-details> <a class=time title={item.date.readableTime()} href=/new/{item.id}>{item.date.relativeTime(true)}</a> <span class=time>von</span> <a href=#user/{item.user} class=\"user um{item.mark}\">{item.user}</a> <span class=item-source> <?js if( item.source ) {?> <span class=pict>s</span>&nbsp;<a href={{item.source}} target=_blank>{{item.source.hostName()}}</a> <?js } else { ?> <span class=pict>s</span>upload</span> <?js } ?>  <?js if( !item.video ) {?> <span class=item-google-search> <span class=pict>g</span>&nbsp; <a href=\"https://www.google.com/searchbyimage?hl=en&amp;safe=off&amp;site=search&amp;image_url=http:{item.image}\" target=_blank> Bild googeln </a> </span> <?js } ?> <?js if( p.user.admin ) { ?> [<span class=action id=item-delete data-id={item.id}>del</span>] [<a href=/new/phash.{item.id}.12>phash</a>] <?js } ?> </div> <div class=item-tags></div> </div> </div> </div> </div> </div> ";
 
 /***/ })
 /******/ ]);

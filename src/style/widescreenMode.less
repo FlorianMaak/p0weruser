@@ -307,6 +307,26 @@ body[class] {
       padding-top: 30px;
       border-right: 3px solid #2a2e31;
 
+      .comment[voted-up] {
+        .vote-up {
+          color: var(--theme-main-color);
+        }
+
+        .vote-down {
+          color: #3c3c3c;
+        }
+      }
+
+      .comment[voted-down] .vote-up {
+        .vote-up {
+          color: #3c3c3c;
+        }
+
+        .vote-down {
+          color: var(--theme-main-color);
+        }
+      }
+
       &.toggled {
         transition: width .2s ease-out;
       }
