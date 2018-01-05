@@ -72,6 +72,7 @@ export default class WidescreenMode {
             template: require('../template/streamItem.html'),
             show: function (rowIndex, itemData, defaultHeight, jumpToComment) {
                 this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
+                this.syncVotes(p.user.voteCache.votes);
 
                 _this.addItemListener(this.$image, itemData);
                 document.body.classList.add('fixed');
