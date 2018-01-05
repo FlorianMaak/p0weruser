@@ -72,6 +72,7 @@ export default class WidescreenMode {
             template: require('../template/streamItem.html'),
             show: function (rowIndex, itemData, defaultHeight, jumpToComment) {
                 this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
+                this.syncVotes(p.user.voteCache.votes);
 
                 _this.addItemListener(this.$image, itemData);
                 document.body.classList.add('fixed');
@@ -80,6 +81,14 @@ export default class WidescreenMode {
                 this.parent();
                 document.body.classList.remove('fixed');
             }
+        });
+
+        // Add fixed container-width
+        Utils.waitForElement('#stream').then((el) => {
+            WidescreenMode.handleResize(el[0]);
+        });
+        $(window).resize(() => {
+            WidescreenMode.handleResize(document.getElementById('stream'));
         });
 
         // Fix audio-controls
@@ -131,6 +140,13 @@ export default class WidescreenMode {
 
             return `<div class="item-row">${result}</div>`;
         };
+    }
+
+    static handleResize(element) {
+        let container = document.getElementById('main-view');
+        let newWidth = Math.floor($(container).innerWidth() / 132) * 132;
+
+        element.style = `width: ${newWidth}px;`;
     }
 
     addItemListener(image, itemData) {

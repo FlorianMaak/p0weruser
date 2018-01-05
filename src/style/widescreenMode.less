@@ -1,5 +1,10 @@
 body[class] {
 
+  // Fix newyears-hat
+  #head-content:after {
+    left: 15px;
+  }
+
   &.fixed {
     overflow: hidden;
   }
@@ -19,12 +24,16 @@ body[class] {
       }
     }
 
-    #stream {
-      text-align: center;
+    #main-view {
+      #stream {
+        text-align: center;
+        display: block;
+        margin: 0 auto;
 
-      a.thumb {
-        display: inline-block;
-        float: none;
+        a.thumb {
+          display: inline-block;
+          float: left;
+        }
       }
     }
 
@@ -297,6 +306,26 @@ body[class] {
       flex-shrink: 0;
       padding-top: 30px;
       border-right: 3px solid #2a2e31;
+
+      .comment[voted-up] {
+        .vote-up {
+          color: var(--theme-main-color);
+        }
+
+        .vote-down {
+          color: #3c3c3c;
+        }
+      }
+
+      .comment[voted-down] .vote-up {
+        .vote-up {
+          color: #3c3c3c;
+        }
+
+        .vote-down {
+          color: var(--theme-main-color);
+        }
+      }
 
       &.toggled {
         transition: width .2s ease-out;
