@@ -7,7 +7,9 @@
 // @include		/^https://prep0st.rene8888.at.*$/
 // @icon		https://pr0gramm.com/media/pr0gramm-favicon.png
 // @connect     rep0st.rene8888.at
-// @version		0.6.0
+// @connect     github.com
+// @connect     raw.githubusercontent.com
+// @version		0.6.1
 // @grant		GM_notification
 // @grant       GM_xmlhttpRequest
 // @require     https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
@@ -872,6 +874,9 @@ class Settings {
         this.tabs.getElementsByClassName('active')[0].classList.remove('active');
         button.classList.add('active');
 
+        // Load Versioninfo
+        this.loadVersionInfo();
+
         // Add listener to clear-button
         let clearButton = this.tabContent.getElementsByClassName('clear-settings-button')[0];
         clearButton.addEventListener('click', () => {
@@ -887,6 +892,22 @@ class Settings {
         })
     }
 
+    loadVersionInfo() {
+        let elems = {
+            installed: document.getElementById('installed_version'),
+            release: document.getElementById('release_version'),
+            beta: document.querySelectorAll('#beta_version > span')[0]
+        };
+
+        elems.installed.innerText = GM_info.script.version;
+        Settings.getVersion(false).then((version) => {
+            elems.release.innerText = version;
+        });
+        Settings.getVersion(true).then((version) => {
+            elems.beta.innerText = version;
+        });
+    }
+
     static addHint() {
         let header = document.getElementById('head-content');
         let hint = document.createElement('div');
@@ -894,6 +915,31 @@ class Settings {
         hint.innerText = 'Bitte öffne die Einstellungen um p0weruser zu konfigurieren!';
 
         header.appendChild(hint);
+    }
+
+    static getVersion(getBeta) {
+        let url = 'https://github.com/FlorianMaak/p0weruser/raw/master/src/template/scriptHeader.txt';
+
+        if(getBeta) {
+            url = 'https://github.com/FlorianMaak/p0weruser/raw/develop/src/template/scriptHeader.txt';
+        }
+
+        return new Promise((resolve, reject) => {
+            GM_xmlhttpRequest({
+                url: url,
+                method: 'GET',
+                headers: {
+                    'cache-control': 'no-cache',
+                    'Upgrade-Insecure-Requests': 1
+                },
+                onload: (res) => {
+                    resolve(res.responseText.match('@version(.*)\t\t(.*)\n')[2]);
+                },
+                onError: (res) => {
+                    reject(res);
+                }
+            });
+        });
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Settings;
@@ -904,7 +950,7 @@ class Settings {
 /* 6 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"form-section settings-tab\"> <h2>Addon Einstellungen</h2> <h3>Aktionen</h3> <div class=\"form-row actions\"> <a class=\"action clear-settings-button\">Einstellungen zurücksetzen</a> <a class=\"action install-beta-button\" href=https://github.com/FlorianMaak/p0weruser/raw/develop/dist/p0weruser.user.js target=_blank>Beta installieren</a> </div> <h3>Verfügbare Module</h3> <div id=addon-list></div> <div class=form-row> <input type=submit id=save-addon-settings value=\"Einstellungen speichern\" class=\"confirm settings-save\"> </div> </div> ";
+module.exports = "<div class=\"form-section settings-tab\"> <h2>Addon Einstellungen</h2> <h3>Aktionen</h3> <div class=\"form-row actions\"> <a class=\"action clear-settings-button\">Einstellungen zurücksetzen</a> </div> <h3>Versionsinformationen</h3> <div id=versioninfo> <dl> <dt>Installiert</dt> <dd id=installed_version></dd> <dt>Latest</dt> <dd id=release_version></dd> <dt>Beta</dt> <dd id=beta_version><span></span> <a class=\"action install-beta-button\" href=https://github.com/FlorianMaak/p0weruser/raw/develop/dist/p0weruser.user.js target=_blank>Beta installieren</a> </dd> </dl> </div> <h3>Verfügbare Module</h3> <div id=addon-list></div> <div class=form-row> <input type=submit id=save-addon-settings value=\"Einstellungen speichern\" class=\"confirm settings-save\"> </div> </div> ";
 
 /***/ }),
 /* 7 */
@@ -946,7 +992,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "#addon-list label {\n  margin-bottom: 10px;\n}\n#addon-list label span {\n  display: block;\n  color: #888;\n}\n#settings_hint {\n  background-color: var(--theme-main-color);\n  text-align: center;\n  position: absolute;\n  top: 52px;\n  width: 100%;\n  padding: 10px;\n}\n.settings-tab .actions a:not(:first-of-type) {\n  margin-left: 10px;\n}\n", ""]);
+exports.push([module.i, "#addon-list label {\n  margin-bottom: 10px;\n}\n#addon-list label span {\n  display: block;\n  color: #888;\n}\n#settings_hint {\n  background-color: var(--theme-main-color);\n  text-align: center;\n  position: absolute;\n  top: 52px;\n  width: 100%;\n  padding: 10px;\n}\n.settings-tab .actions a:not(:first-of-type) {\n  margin-left: 10px;\n}\n.settings-tab #versioninfo dt {\n  float: left;\n  font-weight: bold;\n  margin-right: 0.5em;\n  width: 130px;\n}\n.settings-tab #versioninfo dt::after {\n  content: \": \";\n}\n.settings-tab #versioninfo dd::after {\n  clear: left;\n  content: \" \";\n  display: block;\n}\n.settings-tab #versioninfo dd:empty:before {\n  content: '...';\n}\n.settings-tab #versioninfo dd a {\n  font-size: 10px;\n  margin-left: 5px;\n}\n.settings-tab #versioninfo dd a:after {\n  content: ')';\n}\n.settings-tab #versioninfo dd a:before {\n  content: '(';\n}\n", ""]);
 
 // exports
 
@@ -2264,23 +2310,6 @@ class Rep0st {
         dta.append('filter', 'sfw');
         dta.append('filter', 'nsfw');
         dta.append('filter', 'nsfl');
-
-        let settings = {
-            'async': true,
-            'crossDomain': true,
-            'url': 'https://rep0st.rene8888.at/',
-            'method': 'POST',
-            'headers': {
-                'cache-control': 'no-cache',
-                'Upgrade-Insecure-Requests': 1,
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
-            },
-            'processData': false,
-            'contentType': false,
-            'mimeType': 'multipart/form-data',
-            'data': dta
-        };
-
 
         GM_xmlhttpRequest({
             url: 'https://rep0st.rene8888.at/',
