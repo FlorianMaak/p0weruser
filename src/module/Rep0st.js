@@ -76,23 +76,6 @@ export default class Rep0st {
         dta.append('filter', 'nsfw');
         dta.append('filter', 'nsfl');
 
-        let settings = {
-            'async': true,
-            'crossDomain': true,
-            'url': 'https://rep0st.rene8888.at/',
-            'method': 'POST',
-            'headers': {
-                'cache-control': 'no-cache',
-                'Upgrade-Insecure-Requests': 1,
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8'
-            },
-            'processData': false,
-            'contentType': false,
-            'mimeType': 'multipart/form-data',
-            'data': dta
-        };
-
-
         GM_xmlhttpRequest({
             url: 'https://rep0st.rene8888.at/',
             method: 'POST',

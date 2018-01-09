@@ -1,0 +1,101 @@
+import Tesseract from 'tesseract.js';
+import SimpleBar from '../../bower_components/simplebar/dist/simplebar.js';
+import Utils from '../Utils';
+
+export default class ImageOCR {
+    constructor() {
+        this.name = 'Texterkennung';
+        this.description = 'Extrahiere Text aus Bildern.'
+    }
+
+
+    load() {
+        this.styles = require('../style/imageOCR.less');
+        this.template = require('../template/ocrPopup.html');
+        this.searchWording = 'Verarbeite Bild...';
+        this.popup = document.createElement('div');
+        this.popup.id = 'ocr-popup';
+        this.$popup = $(this.popup);
+        this.popup.innerHTML = this.template;
+        this.textbox = this.$popup.find('.content')[0];
+        this.close = this.$popup.find('.close-popup')[0];
+
+        new SimpleBar(this.popup);
+        this.addButton();
+    }
+
+
+    addButton() {
+        let _this = this;
+
+        p.View.Stream.Item = p.View.Stream.Item.extend({
+            show: function (rowIndex, itemData, defaultHeight, jumpToComment) {
+                this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
+
+                if (this.$image[0].tagName !== 'VIDEO') {
+                    let container = this.$image.parent();
+                    let button = document.createElement('span');
+                    button.innerHTML = `<span class="fa fa-search ocr-button"></span>`;
+                    container[0].appendChild(button);
+
+                    button.addEventListener('click', () => {
+                        container.append(_this.popup);
+
+                        _this.checkImage();
+                    });
+
+                    _this.close.addEventListener('click', () => {
+                        _this.togglePopup();
+                    });
+
+                    _this.textbox.addEventListener('wheel', e => {
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        return false;
+                    });
+                }
+            }
+        });
+
+        // Fix audio-controls
+        Utils.addVideoConstants();
+    }
+
+
+    checkImage() {
+        let image = document.getElementsByClassName('item-image')[0];
+        this.textbox.innerText = this.searchWording;
+        this.popup.classList.add('visible');
+
+        GM_xmlhttpRequest({
+            url: image.src,
+            method: 'GET',
+            responseType: 'arraybuffer',
+            headers: {
+                'cache-control': 'no-cache',
+                'Upgrade-Insecure-Requests': 1
+            },
+            onload: (res) => {
+                Tesseract.recognize(new Blob([new Uint8Array(res.response)]), {
+                    lang: 'deu'
+                }).then(result => {
+                    this.togglePopup(result.text);
+                }).catch(err => {
+                    this.togglePopup();
+                });
+            }
+        });
+    }
+
+
+    togglePopup(text = false) {
+        if (!text) {
+            this.popup.classList.remove('visible');
+
+            return false;
+        }
+
+        this.textbox.innerText = text;
+    }
+}
