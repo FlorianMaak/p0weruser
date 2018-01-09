@@ -1,5 +1,5 @@
 import Tesseract from 'tesseract.js';
-import blobUtil from 'blob-util';
+import SimpleBar from '../../bower_components/simplebar/dist/simplebar.js';
 import Utils from '../Utils';
 
 export default class ImageOCR {
@@ -11,7 +11,16 @@ export default class ImageOCR {
 
     load() {
         this.styles = require('../style/imageOCR.less');
+        this.template = require('../template/ocrPopup.html');
+        this.searchWording = 'Verarbeite Bild...';
+        this.popup = document.createElement('div');
+        this.popup.id = 'ocr-popup';
+        this.$popup = $(this.popup);
+        this.popup.innerHTML = this.template;
+        this.textbox = this.$popup.find('.content')[0];
+        this.close = this.$popup.find('.close-popup')[0];
 
+        new SimpleBar(this.popup);
         this.addButton();
     }
 
@@ -23,14 +32,27 @@ export default class ImageOCR {
             show: function (rowIndex, itemData, defaultHeight, jumpToComment) {
                 this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
 
-                if(this.$image[0].tagName !== 'VIDEO') {
+                if (this.$image[0].tagName !== 'VIDEO') {
+                    let container = this.$image.parent();
                     let button = document.createElement('span');
-
                     button.innerHTML = `<span class="fa fa-search ocr-button"></span>`;
-                    this.$image.parent()[0].appendChild(button);
+                    container[0].appendChild(button);
 
                     button.addEventListener('click', () => {
+                        container.append(_this.popup);
+
                         _this.checkImage();
+                    });
+
+                    _this.close.addEventListener('click', () => {
+                        _this.togglePopup();
+                    });
+
+                    _this.textbox.addEventListener('wheel', e => {
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        return false;
                     });
                 }
             }
@@ -43,6 +65,8 @@ export default class ImageOCR {
 
     checkImage() {
         let image = document.getElementsByClassName('item-image')[0];
+        this.textbox.innerText = this.searchWording;
+        this.popup.classList.add('visible');
 
         GM_xmlhttpRequest({
             url: image.src,
@@ -67,11 +91,11 @@ export default class ImageOCR {
 
     togglePopup(text = false) {
         if (!text) {
-            //close
+            this.popup.classList.remove('visible');
+
             return false;
         }
 
-        // show
-        console.log(text);
+        this.textbox.innerText = text;
     }
 }

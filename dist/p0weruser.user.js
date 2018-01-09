@@ -2533,8 +2533,8 @@ exports.push([module.i, ".repost-link {\n  margin-left: 15px;\n}\n.repost-link .
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tesseract_js__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_tesseract_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_tesseract_js__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_blob_util__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_blob_util___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_blob_util__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__bower_components_simplebar_dist_simplebar_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__bower_components_simplebar_dist_simplebar_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__bower_components_simplebar_dist_simplebar_js__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Utils__ = __webpack_require__(2);
 
 
@@ -2549,7 +2549,16 @@ class ImageOCR {
 
     load() {
         this.styles = __webpack_require__(47);
+        this.template = __webpack_require__(55);
+        this.searchWording = 'Verarbeite Bild...';
+        this.popup = document.createElement('div');
+        this.popup.id = 'ocr-popup';
+        this.$popup = $(this.popup);
+        this.popup.innerHTML = this.template;
+        this.textbox = this.$popup.find('.content')[0];
+        this.close = this.$popup.find('.close-popup')[0];
 
+        new __WEBPACK_IMPORTED_MODULE_1__bower_components_simplebar_dist_simplebar_js___default.a(this.popup);
         this.addButton();
     }
 
@@ -2561,14 +2570,27 @@ class ImageOCR {
             show: function (rowIndex, itemData, defaultHeight, jumpToComment) {
                 this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
 
-                if(this.$image[0].tagName !== 'VIDEO') {
+                if (this.$image[0].tagName !== 'VIDEO') {
+                    let container = this.$image.parent();
                     let button = document.createElement('span');
-
                     button.innerHTML = `<span class="fa fa-search ocr-button"></span>`;
-                    this.$image.parent()[0].appendChild(button);
+                    container[0].appendChild(button);
 
                     button.addEventListener('click', () => {
+                        container.append(_this.popup);
+
                         _this.checkImage();
+                    });
+
+                    _this.close.addEventListener('click', () => {
+                        _this.togglePopup();
+                    });
+
+                    _this.textbox.addEventListener('wheel', e => {
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        return false;
                     });
                 }
             }
@@ -2581,6 +2603,8 @@ class ImageOCR {
 
     checkImage() {
         let image = document.getElementsByClassName('item-image')[0];
+        this.textbox.innerText = this.searchWording;
+        this.popup.classList.add('visible');
 
         GM_xmlhttpRequest({
             url: image.src,
@@ -2605,12 +2629,12 @@ class ImageOCR {
 
     togglePopup(text = false) {
         if (!text) {
-            //close
+            this.popup.classList.remove('visible');
+
             return false;
         }
 
-        // show
-        console.log(text);
+        this.textbox.innerText = text;
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = ImageOCR;
@@ -3187,814 +3211,22 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, ".ocr-button {\n  position: absolute;\n  top: 10px;\n  left: 15px;\n  color: #fff;\n  opacity: 0.7;\n  font-size: 22px;\n  text-shadow: 0 0 3px #000;\n  z-index: 10;\n}\n.ocr-button:hover {\n  color: var(--theme-main-color);\n  opacity: 1;\n  text-shadow: none;\n  cursor: pointer;\n}\n", ""]);
+exports.push([module.i, ".ocr-button {\n  position: absolute;\n  top: 10px;\n  left: 15px;\n  color: #fff;\n  opacity: 0.7;\n  font-size: 22px;\n  text-shadow: 0 0 3px #000;\n  z-index: 10;\n}\n.ocr-button:hover {\n  color: var(--theme-main-color);\n  opacity: 1;\n  text-shadow: none;\n  cursor: pointer;\n}\n#ocr-popup {\n  position: absolute;\n  left: 70px;\n  background: #161618;\n  right: 70px;\n  border: 3px solid #2a2e31;\n  max-height: 80vh;\n  display: none;\n  box-shadow: 0 0 10px #000;\n}\n#ocr-popup.visible {\n  display: block;\n}\n#ocr-popup pre {\n  padding: 10px;\n}\n#ocr-popup .close-popup {\n  float: right;\n  margin-right: 10px;\n  margin-top: 5px;\n  cursor: pointer;\n}\n#ocr-popup .close-popup:hover {\n  color: var(--theme-main-color);\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 49 */
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */
 /***/ (function(module, exports) {
 
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 50 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/* jshint -W079 */
-var Blob = __webpack_require__(51);
-var Promise = __webpack_require__(52);
-
-//
-// PRIVATE
-//
-
-// From http://stackoverflow.com/questions/14967647/ (continues on next line)
-// encode-decode-image-with-base64-breaks-image (2013-04-21)
-function binaryStringToArrayBuffer(binary) {
-  var length = binary.length;
-  var buf = new ArrayBuffer(length);
-  var arr = new Uint8Array(buf);
-  var i = -1;
-  while (++i < length) {
-    arr[i] = binary.charCodeAt(i);
-  }
-  return buf;
-}
-
-// Can't find original post, but this is close
-// http://stackoverflow.com/questions/6965107/ (continues on next line)
-// converting-between-strings-and-arraybuffers
-function arrayBufferToBinaryString(buffer) {
-  var binary = '';
-  var bytes = new Uint8Array(buffer);
-  var length = bytes.byteLength;
-  var i = -1;
-  while (++i < length) {
-    binary += String.fromCharCode(bytes[i]);
-  }
-  return binary;
-}
-
-// doesn't download the image more than once, because
-// browsers aren't dumb. uses the cache
-function loadImage(src, crossOrigin) {
-  return new Promise(function (resolve, reject) {
-    var img = new Image();
-    if (crossOrigin) {
-      img.crossOrigin = crossOrigin;
-    }
-    img.onload = function () {
-      resolve(img);
-    };
-    img.onerror = reject;
-    img.src = src;
-  });
-}
-
-function imgToCanvas(img) {
-  var canvas = document.createElement('canvas');
-
-  canvas.width = img.width;
-  canvas.height = img.height;
-
-  // copy the image contents to the canvas
-  var context = canvas.getContext('2d');
-  context.drawImage(
-    img,
-    0, 0,
-    img.width, img.height,
-    0, 0,
-    img.width, img.height);
-
-  return canvas;
-}
-
-//
-// PUBLIC
-//
-
-/**
- * Shim for
- * [new Blob()]{@link https://developer.mozilla.org/en-US/docs/Web/API/Blob.Blob}
- * to support
- * [older browsers that use the deprecated <code>BlobBuilder</code> API]{@link http://caniuse.com/blob}.
- *
- * @param {Array} parts - content of the <code>Blob</code>
- * @param {Object} options - usually just <code>{type: myContentType}</code>
- * @returns {Blob}
- */
-function createBlob(parts, options) {
-  options = options || {};
-  if (typeof options === 'string') {
-    options = {type: options}; // do you a solid here
-  }
-  return new Blob(parts, options);
-}
-
-/**
- * Shim for
- * [URL.createObjectURL()]{@link https://developer.mozilla.org/en-US/docs/Web/API/URL.createObjectURL}
- * to support browsers that only have the prefixed
- * <code>webkitURL</code> (e.g. Android <4.4).
- * @param {Blob} blob
- * @returns {string} url
- */
-function createObjectURL(blob) {
-  return (window.URL || window.webkitURL).createObjectURL(blob);
-}
-
-/**
- * Shim for
- * [URL.revokeObjectURL()]{@link https://developer.mozilla.org/en-US/docs/Web/API/URL.revokeObjectURL}
- * to support browsers that only have the prefixed
- * <code>webkitURL</code> (e.g. Android <4.4).
- * @param {string} url
- */
-function revokeObjectURL(url) {
-  return (window.URL || window.webkitURL).revokeObjectURL(url);
-}
-
-/**
- * Convert a <code>Blob</code> to a binary string. Returns a Promise.
- *
- * @param {Blob} blob
- * @returns {Promise} Promise that resolves with the binary string
- */
-function blobToBinaryString(blob) {
-  return new Promise(function (resolve, reject) {
-    var reader = new FileReader();
-    var hasBinaryString = typeof reader.readAsBinaryString === 'function';
-    reader.onloadend = function (e) {
-      var result = e.target.result || '';
-      if (hasBinaryString) {
-        return resolve(result);
-      }
-      resolve(arrayBufferToBinaryString(result));
-    };
-    reader.onerror = reject;
-    if (hasBinaryString) {
-      reader.readAsBinaryString(blob);
-    } else {
-      reader.readAsArrayBuffer(blob);
-    }
-  });
-}
-
-/**
- * Convert a base64-encoded string to a <code>Blob</code>. Returns a Promise.
- * @param {string} base64
- * @param {string|undefined} type - the content type (optional)
- * @returns {Promise} Promise that resolves with the <code>Blob</code>
- */
-function base64StringToBlob(base64, type) {
-  return Promise.resolve().then(function () {
-    var parts = [binaryStringToArrayBuffer(atob(base64))];
-    return type ? createBlob(parts, {type: type}) : createBlob(parts);
-  });
-}
-
-/**
- * Convert a binary string to a <code>Blob</code>. Returns a Promise.
- * @param {string} binary
- * @param {string|undefined} type - the content type (optional)
- * @returns {Promise} Promise that resolves with the <code>Blob</code>
- */
-function binaryStringToBlob(binary, type) {
-  return Promise.resolve().then(function () {
-    return base64StringToBlob(btoa(binary), type);
-  });
-}
-
-/**
- * Convert a <code>Blob</code> to a binary string. Returns a Promise.
- * @param {Blob} blob
- * @returns {Promise} Promise that resolves with the binary string
- */
-function blobToBase64String(blob) {
-  return blobToBinaryString(blob).then(function (binary) {
-    return btoa(binary);
-  });
-}
-
-/**
- * Convert a data URL string
- * (e.g. <code>'data:image/png;base64,iVBORw0KG...'</code>)
- * to a <code>Blob</code>. Returns a Promise.
- * @param {string} dataURL
- * @returns {Promise} Promise that resolves with the <code>Blob</code>
- */
-function dataURLToBlob(dataURL) {
-  return Promise.resolve().then(function () {
-    var type = dataURL.match(/data:([^;]+)/)[1];
-    var base64 = dataURL.replace(/^[^,]+,/, '');
-
-    var buff = binaryStringToArrayBuffer(atob(base64));
-    return createBlob([buff], {type: type});
-  });
-}
-
-/**
- * Convert a <code>Blob</code> to a data URL string
- * (e.g. <code>'data:image/png;base64,iVBORw0KG...'</code>).
- * Returns a Promise.
- * @param {Blob} blob
- * @returns {Promise} Promise that resolves with the data URL string
- */
-function blobToDataURL(blob) {
-  return blobToBase64String(blob).then(function (base64String) {
-    return 'data:' + blob.type + ';base64,' + base64String;
-  });
-}
-
-/**
- * Convert an image's <code>src</code> URL to a data URL by loading the image and painting
- * it to a <code>canvas</code>. Returns a Promise.
- *
- * <p/>Note: this will coerce the image to the desired content type, and it
- * will only paint the first frame of an animated GIF.
- *
- * @param {string} src
- * @param {string|undefined} type - the content type (optional, defaults to 'image/png')
- * @param {string|undefined} crossOrigin - for CORS-enabled images, set this to
- *                                         'Anonymous' to avoid "tainted canvas" errors
- * @param {number|undefined} quality - a number between 0 and 1 indicating image quality
- *                                     if the requested type is 'image/jpeg' or 'image/webp'
- * @returns {Promise} Promise that resolves with the data URL string
- */
-function imgSrcToDataURL(src, type, crossOrigin, quality) {
-  type = type || 'image/png';
-
-  return loadImage(src, crossOrigin).then(function (img) {
-    return imgToCanvas(img);
-  }).then(function (canvas) {
-    return canvas.toDataURL(type, quality);
-  });
-}
-
-/**
- * Convert a <code>canvas</code> to a <code>Blob</code>. Returns a Promise.
- * @param {string} canvas
- * @param {string|undefined} type - the content type (optional, defaults to 'image/png')
- * @param {number|undefined} quality - a number between 0 and 1 indicating image quality
- *                                     if the requested type is 'image/jpeg' or 'image/webp'
- * @returns {Promise} Promise that resolves with the <code>Blob</code>
- */
-function canvasToBlob(canvas, type, quality) {
-  return Promise.resolve().then(function () {
-    if (typeof canvas.toBlob === 'function') {
-      return new Promise(function (resolve) {
-        canvas.toBlob(resolve, type, quality);
-      });
-    }
-    return dataURLToBlob(canvas.toDataURL(type, quality));
-  });
-}
-
-/**
- * Convert an image's <code>src</code> URL to a <code>Blob</code> by loading the image and painting
- * it to a <code>canvas</code>. Returns a Promise.
- *
- * <p/>Note: this will coerce the image to the desired content type, and it
- * will only paint the first frame of an animated GIF.
- *
- * @param {string} src
- * @param {string|undefined} type - the content type (optional, defaults to 'image/png')
- * @param {string|undefined} crossOrigin - for CORS-enabled images, set this to
- *                                         'Anonymous' to avoid "tainted canvas" errors
- * @param {number|undefined} quality - a number between 0 and 1 indicating image quality
- *                                     if the requested type is 'image/jpeg' or 'image/webp'
- * @returns {Promise} Promise that resolves with the <code>Blob</code>
- */
-function imgSrcToBlob(src, type, crossOrigin, quality) {
-  type = type || 'image/png';
-
-  return loadImage(src, crossOrigin).then(function (img) {
-    return imgToCanvas(img);
-  }).then(function (canvas) {
-    return canvasToBlob(canvas, type, quality);
-  });
-}
-
-/**
- * Convert an <code>ArrayBuffer</code> to a <code>Blob</code>. Returns a Promise.
- *
- * @param {ArrayBuffer} buffer
- * @param {string|undefined} type - the content type (optional)
- * @returns {Promise} Promise that resolves with the <code>Blob</code>
- */
-function arrayBufferToBlob(buffer, type) {
-  return Promise.resolve().then(function () {
-    return createBlob([buffer], type);
-  });
-}
-
-/**
- * Convert a <code>Blob</code> to an <code>ArrayBuffer</code>. Returns a Promise.
- * @param {Blob} blob
- * @returns {Promise} Promise that resolves with the <code>ArrayBuffer</code>
- */
-function blobToArrayBuffer(blob) {
-  return new Promise(function (resolve, reject) {
-    var reader = new FileReader();
-    reader.onloadend = function (e) {
-      var result = e.target.result || new ArrayBuffer(0);
-      resolve(result);
-    };
-    reader.onerror = reject;
-    reader.readAsArrayBuffer(blob);
-  });
-}
-
-module.exports = {
-  createBlob         : createBlob,
-  createObjectURL    : createObjectURL,
-  revokeObjectURL    : revokeObjectURL,
-  imgSrcToBlob       : imgSrcToBlob,
-  imgSrcToDataURL    : imgSrcToDataURL,
-  canvasToBlob       : canvasToBlob,
-  dataURLToBlob      : dataURLToBlob,
-  blobToDataURL      : blobToDataURL,
-  blobToBase64String : blobToBase64String,
-  base64StringToBlob : base64StringToBlob,
-  binaryStringToBlob : binaryStringToBlob,
-  blobToBinaryString : blobToBinaryString,
-  arrayBufferToBlob  : arrayBufferToBlob,
-  blobToArrayBuffer  : blobToArrayBuffer
-};
-
-
-/***/ }),
-/* 51 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {/**
- * Create a blob builder even when vendor prefixes exist
- */
-
-var BlobBuilder = global.BlobBuilder
-  || global.WebKitBlobBuilder
-  || global.MSBlobBuilder
-  || global.MozBlobBuilder;
-
-/**
- * Check if Blob constructor is supported
- */
-
-var blobSupported = (function() {
-  try {
-    var a = new Blob(['hi']);
-    return a.size === 2;
-  } catch(e) {
-    return false;
-  }
-})();
-
-/**
- * Check if Blob constructor supports ArrayBufferViews
- * Fails in Safari 6, so we need to map to ArrayBuffers there.
- */
-
-var blobSupportsArrayBufferView = blobSupported && (function() {
-  try {
-    var b = new Blob([new Uint8Array([1,2])]);
-    return b.size === 2;
-  } catch(e) {
-    return false;
-  }
-})();
-
-/**
- * Check if BlobBuilder is supported
- */
-
-var blobBuilderSupported = BlobBuilder
-  && BlobBuilder.prototype.append
-  && BlobBuilder.prototype.getBlob;
-
-/**
- * Helper function that maps ArrayBufferViews to ArrayBuffers
- * Used by BlobBuilder constructor and old browsers that didn't
- * support it in the Blob constructor.
- */
-
-function mapArrayBufferViews(ary) {
-  for (var i = 0; i < ary.length; i++) {
-    var chunk = ary[i];
-    if (chunk.buffer instanceof ArrayBuffer) {
-      var buf = chunk.buffer;
-
-      // if this is a subarray, make a copy so we only
-      // include the subarray region from the underlying buffer
-      if (chunk.byteLength !== buf.byteLength) {
-        var copy = new Uint8Array(chunk.byteLength);
-        copy.set(new Uint8Array(buf, chunk.byteOffset, chunk.byteLength));
-        buf = copy.buffer;
-      }
-
-      ary[i] = buf;
-    }
-  }
-}
-
-function BlobBuilderConstructor(ary, options) {
-  options = options || {};
-
-  var bb = new BlobBuilder();
-  mapArrayBufferViews(ary);
-
-  for (var i = 0; i < ary.length; i++) {
-    bb.append(ary[i]);
-  }
-
-  return (options.type) ? bb.getBlob(options.type) : bb.getBlob();
-};
-
-function BlobConstructor(ary, options) {
-  mapArrayBufferViews(ary);
-  return new Blob(ary, options || {});
-};
-
-module.exports = (function() {
-  if (blobSupported) {
-    return blobSupportsArrayBufferView ? global.Blob : BlobConstructor;
-  } else if (blobBuilderSupported) {
-    return BlobBuilderConstructor;
-  } else {
-    return undefined;
-  }
-})();
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(49)))
-
-/***/ }),
-/* 52 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = typeof Promise === 'function' ? Promise : __webpack_require__(53);
-
-
-/***/ }),
-/* 53 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var immediate = __webpack_require__(54);
-
-/* istanbul ignore next */
-function INTERNAL() {}
-
-var handlers = {};
-
-var REJECTED = ['REJECTED'];
-var FULFILLED = ['FULFILLED'];
-var PENDING = ['PENDING'];
-
-module.exports = Promise;
-
-function Promise(resolver) {
-  if (typeof resolver !== 'function') {
-    throw new TypeError('resolver must be a function');
-  }
-  this.state = PENDING;
-  this.queue = [];
-  this.outcome = void 0;
-  if (resolver !== INTERNAL) {
-    safelyResolveThenable(this, resolver);
-  }
-}
-
-Promise.prototype["catch"] = function (onRejected) {
-  return this.then(null, onRejected);
-};
-Promise.prototype.then = function (onFulfilled, onRejected) {
-  if (typeof onFulfilled !== 'function' && this.state === FULFILLED ||
-    typeof onRejected !== 'function' && this.state === REJECTED) {
-    return this;
-  }
-  var promise = new this.constructor(INTERNAL);
-  if (this.state !== PENDING) {
-    var resolver = this.state === FULFILLED ? onFulfilled : onRejected;
-    unwrap(promise, resolver, this.outcome);
-  } else {
-    this.queue.push(new QueueItem(promise, onFulfilled, onRejected));
-  }
-
-  return promise;
-};
-function QueueItem(promise, onFulfilled, onRejected) {
-  this.promise = promise;
-  if (typeof onFulfilled === 'function') {
-    this.onFulfilled = onFulfilled;
-    this.callFulfilled = this.otherCallFulfilled;
-  }
-  if (typeof onRejected === 'function') {
-    this.onRejected = onRejected;
-    this.callRejected = this.otherCallRejected;
-  }
-}
-QueueItem.prototype.callFulfilled = function (value) {
-  handlers.resolve(this.promise, value);
-};
-QueueItem.prototype.otherCallFulfilled = function (value) {
-  unwrap(this.promise, this.onFulfilled, value);
-};
-QueueItem.prototype.callRejected = function (value) {
-  handlers.reject(this.promise, value);
-};
-QueueItem.prototype.otherCallRejected = function (value) {
-  unwrap(this.promise, this.onRejected, value);
-};
-
-function unwrap(promise, func, value) {
-  immediate(function () {
-    var returnValue;
-    try {
-      returnValue = func(value);
-    } catch (e) {
-      return handlers.reject(promise, e);
-    }
-    if (returnValue === promise) {
-      handlers.reject(promise, new TypeError('Cannot resolve promise with itself'));
-    } else {
-      handlers.resolve(promise, returnValue);
-    }
-  });
-}
-
-handlers.resolve = function (self, value) {
-  var result = tryCatch(getThen, value);
-  if (result.status === 'error') {
-    return handlers.reject(self, result.value);
-  }
-  var thenable = result.value;
-
-  if (thenable) {
-    safelyResolveThenable(self, thenable);
-  } else {
-    self.state = FULFILLED;
-    self.outcome = value;
-    var i = -1;
-    var len = self.queue.length;
-    while (++i < len) {
-      self.queue[i].callFulfilled(value);
-    }
-  }
-  return self;
-};
-handlers.reject = function (self, error) {
-  self.state = REJECTED;
-  self.outcome = error;
-  var i = -1;
-  var len = self.queue.length;
-  while (++i < len) {
-    self.queue[i].callRejected(error);
-  }
-  return self;
-};
-
-function getThen(obj) {
-  // Make sure we only access the accessor once as required by the spec
-  var then = obj && obj.then;
-  if (obj && (typeof obj === 'object' || typeof obj === 'function') && typeof then === 'function') {
-    return function appyThen() {
-      then.apply(obj, arguments);
-    };
-  }
-}
-
-function safelyResolveThenable(self, thenable) {
-  // Either fulfill, reject or reject with error
-  var called = false;
-  function onError(value) {
-    if (called) {
-      return;
-    }
-    called = true;
-    handlers.reject(self, value);
-  }
-
-  function onSuccess(value) {
-    if (called) {
-      return;
-    }
-    called = true;
-    handlers.resolve(self, value);
-  }
-
-  function tryToUnwrap() {
-    thenable(onSuccess, onError);
-  }
-
-  var result = tryCatch(tryToUnwrap);
-  if (result.status === 'error') {
-    onError(result.value);
-  }
-}
-
-function tryCatch(func, value) {
-  var out = {};
-  try {
-    out.value = func(value);
-    out.status = 'success';
-  } catch (e) {
-    out.status = 'error';
-    out.value = e;
-  }
-  return out;
-}
-
-Promise.resolve = resolve;
-function resolve(value) {
-  if (value instanceof this) {
-    return value;
-  }
-  return handlers.resolve(new this(INTERNAL), value);
-}
-
-Promise.reject = reject;
-function reject(reason) {
-  var promise = new this(INTERNAL);
-  return handlers.reject(promise, reason);
-}
-
-Promise.all = all;
-function all(iterable) {
-  var self = this;
-  if (Object.prototype.toString.call(iterable) !== '[object Array]') {
-    return this.reject(new TypeError('must be an array'));
-  }
-
-  var len = iterable.length;
-  var called = false;
-  if (!len) {
-    return this.resolve([]);
-  }
-
-  var values = new Array(len);
-  var resolved = 0;
-  var i = -1;
-  var promise = new this(INTERNAL);
-
-  while (++i < len) {
-    allResolver(iterable[i], i);
-  }
-  return promise;
-  function allResolver(value, i) {
-    self.resolve(value).then(resolveFromAll, function (error) {
-      if (!called) {
-        called = true;
-        handlers.reject(promise, error);
-      }
-    });
-    function resolveFromAll(outValue) {
-      values[i] = outValue;
-      if (++resolved === len && !called) {
-        called = true;
-        handlers.resolve(promise, values);
-      }
-    }
-  }
-}
-
-Promise.race = race;
-function race(iterable) {
-  var self = this;
-  if (Object.prototype.toString.call(iterable) !== '[object Array]') {
-    return this.reject(new TypeError('must be an array'));
-  }
-
-  var len = iterable.length;
-  var called = false;
-  if (!len) {
-    return this.resolve([]);
-  }
-
-  var i = -1;
-  var promise = new this(INTERNAL);
-
-  while (++i < len) {
-    resolver(iterable[i]);
-  }
-  return promise;
-  function resolver(value) {
-    self.resolve(value).then(function (response) {
-      if (!called) {
-        called = true;
-        handlers.resolve(promise, response);
-      }
-    }, function (error) {
-      if (!called) {
-        called = true;
-        handlers.reject(promise, error);
-      }
-    });
-  }
-}
-
-
-/***/ }),
-/* 54 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(global) {
-var Mutation = global.MutationObserver || global.WebKitMutationObserver;
-
-var scheduleDrain;
-
-{
-  if (Mutation) {
-    var called = 0;
-    var observer = new Mutation(nextTick);
-    var element = global.document.createTextNode('');
-    observer.observe(element, {
-      characterData: true
-    });
-    scheduleDrain = function () {
-      element.data = (called = ++called % 2);
-    };
-  } else if (!global.setImmediate && typeof global.MessageChannel !== 'undefined') {
-    var channel = new global.MessageChannel();
-    channel.port1.onmessage = nextTick;
-    scheduleDrain = function () {
-      channel.port2.postMessage(0);
-    };
-  } else if ('document' in global && 'onreadystatechange' in global.document.createElement('script')) {
-    scheduleDrain = function () {
-
-      // Create a <script> element; its readystatechange event will be fired asynchronously once it is inserted
-      // into the document. Do so, thus queuing up the task. Remember to clean up once it's been called.
-      var scriptEl = global.document.createElement('script');
-      scriptEl.onreadystatechange = function () {
-        nextTick();
-
-        scriptEl.onreadystatechange = null;
-        scriptEl.parentNode.removeChild(scriptEl);
-        scriptEl = null;
-      };
-      global.document.documentElement.appendChild(scriptEl);
-    };
-  } else {
-    scheduleDrain = function () {
-      setTimeout(nextTick, 0);
-    };
-  }
-}
-
-var draining;
-var queue = [];
-//named nextTick for less confusing stack traces
-function nextTick() {
-  draining = true;
-  var i, oldQueue;
-  var len = queue.length;
-  while (len) {
-    oldQueue = queue;
-    queue = [];
-    i = -1;
-    while (++i < len) {
-      oldQueue[i]();
-    }
-    len = queue.length;
-  }
-  draining = false;
-}
-
-module.exports = immediate;
-function immediate(task) {
-  if (queue.push(task) === 1 && !draining) {
-    scheduleDrain();
-  }
-}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(49)))
+module.exports = "<span class=\"fa fa-close close-popup\"></span> <pre class=content>test</pre> ";
 
 /***/ })
 /******/ ]);

@@ -9,7 +9,8 @@
 // @connect     rep0st.rene8888.at
 // @connect     github.com
 // @connect     raw.githubusercontent.com
-// @version		0.6.1
+// @connect     pr0gramm.com
+// @version		0.7.0
 // @grant		GM_notification
 // @grant       GM_xmlhttpRequest
 // @require     https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
