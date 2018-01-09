@@ -2355,7 +2355,7 @@ class Rep0st {
     constructor() {
         this.closeBtn = {};
         this.name = 'Rep0st Check';
-        this.description = 'Frage rene888, ob es sich um einen rep0st handelt.';
+        this.description = 'Frage rene8888, ob es sich um einen rep0st handelt.';
     }
 
 
