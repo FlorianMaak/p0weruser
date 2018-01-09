@@ -2,7 +2,8 @@
   "name": "p0weruser",
   "version": "0.6.1",
   "dependencies": {
-    "bower": "^1.8.2"
+    "bower": "^1.8.2",
+    "tesseract.js": "^1.0.10"
   },
   "devDependencies": {
     "css-loader": "^0.28.7",
