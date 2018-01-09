@@ -9,7 +9,8 @@
 // @connect     rep0st.rene8888.at
 // @connect     github.com
 // @connect     raw.githubusercontent.com
-// @version		0.6.1
+// @connect     pr0gramm.com
+// @version		0.7.0
 // @grant		GM_notification
 // @grant       GM_xmlhttpRequest
 // @require     https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
@@ -2549,7 +2550,7 @@ class ImageOCR {
 
     load() {
         this.styles = __webpack_require__(47);
-        this.template = __webpack_require__(55);
+        this.template = __webpack_require__(49);
         this.searchWording = 'Verarbeite Bild...';
         this.popup = document.createElement('div');
         this.popup.id = 'ocr-popup';
@@ -3217,13 +3218,7 @@ exports.push([module.i, ".ocr-button {\n  position: absolute;\n  top: 10px;\n  l
 
 
 /***/ }),
-/* 49 */,
-/* 50 */,
-/* 51 */,
-/* 52 */,
-/* 53 */,
-/* 54 */,
-/* 55 */
+/* 49 */
 /***/ (function(module, exports) {
 
 module.exports = "<span class=\"fa fa-close close-popup\"></span> <pre class=content>test</pre> ";
