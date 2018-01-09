@@ -10,6 +10,7 @@ import NotificationCenter from './module/NotificationCenter';
 import DesktopNotifications from './module/DesktopNotifications';
 import FilterMarks from './module/filterMarks';
 import Rep0st from './module/Rep0st';
+import ImageOCR from './module/ImageOCR';
 
 export default class P0weruser {
     constructor() {
@@ -79,7 +80,8 @@ export default class P0weruser {
                 'NotificationCenter': new NotificationCenter(),
                 'DesktopNotifications': new DesktopNotifications(),
                 'FilterMarks': new FilterMarks(),
-                'Rep0st': new Rep0st()
+                'Rep0st': new Rep0st(),
+                'ImageOCR': new ImageOCR()
             };
         }
 

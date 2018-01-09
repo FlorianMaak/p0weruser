@@ -12,6 +12,7 @@ it using settings.
 * Desktop Notifications
 * Filter-Labels
 * Integration of Rene8888s repost-check
+* OCR on images
 * (ToDo) Highlighting of previously visited posts
 * (ToDo) Cheap "stelz"
 * (ToDo) Slideshow mode

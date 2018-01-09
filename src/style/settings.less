@@ -24,4 +24,40 @@
       margin-left: 10px;
     }
   }
+
+  #versioninfo {
+    dt {
+      float: left;
+      font-weight: bold;
+      margin-right: 0.5em;
+      width: 130px;
+    }
+
+    dt::after {
+      content: ": ";
+    }
+
+    dd::after {
+      clear: left;
+      content: " ";
+      display: block;
+    }
+
+    dd:empty:before {
+      content: '...';
+    }
+
+    dd a {
+      font-size: 10px;
+      margin-left: 5px;
+
+      &:after {
+        content: ')';
+      }
+
+      &:before {
+        content: '(';
+      }
+    }
+  }
 }

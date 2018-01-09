@@ -94,6 +94,9 @@ export default class Settings {
         this.tabs.getElementsByClassName('active')[0].classList.remove('active');
         button.classList.add('active');
 
+        // Load Versioninfo
+        this.loadVersionInfo();
+
         // Add listener to clear-button
         let clearButton = this.tabContent.getElementsByClassName('clear-settings-button')[0];
         clearButton.addEventListener('click', () => {
@@ -109,6 +112,22 @@ export default class Settings {
         })
     }
 
+    loadVersionInfo() {
+        let elems = {
+            installed: document.getElementById('installed_version'),
+            release: document.getElementById('release_version'),
+            beta: document.querySelectorAll('#beta_version > span')[0]
+        };
+
+        elems.installed.innerText = GM_info.script.version;
+        Settings.getVersion(false).then((version) => {
+            elems.release.innerText = version;
+        });
+        Settings.getVersion(true).then((version) => {
+            elems.beta.innerText = version;
+        });
+    }
+
     static addHint() {
         let header = document.getElementById('head-content');
         let hint = document.createElement('div');
@@ -116,5 +135,30 @@ export default class Settings {
         hint.innerText = 'Bitte öffne die Einstellungen um p0weruser zu konfigurieren!';
 
         header.appendChild(hint);
+    }
+
+    static getVersion(getBeta) {
+        let url = 'https://github.com/FlorianMaak/p0weruser/raw/master/src/template/scriptHeader.txt';
+
+        if(getBeta) {
+            url = 'https://github.com/FlorianMaak/p0weruser/raw/develop/src/template/scriptHeader.txt';
+        }
+
+        return new Promise((resolve, reject) => {
+            GM_xmlhttpRequest({
+                url: url,
+                method: 'GET',
+                headers: {
+                    'cache-control': 'no-cache',
+                    'Upgrade-Insecure-Requests': 1
+                },
+                onload: (res) => {
+                    resolve(res.responseText.match('@version(.*)\t\t(.*)\n')[2]);
+                },
+                onError: (res) => {
+                    reject(res);
+                }
+            });
+        });
     }
 }
