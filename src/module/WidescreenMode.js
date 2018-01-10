@@ -12,6 +12,14 @@ export default class WidescreenMode {
     }
 
     handleWheelChange(e) {
+        if(this.isMoveable) {
+            this.img.animate({
+                top: e.deltaY > 0 ? '-=20' : '+=20'
+            }, 0);
+
+            return false;
+        }
+
         if (this.hasUnsentComments()) {
             let state = window.confirm('Du hast noch nicht abgeschickte Kommentare! Willst du dieses Medium wirklich verlassen?');
 
@@ -83,14 +91,6 @@ export default class WidescreenMode {
             }
         });
 
-        // Add fixed container-width
-        Utils.waitForElement('#stream').then((el) => {
-            WidescreenMode.handleResize(el[0]);
-        });
-        $(window).resize(() => {
-            WidescreenMode.handleResize(document.getElementById('stream'));
-        });
-
         // Fix audio-controls
         Utils.addVideoConstants();
 
@@ -140,13 +140,6 @@ export default class WidescreenMode {
 
             return `<div class="item-row">${result}</div>`;
         };
-    }
-
-    static handleResize(element) {
-        let container = document.getElementById('main-view');
-        let newWidth = Math.floor($(container).innerWidth() / 132) * 132;
-
-        element.style = `width: ${newWidth}px;`;
     }
 
     addItemListener(image, itemData) {
