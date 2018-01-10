@@ -34,6 +34,10 @@ body[class] {
           display: inline-block;
           float: left;
         }
+
+        .stream-row {
+          clear: none;
+        }
       }
     }
 
@@ -192,39 +196,39 @@ body[class] {
         justify-content: center;
         min-height: 100px;
 
-         > div {
-           position: relative;
-           display: flex;
-           width: 90%;
-           max-width: 980px;
+        > div {
+          position: relative;
+          display: flex;
+          width: 90%;
+          max-width: 980px;
 
-           .item-details,
-           .item-tags {
-             padding: 5px 20px 5px 40px;
-           }
+          .item-details,
+          .item-tags {
+            padding: 5px 20px 5px 40px;
+          }
 
-           .item-vote {
-             display: flex;
-             align-items: center;
-             left: 0;
-             top: 0;
-             position: relative;
+          .item-vote {
+            display: flex;
+            align-items: center;
+            left: 0;
+            top: 0;
+            position: relative;
 
-             .vote-fav {
-               position: relative;
-               margin-left: 20px;
-               font-size: 32px;
-               left: 0;
-               top: 0;
-             }
+            .vote-fav {
+              position: relative;
+              margin-left: 20px;
+              font-size: 32px;
+              left: 0;
+              top: 0;
+            }
 
-             .score {
-               position: relative;
-               top: 0;
-               left: 10px;
-             }
-           }
-         }
+            .score {
+              position: relative;
+              top: 0;
+              left: 10px;
+            }
+          }
+        }
       }
 
       .item-image-wrapper {
@@ -253,7 +257,7 @@ body[class] {
         }
 
         &.oversize:not(.resized) {
-          .item-image{
+          .item-image {
             cursor: move;
           }
         }
