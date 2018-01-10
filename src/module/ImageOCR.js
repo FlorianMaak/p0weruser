@@ -20,7 +20,6 @@ export default class ImageOCR {
         this.textbox = this.$popup.find('.content')[0];
         this.close = this.$popup.find('.close-popup')[0];
 
-        new SimpleBar(this.popup);
         this.addButton();
     }
 
@@ -39,20 +38,13 @@ export default class ImageOCR {
                     container[0].appendChild(button);
 
                     button.addEventListener('click', () => {
-                        container.append(_this.popup);
+                        $('.item-image-wrapper').after(_this.popup);
 
                         _this.checkImage();
                     });
 
                     _this.close.addEventListener('click', () => {
                         _this.togglePopup();
-                    });
-
-                    _this.textbox.addEventListener('wheel', e => {
-                        e.preventDefault();
-                        e.stopPropagation();
-
-                        return false;
                     });
                 }
             }
@@ -81,6 +73,7 @@ export default class ImageOCR {
                     lang: 'deu'
                 }).then(result => {
                     this.togglePopup(result.text);
+                    new SimpleBar(this.popup);
                 }).catch(err => {
                     this.togglePopup();
                 });

@@ -12,9 +12,7 @@ it using settings.
 * Desktop Notifications
 * Filter-Labels
 * Integration of Rene8888s repost-check
-* OCR on images
-* (ToDo) Highlighting of previously visited posts
-* (ToDo) Cheap "stelz"
+* Automated text recognition 
 * (ToDo) Slideshow mode
 * (ToDo) Improved search
 
@@ -22,7 +20,7 @@ it using settings.
 Help and instructions can be found on this repositorys [wiki-pages](https://github.com/FlorianMaak/p0weruser/wiki).
 
 ## Installation
-Just install Greasemonkey or Tapermonkey and install the script by a simple
+Just install Tapermonkey and install the script by a simple
 click on one of the following urls:
 
 ### Release [![Build Status](https://travis-ci.org/FlorianMaak/p0weruser.svg?branch=master)](https://travis-ci.org/FlorianMaak/p0weruser)
@@ -35,7 +33,7 @@ click on one of the following urls:
 ![repost](https://user-images.githubusercontent.com/6325146/31791525-1e0a84b4-b519-11e7-90f8-c5306afcc485.jpg)
 > Repost-Highlighting
 
-![settings](https://user-images.githubusercontent.com/6325146/34079134-8a6ad848-e327-11e7-8536-857474b03fc5.jpg)
+![settings](https://user-images.githubusercontent.com/6325146/34748815-a9dab250-f59e-11e7-8384-84c5cbf862b9.png)
 > Enable or diasble modules via settings
 
 ![widescreen](https://user-images.githubusercontent.com/6325146/31791527-1e3d0fa6-b519-11e7-9ded-b6d9720b5708.jpg)
@@ -50,19 +48,22 @@ click on one of the following urls:
 ![filterlabel](https://user-images.githubusercontent.com/6325146/34079132-8a060c7e-e327-11e7-8809-54e8ad811faa.jpg)
 > See the images filter as a colored label
 
-![rep0st](https://user-images.githubusercontent.com/6325146/34079133-8a446b5e-e327-11e7-8f08-0efc74179b02.jpg)
+![rep0st](https://user-images.githubusercontent.com/6325146/34748669-f2a5b508-f59d-11e7-8e2d-c83ae2c47437.png)
 > Check if an image is a rep0st, by using the check on rep0st.rene8888.at
+
+![ocr](https://user-images.githubusercontent.com/6325146/34748289-1fd1fae8-f59c-11e7-94ce-71369abf456c.png)
+> Tired of retyping a text? Just use p0werusers optical character recognition (OCR) to simply copy the text!
 
 ## Missing Feature?
 Just open an issue and describe your request as accurately as possible. If you like to do script it on your own, feel free to fork and open a Pull Request.
 
 ## Contribution
-Feel free to fork this project. If you like to contribute, please use git-flow
-branch-style and follow the commits conventions. If your work is done, please submit a
-pull request. All contributions will be released under GPLv3 licence.
+Feel free to fork this project. If you like to contribute, please use [git-flow](https://github.com/nvie/gitflow)
+branch-style and follow the commits [conventions](https://github.com/FlorianMaak/p0weruser/wiki/Conventions). If your work is done, please submit a
+pull request. All contributions will be released under [GPLv3 licence](https://github.com/FlorianMaak/p0weruser/blob/master/LICENSE).
 
 ## [Dev] Installation
-After checkout run ```npm install``` and npm will install all needed dependencies
+After checkout run ```npm install``` and [npm](https://www.npmjs.com/) will install all needed dependencies
 and will run ```bower install``` to install needed frontend-libaries. After installation run
 ```npm run build``` to build a bundle from source. There are filewatchers running, starting a new build after a
 each filechange. Just create a new UserScript in Tapermonkey and add your local file (found in
