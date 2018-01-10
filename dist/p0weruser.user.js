@@ -10,7 +10,7 @@
 // @connect     github.com
 // @connect     raw.githubusercontent.com
 // @connect     pr0gramm.com
-// @version		0.7.0
+// @version		0.7.1
 // @grant		GM_notification
 // @grant       GM_xmlhttpRequest
 // @require     https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
@@ -2559,7 +2559,6 @@ class ImageOCR {
         this.textbox = this.$popup.find('.content')[0];
         this.close = this.$popup.find('.close-popup')[0];
 
-        new __WEBPACK_IMPORTED_MODULE_1__bower_components_simplebar_dist_simplebar_js___default.a(this.popup);
         this.addButton();
     }
 
@@ -2578,20 +2577,13 @@ class ImageOCR {
                     container[0].appendChild(button);
 
                     button.addEventListener('click', () => {
-                        container.append(_this.popup);
+                        $('.item-image-wrapper').after(_this.popup);
 
                         _this.checkImage();
                     });
 
                     _this.close.addEventListener('click', () => {
                         _this.togglePopup();
-                    });
-
-                    _this.textbox.addEventListener('wheel', e => {
-                        e.preventDefault();
-                        e.stopPropagation();
-
-                        return false;
                     });
                 }
             }
@@ -2620,6 +2612,7 @@ class ImageOCR {
                     lang: 'deu'
                 }).then(result => {
                     this.togglePopup(result.text);
+                    new __WEBPACK_IMPORTED_MODULE_1__bower_components_simplebar_dist_simplebar_js___default.a(this.popup);
                 }).catch(err => {
                     this.togglePopup();
                 });
@@ -3212,7 +3205,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, ".ocr-button {\n  position: absolute;\n  top: 10px;\n  left: 15px;\n  color: #fff;\n  opacity: 0.7;\n  font-size: 22px;\n  text-shadow: 0 0 3px #000;\n  z-index: 10;\n}\n.ocr-button:hover {\n  color: var(--theme-main-color);\n  opacity: 1;\n  text-shadow: none;\n  cursor: pointer;\n}\n#ocr-popup {\n  position: absolute;\n  left: 70px;\n  background: #161618;\n  right: 70px;\n  border: 3px solid #2a2e31;\n  max-height: 80vh;\n  display: none;\n  box-shadow: 0 0 10px #000;\n}\n#ocr-popup.visible {\n  display: block;\n}\n#ocr-popup pre {\n  padding: 10px;\n}\n#ocr-popup .close-popup {\n  float: right;\n  margin-right: 10px;\n  margin-top: 5px;\n  cursor: pointer;\n}\n#ocr-popup .close-popup:hover {\n  color: var(--theme-main-color);\n}\n", ""]);
+exports.push([module.i, ".ocr-button {\n  position: absolute;\n  top: 20px;\n  left: 24px;\n  color: #fff;\n  opacity: 0.7;\n  font-size: 22px;\n  text-shadow: 0 0 3px #000;\n  z-index: 10;\n}\n.ocr-button:hover {\n  color: var(--theme-main-color);\n  opacity: 1;\n  text-shadow: none;\n  cursor: pointer;\n}\n#ocr-popup {\n  border-top: 3px solid #2a2e31;\n  max-height: 40vh;\n  display: none;\n  overflow: hidden;\n}\n#ocr-popup.visible {\n  display: flex;\n}\n#ocr-popup pre {\n  padding: 10px;\n  font-family: sans-serif;\n  text-align: center;\n  width: 100%;\n}\n#ocr-popup .close-popup {\n  position: fixed;\n  font-size: 20px;\n  right: 15px;\n  margin-top: 5px;\n  cursor: pointer;\n}\n#ocr-popup .close-popup:hover {\n  color: var(--theme-main-color);\n}\n#ocr-popup .simplebar-scrollbar {\n  background: #2a2e31;\n  border-radius: 0;\n  right: 0;\n}\n#ocr-popup .simplebar-scrollbar.visible {\n  opacity: 1;\n}\n#ocr-popup .simplebar-content {\n  outline: none;\n}\n", ""]);
 
 // exports
 

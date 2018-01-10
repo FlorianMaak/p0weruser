@@ -1,7 +1,7 @@
 .ocr-button {
   position: absolute;
-  top: 10px;
-  left: 15px;
+  top: 20px;
+  left: 24px;
   color: #fff;
   opacity: 0.7;
   font-size: 22px;
@@ -17,31 +17,45 @@
 }
 
 #ocr-popup {
-  position: absolute;
-  left: 70px;
-  background: #161618;
-  right: 70px;
-  border: 3px solid #2a2e31;
-  max-height: 80vh;
+  border-top: 3px solid #2a2e31;
+  max-height: 40vh;
   display: none;
-  box-shadow: 0 0 10px #000;
+  overflow: hidden;
 
   &.visible {
-    display: block;
+    display: flex;
   }
 
   pre {
     padding: 10px;
+    font-family: sans-serif;
+    text-align: center;
+    width: 100%;
   }
 
   .close-popup {
-    float: right;
-    margin-right: 10px;
+    position: fixed;
+    font-size: 20px;
+    right: 15px;
     margin-top: 5px;
     cursor: pointer;
 
     &:hover {
       color: var(--theme-main-color);
     }
+  }
+
+  .simplebar-scrollbar {
+    background: #2a2e31;
+    border-radius: 0;
+    right: 0;
+
+    &.visible {
+      opacity: 1;
+    }
+  }
+
+  .simplebar-content {
+    outline: none;
   }
 }
