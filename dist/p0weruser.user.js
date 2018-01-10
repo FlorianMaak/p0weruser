@@ -589,6 +589,21 @@ class Utils {
         };
     }
 
+    static isElementInViewport (el) {
+        if (typeof jQuery === "function" && el instanceof jQuery) {
+            el = el[0];
+        }
+
+        let rect = el.getBoundingClientRect();
+
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+    }
+
 
     static getUrlFromParams(url, params) {
         let result = url + '?';
@@ -880,7 +895,7 @@ function loadImage(image, cb){
 /* 6 */
 /***/ (function(module, exports) {
 
-module.exports = {"_from":"tesseract.js@^1.0.10","_id":"tesseract.js@1.0.10","_inBundle":false,"_integrity":"sha1-4RqWrnYUeTnZIY+I4of7aUFLHl0=","_location":"/tesseract.js","_phantomChildren":{},"_requested":{"type":"range","registry":true,"raw":"tesseract.js@^1.0.10","name":"tesseract.js","escapedName":"tesseract.js","rawSpec":"^1.0.10","saveSpec":null,"fetchSpec":"^1.0.10"},"_requiredBy":["#USER","/"],"_resolved":"https://registry.npmjs.org/tesseract.js/-/tesseract.js-1.0.10.tgz","_shasum":"e11a96ae76147939d9218f88e287fb69414b1e5d","_spec":"tesseract.js@^1.0.10","_where":"D:\\p0weruser","author":"","browser":{"./src/node/index.js":"./src/browser/index.js"},"bugs":{"url":"https://github.com/naptha/tesseract.js/issues"},"bundleDependencies":false,"dependencies":{"file-type":"^3.8.0","is-url":"^1.2.2","jpeg-js":"^0.2.0","level-js":"^2.2.4","node-fetch":"^1.6.3","object-assign":"^4.1.0","png.js":"^0.2.1","tesseract.js-core":"^1.0.2"},"deprecated":false,"description":"Pure Javascript Multilingual OCR","devDependencies":{"babel-preset-es2015":"^6.16.0","babelify":"^7.3.0","browserify":"^13.1.0","envify":"^3.4.1","http-server":"^0.9.0","pako":"^1.0.3","watchify":"^3.7.0"},"homepage":"https://github.com/naptha/tesseract.js","license":"Apache-2.0","main":"src/index.js","name":"tesseract.js","repository":{"type":"git","url":"git+https://github.com/naptha/tesseract.js.git"},"scripts":{"build":"browserify src/index.js -t [ babelify --presets [ es2015 ] ] -o dist/tesseract.js --standalone Tesseract && browserify src/browser/worker.js -t [ babelify --presets [ es2015 ] ] -o dist/worker.js","release":"npm run build && git commit -am 'new release' && git push && git tag `jq -r '.version' package.json` && git push origin --tags && npm publish","start":"watchify src/index.js  -t [ envify --NODE_ENV development ] -t [ babelify --presets [ es2015 ] ] -o dist/tesseract.dev.js --standalone Tesseract & watchify src/browser/worker.js  -t [ envify --NODE_ENV development ] -t [ babelify --presets [ es2015 ] ] -o dist/worker.dev.js & http-server -p 7355","test":"echo \"Error: no test specified\" & exit 1"},"version":"1.0.10"}
+module.exports = {"_from":"tesseract.js","_id":"tesseract.js@1.0.10","_inBundle":false,"_integrity":"sha1-4RqWrnYUeTnZIY+I4of7aUFLHl0=","_location":"/tesseract.js","_phantomChildren":{},"_requested":{"type":"tag","registry":true,"raw":"tesseract.js","name":"tesseract.js","escapedName":"tesseract.js","rawSpec":"","saveSpec":null,"fetchSpec":"latest"},"_requiredBy":["#USER","/"],"_resolved":"https://registry.npmjs.org/tesseract.js/-/tesseract.js-1.0.10.tgz","_shasum":"e11a96ae76147939d9218f88e287fb69414b1e5d","_spec":"tesseract.js","_where":"D:\\Projekte\\p0weruser","author":"","browser":{"./src/node/index.js":"./src/browser/index.js"},"bugs":{"url":"https://github.com/naptha/tesseract.js/issues"},"bundleDependencies":false,"dependencies":{"file-type":"^3.8.0","is-url":"^1.2.2","jpeg-js":"^0.2.0","level-js":"^2.2.4","node-fetch":"^1.6.3","object-assign":"^4.1.0","png.js":"^0.2.1","tesseract.js-core":"^1.0.2"},"deprecated":false,"description":"Pure Javascript Multilingual OCR","devDependencies":{"babel-preset-es2015":"^6.16.0","babelify":"^7.3.0","browserify":"^13.1.0","envify":"^3.4.1","http-server":"^0.9.0","pako":"^1.0.3","watchify":"^3.7.0"},"homepage":"https://github.com/naptha/tesseract.js","license":"Apache-2.0","main":"src/index.js","name":"tesseract.js","repository":{"type":"git","url":"git+https://github.com/naptha/tesseract.js.git"},"scripts":{"build":"browserify src/index.js -t [ babelify --presets [ es2015 ] ] -o dist/tesseract.js --standalone Tesseract && browserify src/browser/worker.js -t [ babelify --presets [ es2015 ] ] -o dist/worker.js","release":"npm run build && git commit -am 'new release' && git push && git tag `jq -r '.version' package.json` && git push origin --tags && npm publish","start":"watchify src/index.js  -t [ envify --NODE_ENV development ] -t [ babelify --presets [ es2015 ] ] -o dist/tesseract.dev.js --standalone Tesseract & watchify src/browser/worker.js  -t [ envify --NODE_ENV development ] -t [ babelify --presets [ es2015 ] ] -o dist/worker.dev.js & http-server -p 7355","test":"echo \"Error: no test specified\" & exit 1"},"version":"1.0.10"}
 
 /***/ }),
 /* 7 */
@@ -1293,6 +1308,14 @@ class WidescreenMode {
     }
 
     handleWheelChange(e) {
+        if(this.isMoveable) {
+            this.img.animate({
+                top: e.deltaY > 0 ? '-=20' : '+=20'
+            }, 0);
+
+            return false;
+        }
+
         if (this.hasUnsentComments()) {
             let state = window.confirm('Du hast noch nicht abgeschickte Kommentare! Willst du dieses Medium wirklich verlassen?');
 

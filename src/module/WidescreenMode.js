@@ -12,6 +12,14 @@ export default class WidescreenMode {
     }
 
     handleWheelChange(e) {
+        if(this.isMoveable) {
+            this.img.animate({
+                top: e.deltaY > 0 ? '-=20' : '+=20'
+            }, 0);
+
+            return false;
+        }
+
         if (this.hasUnsentComments()) {
             let state = window.confirm('Du hast noch nicht abgeschickte Kommentare! Willst du dieses Medium wirklich verlassen?');
 
