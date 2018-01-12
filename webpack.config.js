@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const fs = require('fs');
+const WebpackAutoInject = require('webpack-auto-inject-version');
 
 module.exports = {
     entry: './src/P0weruser.js',
@@ -15,6 +16,24 @@ module.exports = {
             ),
             raw: true,
             entryOnly: true
+        }),
+        new WebpackAutoInject({
+            NAME: 'p0weruser',
+            SILENT: true,
+            PACKAGE_JSON_PATH: './package.json',
+            components: {
+                AutoIncreaseVersion: true,
+                InjectByTag: true
+            },
+            componentsOptions: {
+                AutoIncreaseVersion: {
+                    runInWatchMode: false // it will increase version with every single build!
+                },
+                InjectByTag: {
+                    fileRegex: /\.+/,
+                    dateFormat: 'h:MM:ss TT'
+                }
+            }
         })
     ],
     module: {
