@@ -1,4 +1,4 @@
-// [AIV]  Build version: 0.7.3 - Friday, January 12th, 2018, 8:40:50 PM  
+// [AIV]  Build version: 0.7.4 - Friday, January 12th, 2018, 9:18:35 PM  
  // ==UserScript==
 // @name		p0weruser
 // @namespace	https://github.com/FlorianMaak/p0weruser
@@ -11,7 +11,7 @@
 // @connect     github.com
 // @connect     raw.githubusercontent.com
 // @connect     pr0gramm.com
-// @version		0.7.3
+// @version		0.7.4
 // @grant		GM_notification
 // @grant       GM_xmlhttpRequest
 // @require     https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
@@ -1355,9 +1355,29 @@ class WidescreenMode {
             container: document.getElementById('footer-links')
         };
 
+        this.addInputListeners();
         this.overrideViews();
         this.addNavigation();
         this.modifyLogo();
+    }
+
+
+    addInputListeners() {
+        if (!this.listenerAdded) {
+            this.listenerAdded = true;
+            document.addEventListener('keydown', (e) => {
+                this.handleKeypress(e,
+                    document.activeElement.tagName === 'TEXTAREA' ||
+                    document.activeElement.tagName === 'INPUT'
+                );
+            });
+
+            window.addEventListener('locationChange', (e) => {
+                if (e.mode === 0) {
+                    document.body.classList.remove('fixed');
+                }
+            })
+        }
     }
 
 
@@ -1469,22 +1489,6 @@ class WidescreenMode {
 
             this.handleWheelChange(e);
         });
-
-        if (!this.listenerAdded) {
-            this.listenerAdded = true;
-            document.addEventListener('keydown', (e) => {
-                this.handleKeypress(e,
-                    document.activeElement.tagName === 'TEXTAREA' ||
-                    document.activeElement.tagName === 'INPUT'
-                );
-            });
-
-            window.addEventListener('locationChange', (e) => {
-                if (e.mode === 0) {
-                    document.body.classList.remove('fixed');
-                }
-            })
-        }
     }
 
 

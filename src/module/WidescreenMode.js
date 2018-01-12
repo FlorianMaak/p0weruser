@@ -52,9 +52,29 @@ export default class WidescreenMode {
             container: document.getElementById('footer-links')
         };
 
+        this.addInputListeners();
         this.overrideViews();
         this.addNavigation();
         this.modifyLogo();
+    }
+
+
+    addInputListeners() {
+        if (!this.listenerAdded) {
+            this.listenerAdded = true;
+            document.addEventListener('keydown', (e) => {
+                this.handleKeypress(e,
+                    document.activeElement.tagName === 'TEXTAREA' ||
+                    document.activeElement.tagName === 'INPUT'
+                );
+            });
+
+            window.addEventListener('locationChange', (e) => {
+                if (e.mode === 0) {
+                    document.body.classList.remove('fixed');
+                }
+            })
+        }
     }
 
 
@@ -166,22 +186,6 @@ export default class WidescreenMode {
 
             this.handleWheelChange(e);
         });
-
-        if (!this.listenerAdded) {
-            this.listenerAdded = true;
-            document.addEventListener('keydown', (e) => {
-                this.handleKeypress(e,
-                    document.activeElement.tagName === 'TEXTAREA' ||
-                    document.activeElement.tagName === 'INPUT'
-                );
-            });
-
-            window.addEventListener('locationChange', (e) => {
-                if (e.mode === 0) {
-                    document.body.classList.remove('fixed');
-                }
-            })
-        }
     }
 
 
