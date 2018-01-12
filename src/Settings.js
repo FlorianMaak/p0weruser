@@ -38,6 +38,42 @@ export default class Settings {
     }
 
 
+    static addHint() {
+        let header = document.getElementById('head-content');
+        let hint = document.createElement('div');
+        hint.id = 'settings_hint';
+        hint.innerText = 'Bitte öffne die Einstellungen um p0weruser zu konfigurieren!';
+
+        header.appendChild(hint);
+    }
+
+
+    static getVersion(getBeta) {
+        let url = 'https://github.com/FlorianMaak/p0weruser/raw/master/src/template/scriptHeader.txt';
+
+        if (getBeta) {
+            url = 'https://github.com/FlorianMaak/p0weruser/raw/develop/src/template/scriptHeader.txt';
+        }
+
+        return new Promise((resolve, reject) => {
+            GM_xmlhttpRequest({
+                url: url,
+                method: 'GET',
+                headers: {
+                    'cache-control': 'no-cache',
+                    'Upgrade-Insecure-Requests': 1
+                },
+                onload: (res) => {
+                    resolve(res.responseText.match('@version(.*)\t\t(.*)\n')[2]);
+                },
+                onError: (res) => {
+                    reject(res);
+                }
+            });
+        });
+    }
+
+
     addListeners() {
         window.addEventListener('settingsLoaded', () => {
             this.addSettingsTab();
@@ -112,6 +148,7 @@ export default class Settings {
         })
     }
 
+
     loadVersionInfo() {
         let elems = {
             installed: document.getElementById('installed_version'),
@@ -125,40 +162,6 @@ export default class Settings {
         });
         Settings.getVersion(true).then((version) => {
             elems.beta.innerText = version;
-        });
-    }
-
-    static addHint() {
-        let header = document.getElementById('head-content');
-        let hint = document.createElement('div');
-        hint.id = 'settings_hint';
-        hint.innerText = 'Bitte öffne die Einstellungen um p0weruser zu konfigurieren!';
-
-        header.appendChild(hint);
-    }
-
-    static getVersion(getBeta) {
-        let url = 'https://github.com/FlorianMaak/p0weruser/raw/master/src/template/scriptHeader.txt';
-
-        if(getBeta) {
-            url = 'https://github.com/FlorianMaak/p0weruser/raw/develop/src/template/scriptHeader.txt';
-        }
-
-        return new Promise((resolve, reject) => {
-            GM_xmlhttpRequest({
-                url: url,
-                method: 'GET',
-                headers: {
-                    'cache-control': 'no-cache',
-                    'Upgrade-Insecure-Requests': 1
-                },
-                onload: (res) => {
-                    resolve(res.responseText.match('@version(.*)\t\t(.*)\n')[2]);
-                },
-                onError: (res) => {
-                    reject(res);
-                }
-            });
         });
     }
 }

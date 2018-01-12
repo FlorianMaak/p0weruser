@@ -47,7 +47,7 @@ export default class P0weruser {
             modules = '[]';
         }
 
-        if(modules === '[]') {
+        if (modules === '[]') {
             Settings.addHint();
         }
 

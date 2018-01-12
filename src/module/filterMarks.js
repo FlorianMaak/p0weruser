@@ -7,6 +7,31 @@ export default class FilterMarks {
     }
 
 
+    static displayFilterLabel(itemData, $container) {
+        let filter = FilterMarks.getFilter(itemData);
+        let badge = document.createElement('span');
+        badge.className = 'badge';
+        badge.classList.toggle(filter);
+        badge.innerText = filter.toUpperCase();
+
+        $container.find('.item-details')[0].appendChild(badge);
+    }
+
+
+    static getFilter(itemData) {
+        switch (itemData.flags) {
+            case 1:
+                return 'sfw';
+            case 2:
+                return 'nsfw';
+            case 4:
+                return 'nsfl';
+            case 8:
+                return 'nsfp';
+        }
+    }
+
+
     load() {
         this.styles = require('../style/filterMarks.less');
         this.overrideViews();
@@ -26,31 +51,5 @@ export default class FilterMarks {
 
         // Fix audio-controls
         Utils.addVideoConstants();
-    }
-
-
-    static displayFilterLabel(itemData, $container) {
-        let filter = FilterMarks.getFilter(itemData);
-        let badge = document.createElement('span');
-        badge.className = 'badge';
-
-        badge.classList.toggle(filter);
-        badge.innerText = filter.toUpperCase();
-
-        $container.find('.item-details')[0].appendChild(badge);
-    }
-
-
-    static getFilter(itemData) {
-        switch(itemData.flags) {
-            case 1:
-                return 'sfw';
-            case 2:
-                return 'nsfw';
-            case 4:
-                return 'nsfl';
-            case 8:
-                return 'nsfp';
-        }
     }
 }
