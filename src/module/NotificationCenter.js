@@ -8,6 +8,11 @@ export default class NotificationCenter {
     }
 
 
+    static getTitle(message) {
+        return message.thumb === null ? 'Private Nachricht' : 'Kommentar';
+    }
+
+
     load() {
         this.menuOpen = false;
         this.template = require('../template/notificationCenter.html');
@@ -34,8 +39,8 @@ export default class NotificationCenter {
         });
 
         window.addEventListener('click', (e) => {
-            if(this.menuOpen) {
-                if(! $(e.target).parents('#notification-center')[0]) {
+            if (this.menuOpen) {
+                if (!$(e.target).parents('#notification-center')[0]) {
                     e.preventDefault();
                     this.toggleMenu();
                 }
@@ -57,7 +62,7 @@ export default class NotificationCenter {
             this.messageContainer.classList.remove('loading');
             p.user.setInboxLink(0);
 
-            if(messages.length <= 0) {
+            if (messages.length <= 0) {
                 let elem = document.createElement('li');
                 elem.innerText = 'Keine neuen Benachrichtigungen!';
                 elem.className = 'no-notifications';
@@ -65,7 +70,7 @@ export default class NotificationCenter {
                 return false;
             }
 
-            for(let i = 0; i < messages.length; i++) {
+            for (let i = 0; i < messages.length; i++) {
                 this.addEntry(NotificationCenter.getTitle(
                     messages[i]),
                     messages[i].name,
@@ -82,21 +87,16 @@ export default class NotificationCenter {
             this.getNotifications(false).then((notifications) => {
                 let messages = notifications.messages;
 
-                if(messages.length <= 0) {
+                if (messages.length <= 0) {
                     return false;
                 }
 
-                for(let i = 0; i < messages.length; i++) {
+                for (let i = 0; i < messages.length; i++) {
                     console.log($(this.messageContainer).find(`notification-${messages[i].id}`));
                     $(this.messageContainer).find(`#notification-${messages[i].id}`)[0].classList.add('new');
                 }
             });
         });
-    }
-
-
-    static getTitle(message) {
-        return message.thumb === null ? 'Private Nachricht' : 'Kommentar';
     }
 
 
@@ -113,7 +113,7 @@ export default class NotificationCenter {
         let img = '<img src="//thumb.pr0gramm.com/##THUMB##" class="comment-thumb">';
         let url = image ? `/new/${id}:comment${cId}` : `/inbox/messages`;
 
-        if(! image) {
+        if (!image) {
             img = '<span class="message fa fa-envelope-open"></span>';
         } else {
             img = img.replace('##THUMB', image);

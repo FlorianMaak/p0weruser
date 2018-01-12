@@ -29,7 +29,7 @@ export default class Utils {
         window.history.pushState({}, 'pr0gramm.com', newLocation);
     }
 
-    
+
     static getUrlParams(url) {
         let result = {};
         url = url.split('?');
@@ -46,8 +46,9 @@ export default class Utils {
         };
     }
 
-    static isElementInViewport (el) {
-        if (typeof jQuery === "function" && el instanceof jQuery) {
+
+    static isElementInViewport(el) {
+        if (typeof jQuery === 'function' && el instanceof jQuery) {
             el = el[0];
         }
 
@@ -82,8 +83,9 @@ export default class Utils {
         reference.parentNode.insertBefore(node, reference.nextSibling);
     }
 
+
     static addPrototypes() {
-        String.prototype.replaceArray = function(find, replace) {
+        String.prototype.replaceArray = function (find, replace) {
             let replaceString = this;
             for (let i = 0; i < find.length; i++) {
                 replaceString = replaceString.replace(find[i], replace[i]);
@@ -91,6 +93,7 @@ export default class Utils {
             return replaceString;
         };
     }
+
 
     // Add constants, related to video-controls
     static addVideoConstants() {

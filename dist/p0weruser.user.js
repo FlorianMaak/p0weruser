@@ -1,4 +1,5 @@
-// ==UserScript==
+// [AIV]  Build version: 0.7.3 - Friday, January 12th, 2018, 8:40:50 PM  
+ // ==UserScript==
 // @name		p0weruser
 // @namespace	https://github.com/FlorianMaak/p0weruser
 // @author		Florian Maak
@@ -10,7 +11,7 @@
 // @connect     github.com
 // @connect     raw.githubusercontent.com
 // @connect     pr0gramm.com
-// @version		0.7.2
+// @version		0.7.3
 // @grant		GM_notification
 // @grant       GM_xmlhttpRequest
 // @require     https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
@@ -572,7 +573,7 @@ class Utils {
         window.history.pushState({}, 'pr0gramm.com', newLocation);
     }
 
-    
+
     static getUrlParams(url) {
         let result = {};
         url = url.split('?');
@@ -589,8 +590,9 @@ class Utils {
         };
     }
 
-    static isElementInViewport (el) {
-        if (typeof jQuery === "function" && el instanceof jQuery) {
+
+    static isElementInViewport(el) {
+        if (typeof jQuery === 'function' && el instanceof jQuery) {
             el = el[0];
         }
 
@@ -625,8 +627,9 @@ class Utils {
         reference.parentNode.insertBefore(node, reference.nextSibling);
     }
 
+
     static addPrototypes() {
-        String.prototype.replaceArray = function(find, replace) {
+        String.prototype.replaceArray = function (find, replace) {
             let replaceString = this;
             for (let i = 0; i < find.length; i++) {
                 replaceString = replaceString.replace(find[i], replace[i]);
@@ -634,6 +637,7 @@ class Utils {
             return replaceString;
         };
     }
+
 
     // Add constants, related to video-controls
     static addVideoConstants() {
@@ -736,7 +740,7 @@ class P0weruser {
             modules = '[]';
         }
 
-        if(modules === '[]') {
+        if (modules === '[]') {
             __WEBPACK_IMPORTED_MODULE_0__Settings__["a" /* default */].addHint();
         }
 
@@ -948,6 +952,42 @@ class Settings {
     }
 
 
+    static addHint() {
+        let header = document.getElementById('head-content');
+        let hint = document.createElement('div');
+        hint.id = 'settings_hint';
+        hint.innerText = 'Bitte öffne die Einstellungen um p0weruser zu konfigurieren!';
+
+        header.appendChild(hint);
+    }
+
+
+    static getVersion(getBeta) {
+        let url = 'https://github.com/FlorianMaak/p0weruser/raw/master/package.json';
+
+        if (getBeta) {
+            url = 'https://github.com/FlorianMaak/p0weruser/raw/develop/package.json';
+        }
+
+        return new Promise((resolve, reject) => {
+            GM_xmlhttpRequest({
+                url: url,
+                method: 'GET',
+                headers: {
+                    'cache-control': 'no-cache',
+                    'Upgrade-Insecure-Requests': 1
+                },
+                onload: (res) => {
+                    resolve(res.responseText.match('version": "(.*)"')[1]);
+                },
+                onError: (res) => {
+                    reject(res);
+                }
+            });
+        });
+    }
+
+
     addListeners() {
         window.addEventListener('settingsLoaded', () => {
             this.addSettingsTab();
@@ -1022,6 +1062,7 @@ class Settings {
         })
     }
 
+
     loadVersionInfo() {
         let elems = {
             installed: document.getElementById('installed_version'),
@@ -1035,40 +1076,6 @@ class Settings {
         });
         Settings.getVersion(true).then((version) => {
             elems.beta.innerText = version;
-        });
-    }
-
-    static addHint() {
-        let header = document.getElementById('head-content');
-        let hint = document.createElement('div');
-        hint.id = 'settings_hint';
-        hint.innerText = 'Bitte öffne die Einstellungen um p0weruser zu konfigurieren!';
-
-        header.appendChild(hint);
-    }
-
-    static getVersion(getBeta) {
-        let url = 'https://github.com/FlorianMaak/p0weruser/raw/master/src/template/scriptHeader.txt';
-
-        if(getBeta) {
-            url = 'https://github.com/FlorianMaak/p0weruser/raw/develop/src/template/scriptHeader.txt';
-        }
-
-        return new Promise((resolve, reject) => {
-            GM_xmlhttpRequest({
-                url: url,
-                method: 'GET',
-                headers: {
-                    'cache-control': 'no-cache',
-                    'Upgrade-Insecure-Requests': 1
-                },
-                onload: (res) => {
-                    resolve(res.responseText.match('@version(.*)\t\t(.*)\n')[2]);
-                },
-                onError: (res) => {
-                    reject(res);
-                }
-            });
         });
     }
 }
@@ -1307,8 +1314,9 @@ class WidescreenMode {
         this.description = 'Stellt das pr0 im Breitbildmodus dar.'
     }
 
+
     handleWheelChange(e) {
-        if(this.isMoveable) {
+        if (this.isMoveable) {
             this.img.animate({
                 top: e.deltaY > 0 ? '-=20' : '+=20'
             }, 0);
@@ -1334,6 +1342,7 @@ class WidescreenMode {
         el.click();
     }
 
+
     load() {
         this.comments = [];
         this.commentsWide = window.localStorage.getItem('comments_wide') === 'true';
@@ -1351,6 +1360,7 @@ class WidescreenMode {
         this.modifyLogo();
     }
 
+
     modifyLogo() {
         let originalLink = document.getElementById('pr0gramm-logo-link');
 
@@ -1367,6 +1377,7 @@ class WidescreenMode {
             }
         });
     }
+
 
     overrideViews() {
         // Override Item-View
@@ -1438,6 +1449,7 @@ class WidescreenMode {
         };
     }
 
+
     addItemListener(image, itemData) {
         this.img = image;
         this.container = this.img[0].parentNode;
@@ -1461,9 +1473,10 @@ class WidescreenMode {
         if (!this.listenerAdded) {
             this.listenerAdded = true;
             document.addEventListener('keydown', (e) => {
-                if (document.activeElement.tagName !== 'TEXTAREA' && document.activeElement.tagName !== 'INPUT') {
-                    this.handleKeypress(e);
-                }
+                this.handleKeypress(e,
+                    document.activeElement.tagName === 'TEXTAREA' ||
+                    document.activeElement.tagName === 'INPUT'
+                );
             });
 
             window.addEventListener('locationChange', (e) => {
@@ -1474,32 +1487,42 @@ class WidescreenMode {
         }
     }
 
-    handleKeypress(e) {
-        switch (e.code) {
-            case 'Space':
-                e.preventDefault();
-                this.toggleMove();
-                break;
-            case 'Escape':
-                if (this.resized && p.currentView.$itemContainer) {
-                    p.currentView.hideItem();
-                }
-                break;
-            case 'ArrowUp':
-            case 'ArrowDown':
-                if (this.isMoveable) {
-                    this.img.animate({
-                        top: e.code === 'ArrowDown' ? '-=20' : '+=20'
-                    }, 0);
-                } else {
-                    let elem = this.commentsContainer.find('.simplebar-content');
-                    if (!elem.is(':focus')) {
-                        elem.attr('tabindex', -1).focus();
+
+    handleKeypress(e, isInput = false) {
+        if (isInput) {
+            if (event.ctrlKey && e.code === 'Enter') {
+                $(document.activeElement).parents('form').find('input[type="submit"]')[0].click();
+            }
+
+            return true;
+        } else {
+            switch (e.code) {
+                case 'Space':
+                    e.preventDefault();
+                    this.toggleMove();
+                    break;
+                case 'Escape':
+                    if (this.resized && p.currentView.$itemContainer) {
+                        p.currentView.hideItem();
                     }
-                }
-                break;
+                    break;
+                case 'ArrowUp':
+                case 'ArrowDown':
+                    if (this.isMoveable) {
+                        this.img.animate({
+                            top: e.code === 'ArrowDown' ? '-=20' : '+=20'
+                        }, 0);
+                    } else {
+                        let elem = this.commentsContainer.find('.simplebar-content');
+                        if (!elem.is(':focus')) {
+                            elem.attr('tabindex', -1).focus();
+                        }
+                    }
+                    break;
+            }
         }
     }
+
 
     hasUnsentComments() {
         for (let i = 0; i < this.comments.length; i++) {
@@ -1510,6 +1533,7 @@ class WidescreenMode {
 
         return false;
     }
+
 
     toggleMove() {
         if (this.resized) {
@@ -1526,6 +1550,7 @@ class WidescreenMode {
             this.img.resizeInit = true;
         }
     }
+
 
     addNavigation() {
         this.nav.button = document.createElement('a');
@@ -1787,9 +1812,11 @@ class BenisInNavbar {
         this.addBenis();
     }
 
+
     addBenis() {
         this.target.innerText = this.benis;
     }
+
 
     addListener() {
         window.addEventListener('userSync', (e) => {
@@ -1908,15 +1935,16 @@ class AdvancedComments {
     }
 
 
+    static handleMouseover(pId, source) {
+        const elem = document.querySelectorAll(`#${pId} .comment-content`);
+        source.title = elem[0].innerText;
+    }
+
+
     load() {
         this.styles = __webpack_require__(27);
 
         this.prepareComments();
-    }
-
-    static handleMouseover(pId, source) {
-        const elem = document.querySelectorAll(`#${pId} .comment-content`);
-        source.title = elem[0].innerText;
     }
 
 
@@ -1928,20 +1956,20 @@ class AdvancedComments {
         window.addEventListener('commentsLoaded', () => {
             const comments = $('.comments .comment-box .comment');
             comments.tooltip();
-            for(let i = 0; i < comments.length; i++) {
+            for (let i = 0; i < comments.length; i++) {
                 const container = $(comments[i]);
                 const comment = $(container.parents('.comment-box')[0]).prev('.comment');
                 const userHref = container.find('.comment-foot > a.user')[0].href;
                 const isOwnComment = userHref.substr(userHref.lastIndexOf('/') + 1) === p.user.name;
 
-                if(comment[0]) {
+                if (comment[0]) {
                     const pId = comment[0].id;
                     let elem = document.createElement('a');
                     elem.href = `#${pId}`;
                     elem.className = 'fa fa-level-up action preview-link';
                     container.find('.comment-foot').append(elem);
 
-                    if(isOwnComment) {
+                    if (isOwnComment) {
                         container[0].classList.add('own-comment');
                     }
 
@@ -2020,6 +2048,11 @@ class NotificationCenter {
     }
 
 
+    static getTitle(message) {
+        return message.thumb === null ? 'Private Nachricht' : 'Kommentar';
+    }
+
+
     load() {
         this.menuOpen = false;
         this.template = __webpack_require__(30);
@@ -2046,8 +2079,8 @@ class NotificationCenter {
         });
 
         window.addEventListener('click', (e) => {
-            if(this.menuOpen) {
-                if(! $(e.target).parents('#notification-center')[0]) {
+            if (this.menuOpen) {
+                if (!$(e.target).parents('#notification-center')[0]) {
                     e.preventDefault();
                     this.toggleMenu();
                 }
@@ -2069,7 +2102,7 @@ class NotificationCenter {
             this.messageContainer.classList.remove('loading');
             p.user.setInboxLink(0);
 
-            if(messages.length <= 0) {
+            if (messages.length <= 0) {
                 let elem = document.createElement('li');
                 elem.innerText = 'Keine neuen Benachrichtigungen!';
                 elem.className = 'no-notifications';
@@ -2077,7 +2110,7 @@ class NotificationCenter {
                 return false;
             }
 
-            for(let i = 0; i < messages.length; i++) {
+            for (let i = 0; i < messages.length; i++) {
                 this.addEntry(NotificationCenter.getTitle(
                     messages[i]),
                     messages[i].name,
@@ -2094,21 +2127,16 @@ class NotificationCenter {
             this.getNotifications(false).then((notifications) => {
                 let messages = notifications.messages;
 
-                if(messages.length <= 0) {
+                if (messages.length <= 0) {
                     return false;
                 }
 
-                for(let i = 0; i < messages.length; i++) {
+                for (let i = 0; i < messages.length; i++) {
                     console.log($(this.messageContainer).find(`notification-${messages[i].id}`));
                     $(this.messageContainer).find(`#notification-${messages[i].id}`)[0].classList.add('new');
                 }
             });
         });
-    }
-
-
-    static getTitle(message) {
-        return message.thumb === null ? 'Private Nachricht' : 'Kommentar';
     }
 
 
@@ -2125,7 +2153,7 @@ class NotificationCenter {
         let img = '<img src="//thumb.pr0gramm.com/##THUMB##" class="comment-thumb">';
         let url = image ? `/new/${id}:comment${cId}` : `/inbox/messages`;
 
-        if(! image) {
+        if (!image) {
             img = '<span class="message fa fa-envelope-open"></span>';
         } else {
             img = img.replace('##THUMB', image);
@@ -2217,12 +2245,12 @@ class DesktopNotifications {
 
     load() {
         window.addEventListener('userSync', (e) => {
-            if(e.data.inboxCount > this.notifications) {
+            if (e.data.inboxCount > this.notifications) {
                 GM_notification(
                     'Du hast ' + (e.data.inboxCount === 1 ? 'eine ungelesene Nachricht!' : e.data.inboxCount + ' ungelesene Nachrichten!'),
                     'pr0gramm',
                     'http://pr0gramm.com/media/pr0gramm-favicon.png',
-                    function() {
+                    function () {
                         window.focus();
                         window.location.href = '/inbox/unread';
                     }
@@ -2252,6 +2280,31 @@ class FilterMarks {
     }
 
 
+    static displayFilterLabel(itemData, $container) {
+        let filter = FilterMarks.getFilter(itemData);
+        let badge = document.createElement('span');
+        badge.className = 'badge';
+        badge.classList.toggle(filter);
+        badge.innerText = filter.toUpperCase();
+
+        $container.find('.item-details')[0].appendChild(badge);
+    }
+
+
+    static getFilter(itemData) {
+        switch (itemData.flags) {
+            case 1:
+                return 'sfw';
+            case 2:
+                return 'nsfw';
+            case 4:
+                return 'nsfl';
+            case 8:
+                return 'nsfp';
+        }
+    }
+
+
     load() {
         this.styles = __webpack_require__(36);
         this.overrideViews();
@@ -2271,32 +2324,6 @@ class FilterMarks {
 
         // Fix audio-controls
         __WEBPACK_IMPORTED_MODULE_0__Utils__["a" /* default */].addVideoConstants();
-    }
-
-
-    static displayFilterLabel(itemData, $container) {
-        let filter = FilterMarks.getFilter(itemData);
-        let badge = document.createElement('span');
-        badge.className = 'badge';
-
-        badge.classList.toggle(filter);
-        badge.innerText = filter.toUpperCase();
-
-        $container.find('.item-details')[0].appendChild(badge);
-    }
-
-
-    static getFilter(itemData) {
-        switch(itemData.flags) {
-            case 1:
-                return 'sfw';
-            case 2:
-                return 'nsfw';
-            case 4:
-                return 'nsfl';
-            case 8:
-                return 'nsfp';
-        }
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = FilterMarks;
@@ -3225,4 +3252,4 @@ exports.push([module.i, ".ocr-button {\n  position: absolute;\n  top: 20px;\n  l
 module.exports = "<span class=\"fa fa-close close-popup\"></span> <pre class=content>test</pre> ";
 
 /***/ })
-/******/ ]);
+/******/ ]); 

@@ -10,12 +10,12 @@ export default class DesktopNotifications {
 
     load() {
         window.addEventListener('userSync', (e) => {
-            if(e.data.inboxCount > this.notifications) {
+            if (e.data.inboxCount > this.notifications) {
                 GM_notification(
                     'Du hast ' + (e.data.inboxCount === 1 ? 'eine ungelesene Nachricht!' : e.data.inboxCount + ' ungelesene Nachrichten!'),
                     'pr0gramm',
                     'http://pr0gramm.com/media/pr0gramm-favicon.png',
-                    function() {
+                    function () {
                         window.focus();
                         window.location.href = '/inbox/unread';
                     }

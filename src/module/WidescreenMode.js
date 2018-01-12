@@ -11,8 +11,9 @@ export default class WidescreenMode {
         this.description = 'Stellt das pr0 im Breitbildmodus dar.'
     }
 
+
     handleWheelChange(e) {
-        if(this.isMoveable) {
+        if (this.isMoveable) {
             this.img.animate({
                 top: e.deltaY > 0 ? '-=20' : '+=20'
             }, 0);
@@ -38,6 +39,7 @@ export default class WidescreenMode {
         el.click();
     }
 
+
     load() {
         this.comments = [];
         this.commentsWide = window.localStorage.getItem('comments_wide') === 'true';
@@ -55,6 +57,7 @@ export default class WidescreenMode {
         this.modifyLogo();
     }
 
+
     modifyLogo() {
         let originalLink = document.getElementById('pr0gramm-logo-link');
 
@@ -71,6 +74,7 @@ export default class WidescreenMode {
             }
         });
     }
+
 
     overrideViews() {
         // Override Item-View
@@ -142,6 +146,7 @@ export default class WidescreenMode {
         };
     }
 
+
     addItemListener(image, itemData) {
         this.img = image;
         this.container = this.img[0].parentNode;
@@ -165,9 +170,10 @@ export default class WidescreenMode {
         if (!this.listenerAdded) {
             this.listenerAdded = true;
             document.addEventListener('keydown', (e) => {
-                if (document.activeElement.tagName !== 'TEXTAREA' && document.activeElement.tagName !== 'INPUT') {
-                    this.handleKeypress(e);
-                }
+                this.handleKeypress(e,
+                    document.activeElement.tagName === 'TEXTAREA' ||
+                    document.activeElement.tagName === 'INPUT'
+                );
             });
 
             window.addEventListener('locationChange', (e) => {
@@ -178,32 +184,42 @@ export default class WidescreenMode {
         }
     }
 
-    handleKeypress(e) {
-        switch (e.code) {
-            case 'Space':
-                e.preventDefault();
-                this.toggleMove();
-                break;
-            case 'Escape':
-                if (this.resized && p.currentView.$itemContainer) {
-                    p.currentView.hideItem();
-                }
-                break;
-            case 'ArrowUp':
-            case 'ArrowDown':
-                if (this.isMoveable) {
-                    this.img.animate({
-                        top: e.code === 'ArrowDown' ? '-=20' : '+=20'
-                    }, 0);
-                } else {
-                    let elem = this.commentsContainer.find('.simplebar-content');
-                    if (!elem.is(':focus')) {
-                        elem.attr('tabindex', -1).focus();
+
+    handleKeypress(e, isInput = false) {
+        if (isInput) {
+            if (event.ctrlKey && e.code === 'Enter') {
+                $(document.activeElement).parents('form').find('input[type="submit"]')[0].click();
+            }
+
+            return true;
+        } else {
+            switch (e.code) {
+                case 'Space':
+                    e.preventDefault();
+                    this.toggleMove();
+                    break;
+                case 'Escape':
+                    if (this.resized && p.currentView.$itemContainer) {
+                        p.currentView.hideItem();
                     }
-                }
-                break;
+                    break;
+                case 'ArrowUp':
+                case 'ArrowDown':
+                    if (this.isMoveable) {
+                        this.img.animate({
+                            top: e.code === 'ArrowDown' ? '-=20' : '+=20'
+                        }, 0);
+                    } else {
+                        let elem = this.commentsContainer.find('.simplebar-content');
+                        if (!elem.is(':focus')) {
+                            elem.attr('tabindex', -1).focus();
+                        }
+                    }
+                    break;
+            }
         }
     }
+
 
     hasUnsentComments() {
         for (let i = 0; i < this.comments.length; i++) {
@@ -214,6 +230,7 @@ export default class WidescreenMode {
 
         return false;
     }
+
 
     toggleMove() {
         if (this.resized) {
@@ -230,6 +247,7 @@ export default class WidescreenMode {
             this.img.resizeInit = true;
         }
     }
+
 
     addNavigation() {
         this.nav.button = document.createElement('a');

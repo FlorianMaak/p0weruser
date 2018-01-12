@@ -16,9 +16,11 @@ export default class BenisInNavbar {
         this.addBenis();
     }
 
+
     addBenis() {
         this.target.innerText = this.benis;
     }
+
 
     addListener() {
         window.addEventListener('userSync', (e) => {
