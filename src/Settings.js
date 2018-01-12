@@ -49,10 +49,10 @@ export default class Settings {
 
 
     static getVersion(getBeta) {
-        let url = 'https://github.com/FlorianMaak/p0weruser/raw/master/src/template/scriptHeader.txt';
+        let url = 'https://github.com/FlorianMaak/p0weruser/raw/master/package.json';
 
         if (getBeta) {
-            url = 'https://github.com/FlorianMaak/p0weruser/raw/develop/src/template/scriptHeader.txt';
+            url = 'https://github.com/FlorianMaak/p0weruser/raw/develop/package.json';
         }
 
         return new Promise((resolve, reject) => {
@@ -64,7 +64,7 @@ export default class Settings {
                     'Upgrade-Insecure-Requests': 1
                 },
                 onload: (res) => {
-                    resolve(res.responseText.match('@version(.*)\t\t(.*)\n')[2]);
+                    resolve(res.responseText.match('version": "(.*)"')[1]);
                 },
                 onError: (res) => {
                     reject(res);
