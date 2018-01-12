@@ -1461,9 +1461,10 @@ class WidescreenMode {
         if (!this.listenerAdded) {
             this.listenerAdded = true;
             document.addEventListener('keydown', (e) => {
-                if (document.activeElement.tagName !== 'TEXTAREA' && document.activeElement.tagName !== 'INPUT') {
-                    this.handleKeypress(e);
-                }
+                this.handleKeypress(e,
+                    document.activeElement.tagName === 'TEXTAREA' ||
+                    document.activeElement.tagName === 'INPUT'
+                );
             });
 
             window.addEventListener('locationChange', (e) => {
@@ -1474,30 +1475,38 @@ class WidescreenMode {
         }
     }
 
-    handleKeypress(e) {
-        switch (e.code) {
-            case 'Space':
-                e.preventDefault();
-                this.toggleMove();
-                break;
-            case 'Escape':
-                if (this.resized && p.currentView.$itemContainer) {
-                    p.currentView.hideItem();
-                }
-                break;
-            case 'ArrowUp':
-            case 'ArrowDown':
-                if (this.isMoveable) {
-                    this.img.animate({
-                        top: e.code === 'ArrowDown' ? '-=20' : '+=20'
-                    }, 0);
-                } else {
-                    let elem = this.commentsContainer.find('.simplebar-content');
-                    if (!elem.is(':focus')) {
-                        elem.attr('tabindex', -1).focus();
+    handleKeypress(e, isInput = false) {
+        if(isInput) {
+            if(event.ctrlKey && e.code === 'Enter') {
+                $(document.activeElement).parents('form').find('input[type="submit"]')[0].click();
+            }
+
+            return true;
+        } else {
+            switch (e.code) {
+                case 'Space':
+                    e.preventDefault();
+                    this.toggleMove();
+                    break;
+                case 'Escape':
+                    if (this.resized && p.currentView.$itemContainer) {
+                        p.currentView.hideItem();
                     }
-                }
-                break;
+                    break;
+                case 'ArrowUp':
+                case 'ArrowDown':
+                    if (this.isMoveable) {
+                        this.img.animate({
+                            top: e.code === 'ArrowDown' ? '-=20' : '+=20'
+                        }, 0);
+                    } else {
+                        let elem = this.commentsContainer.find('.simplebar-content');
+                        if (!elem.is(':focus')) {
+                            elem.attr('tabindex', -1).focus();
+                        }
+                    }
+                    break;
+            }
         }
     }
 
