@@ -239,6 +239,22 @@ body[class] {
         justify-content: center;
         padding: 40px;
 
+        .move-link {
+          position: absolute;
+          color: #fff;
+          opacity: 0.7;
+          padding: 0 24px;
+          font-size: 26px;
+          right: 0;
+          top: 24px;
+          text-shadow: 0 0 3px #000;
+          z-index: 10;
+        }
+
+        .item-fullsize-link + .move-link {
+          top: 60px;
+        }
+
         .video-controls {
           height: 64px;
 

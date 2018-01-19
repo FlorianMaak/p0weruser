@@ -52,9 +52,29 @@ export default class WidescreenMode {
             container: document.getElementById('footer-links')
         };
 
+        this.addInputListeners();
         this.overrideViews();
         this.addNavigation();
         this.modifyLogo();
+    }
+
+
+    addInputListeners() {
+        if (!this.listenerAdded) {
+            this.listenerAdded = true;
+            document.addEventListener('keydown', (e) => {
+                this.handleKeypress(e,
+                    document.activeElement.tagName === 'TEXTAREA' ||
+                    document.activeElement.tagName === 'INPUT'
+                );
+            });
+
+            window.addEventListener('locationChange', (e) => {
+                if (e.mode === 0) {
+                    document.body.classList.remove('fixed');
+                }
+            })
+        }
     }
 
 
@@ -152,6 +172,7 @@ export default class WidescreenMode {
         this.container = this.img[0].parentNode;
         this.resized = (itemData.height > this.container.offsetHeight || itemData.width > this.container.offsetWidth);
         this.container.classList.toggle('resized', this.resized);
+        this.moveLink = document.getElementsByClassName('move-link')[0];
 
         // Enable draggable
         if (this.resized) {
@@ -167,20 +188,11 @@ export default class WidescreenMode {
             this.handleWheelChange(e);
         });
 
-        if (!this.listenerAdded) {
-            this.listenerAdded = true;
-            document.addEventListener('keydown', (e) => {
-                this.handleKeypress(e,
-                    document.activeElement.tagName === 'TEXTAREA' ||
-                    document.activeElement.tagName === 'INPUT'
-                );
+        if(this.moveLink) {
+            this.moveLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.toggleMove();
             });
-
-            window.addEventListener('locationChange', (e) => {
-                if (e.mode === 0) {
-                    document.body.classList.remove('fixed');
-                }
-            })
         }
     }
 
