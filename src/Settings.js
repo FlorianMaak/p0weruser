@@ -69,7 +69,9 @@ export default class Settings {
                     'Upgrade-Insecure-Requests': 1
                 },
                 onload: (res) => {
-                    resolve(res.responseText.match('version": "(.*)"')[1]);
+                    const version = res.responseText.match('"version":.*"(.*)"');
+
+                    resolve(version !== null ? version[1] : 'Not available!');
                 },
                 onError: (res) => {
                     reject(res);
