@@ -9,6 +9,7 @@ export default class Settings {
         this.app = app;
         this.tabs = {};
         this.tabContent = {};
+        this.hintIsShown = false;
 
         this.addListeners();
     }
@@ -39,12 +40,16 @@ export default class Settings {
 
 
     static addHint() {
-        let header = document.getElementById('head-content');
-        let hint = document.createElement('div');
-        hint.id = 'settings_hint';
-        hint.innerText = 'Bitte öffne die Einstellungen um p0weruser zu konfigurieren!';
+        if (!document.getElementById('settings_hint')) {
+            let header = document.getElementById('head-content');
+            let hint = document.createElement('div');
+            hint.id = 'settings_hint';
+            hint.innerText = 'Bitte öffne die Einstellungen um p0weruser zu konfigurieren!';
 
-        header.appendChild(hint);
+            header.appendChild(hint);
+
+            return true;
+        }
     }
 
 
@@ -64,7 +69,9 @@ export default class Settings {
                     'Upgrade-Insecure-Requests': 1
                 },
                 onload: (res) => {
-                    resolve(res.responseText.match('version": "(.*)"')[1]);
+                    const version = res.responseText.match('"version":.*"(.*)"');
+
+                    resolve(version !== null ? version[1] : 'Not available!');
                 },
                 onError: (res) => {
                     reject(res);
