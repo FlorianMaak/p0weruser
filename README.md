@@ -63,8 +63,7 @@ branch-style and follow the commits [conventions](https://github.com/FlorianMaak
 pull request. All contributions will be released under [GPLv3 licence](https://github.com/FlorianMaak/p0weruser/blob/master/LICENSE).
 
 ## [Dev] Installation
-After checkout run ```npm install``` and [npm](https://www.npmjs.com/) will install all needed dependencies
-and will run ```bower install``` to install needed frontend-libaries. After installation run
-```npm run build``` to build a bundle from source. There are filewatchers running, starting a new build after a
+After checkout run ```npm install``` and [npm](https://www.npmjs.com/) will install all needed dependencies and creates a new build in ```/dist```-Folder. After installation run
+```npm run dev``` to start filewatchers, which are starting a new build after a
 each filechange. Just create a new UserScript in Tapermonkey and add your local file (found in
 ```dist``` folder) to test your script. 

@@ -1,4 +1,4 @@
-// [AIV]  Build version: 0.7.6 - Tuesday, March 13th, 2018, 9:19:33 PM  
+// [AIV]  Build version: 0.7.7 - Tuesday, March 13th, 2018, 9:34:58 PM  
  // ==UserScript==
 // @name		p0weruser
 // @namespace	https://github.com/FlorianMaak/p0weruser
@@ -11,7 +11,7 @@
 // @connect     github.com
 // @connect     raw.githubusercontent.com
 // @connect     pr0gramm.com
-// @version		0.7.6
+// @version		0.7.7
 // @grant		GM_notification
 // @grant       GM_xmlhttpRequest
 // @require     https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
