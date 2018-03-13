@@ -1,5 +1,4 @@
 const path = require('path');
-const webpack = require('webpack');
 const fs = require('fs');
 const WebpackAutoInject = require('webpack-auto-inject-version');
 
@@ -10,15 +9,9 @@ module.exports = {
         path: path.resolve(__dirname, 'dist')
     },
     plugins: [
-        new webpack.BannerPlugin({
-            banner: fs.readFileSync(
-                path.resolve(__dirname, 'src/template/scriptHeader.txt'), 'utf8'
-            ),
-            raw: true,
-            entryOnly: true
-        }),
         new WebpackAutoInject({
             NAME: 'p0weruser',
+            SHORT: 'TPM',
             SILENT: true,
             PACKAGE_JSON_PATH: './package.json',
             components: {
@@ -26,6 +19,12 @@ module.exports = {
                 InjectByTag: true
             },
             componentsOptions: {
+                InjectAsComment: {
+                    tag: fs.readFileSync(
+                        path.resolve(__dirname, 'src/template/scriptHeader.txt'), 'utf8'
+                    ),
+                    dateFormat: 'dddd, mmmm dS, yyyy, h:MM:ss TT'
+                },
                 AutoIncreaseVersion: {
                     runInWatchMode: false
                 },
