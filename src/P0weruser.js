@@ -4,11 +4,11 @@ import EventHandler from './EventHandler';
 import WidescreenMode from './module/WidescreenMode';
 import RepostMarker from './module/RepostMarker';
 import BenisInNavbar from './module/BenisInNavbar';
-import scrollbarCSS from '../bower_components/simplebar/dist/simplebar.css';
+import scrollbarCSS from 'simplebar/dist/simplebar.css';
 import AdvancedComments from './module/AdvancedComments';
 import NotificationCenter from './module/NotificationCenter';
 import DesktopNotifications from './module/DesktopNotifications';
-import FilterMarks from './module/filterMarks';
+import FilterMarks from './module/FilterMarks';
 import Rep0st from './module/Rep0st';
 import ImageOCR from './module/ImageOCR';
 
