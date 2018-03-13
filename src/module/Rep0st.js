@@ -71,10 +71,14 @@ export default class Rep0st {
         dta.append('image', new Blob([], {type: 'application/octet-stream'}), '');
         dta.append('url', imgElement[0].src);
 
+
         // Filters
-        dta.append('filter', 'sfw');
-        dta.append('filter', 'nsfw');
-        dta.append('filter', 'nsfl');
+        let filters = p.user.flagsName.split('+');
+        filters = filters.indexOf('all') !== -1 ? ['sfw', 'nsfw', 'nsfl'] : filters;
+
+        for (const filter of filters) {
+            dta.append('filter', filter);
+        }
 
         GM_xmlhttpRequest({
             url: 'https://rep0st.rene8888.at/',
