@@ -1,4 +1,4 @@
-import SimpleBar from '../../bower_components/simplebar/dist/simplebar.js';
+import SimpleBar from 'simplebar';
 import Utils from '../Utils';
 
 export default class WidescreenMode {
@@ -188,7 +188,7 @@ export default class WidescreenMode {
             this.handleWheelChange(e);
         });
 
-        if(this.moveLink) {
+        if (this.moveLink) {
             this.moveLink.addEventListener('click', (e) => {
                 e.preventDefault();
                 this.toggleMove();

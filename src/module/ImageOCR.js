@@ -1,5 +1,5 @@
 import Tesseract from 'tesseract.js';
-import SimpleBar from '../../bower_components/simplebar/dist/simplebar.js';
+import SimpleBar from 'simplebar';
 import Utils from '../Utils';
 
 export default class ImageOCR {
