@@ -11,7 +11,7 @@ module.exports = {
     plugins: [
         new WebpackAutoInject({
             NAME: 'p0weruser',
-            SHORT: 'TPM',
+            SHORT: 'pr0',
             SILENT: true,
             PACKAGE_JSON_PATH: './package.json',
             components: {

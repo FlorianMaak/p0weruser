@@ -1,4 +1,4 @@
-// [TPM]  // ==UserScript==
+// [pr0]  // ==UserScript==
 // @name		p0weruser
 // @namespace	https://github.com/FlorianMaak/p0weruser
 // @author		Florian Maak
@@ -10,7 +10,8 @@
 // @connect     github.com
 // @connect     raw.githubusercontent.com
 // @connect     pr0gramm.com
-// @version		0.7.7
+// @run-at      document-end
+// @version		0.7.8
 // @grant		GM_notification
 // @grant       GM_xmlhttpRequest
 // @require     https://code.jquery.com/ui/1.12.1/jquery-ui.min.js

@@ -10,6 +10,7 @@
 // @connect     github.com
 // @connect     raw.githubusercontent.com
 // @connect     pr0gramm.com
+// @run-at      document-end
 // @version		{version}
 // @grant		GM_notification
 // @grant       GM_xmlhttpRequest
