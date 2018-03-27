@@ -1,66 +1,66 @@
 <div class="item-pointer"></div>
 <div class="item-container-content">
     <?js if( p.user.admin ) {?>
-        <svg class="flags flags-{item.flags}" viewBox="0 0 10 10">
-            <polygon points="0,0 10,0 0,10"></polygon>
-        </svg>
+    <svg class="flags flags-{item.flags}" viewBox="0 0 10 10">
+        <polygon points="0,0 10,0 0,10"></polygon>
+    </svg>
     <?js } ?>
     <div class="item-comments" data-simplebar></div>
     <div class="image-main">
         <div class="item-image-wrapper">
             <?js if( item.video ) { ?> <?js if(supportsAutoplay) {?>
-                <video class="item-image" src="{item.image}" type="video/mp4" loop autoplay preload="auto"></video>
+            <video class="item-image" src="{item.image}" type="video/mp4" loop autoplay preload="auto"></video>
             <?js } else { ?>
-                <video class="item-image" webkit-playsinline playsinline poster="{item.thumb}" src="{item.image}"
-                       type="video/mp4" loop preload="metadata"></video>
-                <svg class="video-play-button" viewBox="0 0 200 200">
-                    <circle cx="100" cy="100" r="90" fill="none" stroke-width="15" stroke="#fff"></circle>
-                    <polygon points="70, 55 70, 145 145, 100" fill="#fff"></polygon>
-                </svg>
+            <video class="item-image" webkit-playsinline playsinline poster="{item.thumb}" src="{item.image}"
+                   type="video/mp4" loop preload="metadata"></video>
+            <svg class="video-play-button" viewBox="0 0 200 200">
+                <circle cx="100" cy="100" r="90" fill="none" stroke-width="15" stroke="#fff"></circle>
+                <polygon points="70, 55 70, 145 145, 100" fill="#fff"></polygon>
+            </svg>
             <?js } ?>
             <div class="video-controls<?js if(item.audio){?> has-audio<?js}?>">
                 <div class="video-position-bar-background">
                     <div class="video-position"></div>
                 </div>
                 <?js if(item.audio) {?>
-                    <div class="audio-controls">
-                        <svg class="audio-state" viewBox="0 0 75 75">
-                            <polygon class="audio-speaker"
-                                     points="39.389,13.769 22.235,28.606 6,28.606 6,47.699 21.989,47.699 39.389,62.75 39.389,13.769"/>
-                            <g class="audio-x">
-                                <path d="M 49,50 69,26"/>
-                                <path d="M 69,50 49,26"/>
-                            </g>
-                            <g class="audio-wave">
-                                <path class="audio-wave-1" d="M 48,49 C 50,46 51,42 51,38 C 51,34 50,31 48,28"/>
-                                <path class="audio-wave-2" d="M 55,21 C 59,26 61,32 61,38 C 61,45 59,51 55,56"/>
-                                <path class="audio-wave-3" d="M 62,63 C 67,56 70,48 70,38 C 70,29 67,21 62,14"/>
-                            </g>
-                        </svg>
-                        <div class="audio-volume-controls">
-                            <div class="audio-volume-bar"></div>
-                            <div class="audio-volume-slider"></div>
-                        </div>
+                <div class="audio-controls">
+                    <svg class="audio-state" viewBox="0 0 75 75">
+                        <polygon class="audio-speaker"
+                                 points="39.389,13.769 22.235,28.606 6,28.606 6,47.699 21.989,47.699 39.389,62.75 39.389,13.769"/>
+                        <g class="audio-x">
+                            <path d="M 49,50 69,26"/>
+                            <path d="M 69,50 49,26"/>
+                        </g>
+                        <g class="audio-wave">
+                            <path class="audio-wave-1" d="M 48,49 C 50,46 51,42 51,38 C 51,34 50,31 48,28"/>
+                            <path class="audio-wave-2" d="M 55,21 C 59,26 61,32 61,38 C 61,45 59,51 55,56"/>
+                            <path class="audio-wave-3" d="M 62,63 C 67,56 70,48 70,38 C 70,29 67,21 62,14"/>
+                        </g>
+                    </svg>
+                    <div class="audio-volume-controls">
+                        <div class="audio-volume-bar"></div>
+                        <div class="audio-volume-slider"></div>
                     </div>
+                </div>
                 <?js } ?> </div>
             <?js } else { ?>
             <img class="item-image" src="{item.image}"/>
-                <?js if(item.fullsize) { ?>
-                    <a href="{item.fullsize}" target="_blank" class="item-fullsize-link">+</a>
-                <?js } ?>
+            <?js if(item.fullsize) { ?>
+            <a href="{item.fullsize}" target="_blank" class="item-fullsize-link">+</a>
+            <?js } ?>
 
-                <a class="fa fa-arrows move-link"></a>
+            <a class="fa fa-arrows move-link"></a>
             <?js } ?>
             <?js if( p.user.showAds ) { ?>
-                <div class="stream-prev" title="Neuer">
-                    <span class="fa fa-angle-left"></span>
-                </div>
-                <div class="stream-next" title="Älter">
-                    <span class="fa fa-angle-right"></span>
-                </div>
+            <div class="stream-prev" title="Neuer">
+                <span class="fa fa-angle-left"></span>
+            </div>
+            <div class="stream-next" title="Älter">
+                <span class="fa fa-angle-right"></span>
+            </div>
             <?js } else { ?>
-                <div class="stream-prev arrow pict" title="Neuer">&lt;</div>
-                <div class="stream-next arrow pict" title="Älter">&gt;</div>
+            <div class="stream-prev arrow pict" title="Neuer">&lt;</div>
+            <div class="stream-next arrow pict" title="Älter">&gt;</div>
             <?js } ?>
         </div>
         <div class="item-info">
@@ -75,7 +75,7 @@
                         <?js print(item.up - item.down)?>
                     </span>
                     <?js if( item.user != p.user.name ) {?>
-                        <span class="pict vote-fav{p.favClass(item.vote)}">*</span>
+                    <span class="pict vote-fav{p.favClass(item.vote)}">*</span>
                     <?js } ?>
                 </div>
                 <div>
@@ -102,6 +102,7 @@
                         [<span class="action" id="item-delete" data-id="{item.id}">del</span>]
                         [<a href="/new/phash.{item.id}.12">phash</a>]
                         <?js } ?>
+                        [<span class="item-report action" data-item="{item.id}">melden</span>]
                     </div>
                     <div class="item-tags"></div>
                 </div>
