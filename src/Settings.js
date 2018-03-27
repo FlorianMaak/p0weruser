@@ -34,8 +34,7 @@ export default class Settings {
         }
         P0weruser.saveActivatedModules(result);
 
-        // Reload pr0gramm
-        p.reload();
+        window.location.href = '/settings/site';
     }
 
 

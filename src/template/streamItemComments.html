@@ -24,43 +24,44 @@
     </form>
     <div class="comments">
         <?js var recurseComments = function( comments, level ) { ?>
-            <div class="comment-box">
-                <?js for( var i = 0; i < comments.length; i++ ) { var c = comments[i]; ?>
-                    <div class="comment-box-inner">
-                        <div class="comment{p.voteClass(c.vote)}" id="comment{c.id}">
-                            <div class="comment-vote">
-                                <span class="pict vote-up">+</span>
-                                <span class="pict vote-down">-</span>
-                            </div>
-                        <div class="comment-content"> {c.content.format()}</div>
-                        <div class="comment-foot">
-                            <?js if(c.name == itemUser){?>
-                                <span class="user-comment-op">OP</span>
-                            <?js}?>
-                            <a href="#user/{c.name}" class="user um{c.mark}">{c.name}</a>
-                            <span class="score" title="{c.up} up, {c.down} down">{"Punkt".inflect(c.score)}</span>
-                            <a href="#{tab}/{itemId}:comment{c.id}" class="time permalink">{c.date.relativeTime(true)}</a>
-                            <?js if( level < CONFIG.COMMENTS_MAX_LEVELS ) {?>
-                                <a href="#{tab}/{itemId}:comment{c.id}" class="comment-reply-link action">
-                                    <span class="pict">r</span> antworten
-                                </a>
-                            <?js } ?>
-                            <?js if (c.children.length > 0) {?>
-                                <span class="fold fold-in action" title="Kommentare einklappen">[–]</span>
-                                <span class="fold fold-out action" title="Kommentare ausklappen">[+]</span>
-                                <span class="folded-comments-message"> (<span class="folded-comments-count"></span> eingeklappt) </span>
-                            <?js } ?>
-                            <?js if( p.user.admin ) {?>
-                                [ <span class="comment-delete action">del</span> /
-                                <a href="#{tab}/{itemId}:comment{c.id}" class="comment-edit-link action">edit</a> ]
-                            <?js } ?>
-                        </div>
+        <div class="comment-box">
+            <?js for( var i = 0; i < comments.length; i++ ) { var c = comments[i]; ?>
+            <div class="comment-box-inner">
+                <div class="comment{p.voteClass(c.vote)}" id="comment{c.id}">
+                    <div class="comment-vote">
+                        <span class="pict vote-up">+</span>
+                        <span class="pict vote-down">-</span>
                     </div>
-                    <?js if( c.children.length ) { recurseComments(c.children, level+1); } ?>
+                    <div class="comment-content"> {c.content.format()}</div>
+                    <div class="comment-foot">
+                        <?js if(c.name == itemUser){?>
+                        <span class="user-comment-op">OP</span>
+                        <?js}?>
+                        <a href="#user/{c.name}" class="user um{c.mark}">{c.name}</a>
+                        <span class="score" title="{c.up} up, {c.down} down">{"Punkt".inflect(c.score)}</span>
+                        <a href="#{tab}/{itemId}:comment{c.id}" class="time permalink">{c.date.relativeTime(true)}</a>
+                        <?js if( level < CONFIG.COMMENTS_MAX_LEVELS ) {?>
+                        <a href="#{tab}/{itemId}:comment{c.id}" class="comment-reply-link action">
+                            <span class="pict">r</span> antworten
+                        </a>
+                        <?js } ?>
+                        <?js if (c.children.length > 0) {?>
+                        <span class="fold fold-in action" title="Kommentare einklappen">[–]</span>
+                        <span class="fold fold-out action" title="Kommentare ausklappen">[+]</span>
+                        <span class="folded-comments-message"> (<span class="folded-comments-count"></span> eingeklappt) </span>
+                        <?js } ?>
+                        <?js if( p.user.admin ) {?>
+                        [ <span class="comment-delete action">del</span> /
+                        <a href="#{tab}/{itemId}:comment{c.id}" class="comment-edit-link action">edit</a> ]
+                        <?js } ?>
+                        [<span class="comment-report action" data-item="{itemId}" data-comment="{c.id}">melden</span>]
                     </div>
-                    <?js } ?>
+                </div>
+                <?js if( c.children.length ) { recurseComments(c.children, level+1); } ?>
             </div>
-            <?js }; ?>
-            <?js recurseComments(comments, 1); ?>
+            <?js } ?>
+        </div>
+        <?js }; ?>
+        <?js recurseComments(comments, 1); ?>
     </div>
 </div>
