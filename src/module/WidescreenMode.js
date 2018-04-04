@@ -159,6 +159,7 @@ export default class WidescreenMode {
         // Handle stream-building
         p.View.Stream.Main.prototype.buildItemRows = function (items) {
             let result = '';
+
             for (let i = 0; i < items.length; i++) {
                 result += this.buildItem(items[i]);
             }

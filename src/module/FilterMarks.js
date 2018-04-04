@@ -41,6 +41,11 @@ export default class FilterMarks {
     overrideViews() {
         let _this = this;
 
+        // Handle stream-view
+        p.View.Stream.Main.prototype.buildItem = function (item) {
+            return (`<a class="silent thumb filter ${FilterMarks.getFilter(item)}" id="item-${item.id}" href="${this.baseURL + item.id}"><img src="${item.thumb}"/></a>`);
+        };
+
         // Handle detail-view
         p.View.Stream.Item = p.View.Stream.Item.extend({
             show: function (rowIndex, itemData, defaultHeight, jumpToComment) {
