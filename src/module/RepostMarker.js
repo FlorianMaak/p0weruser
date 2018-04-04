@@ -20,7 +20,6 @@ export default class RepostMarker {
 
     load() {
         this.styles = require('../style/repostMarker.less');
-        this.overrideBuildItem();
 
         // Get reposts, if not searched before
         $(document).ajaxComplete((event, request, settings) => {
@@ -31,23 +30,6 @@ export default class RepostMarker {
             });
         });
     }
-
-
-    overrideBuildItem() {
-        let mainView = p.View.Stream.Main;
-
-        p.View.Stream.Main = mainView.extend({
-            buildItem: this.buildItem
-        });
-
-        p.currentView.buildItem = this.buildItem;
-    }
-
-
-    buildItem(item) {
-        return `<a class="silent thumb" id="item-${item.id}" href="${this.baseURL}${item.id}"><img src="${item.thumb}"/></a>`;
-    }
-
 
     handleAjax(url) {
         return new Promise((resolve, reject) => {

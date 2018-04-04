@@ -1,5 +1,6 @@
 import SimpleBar from 'simplebar';
 import Utils from '../Utils';
+import FilterMarks from './FilterMarks';
 
 export default class WidescreenMode {
     constructor() {
