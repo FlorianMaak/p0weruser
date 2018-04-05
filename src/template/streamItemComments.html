@@ -54,7 +54,8 @@
                         [ <span class="comment-delete action">del</span> /
                         <a href="#{tab}/{itemId}:comment{c.id}" class="comment-edit-link action">edit</a> ]
                         <?js } ?>
-                        [<span class="comment-report action" data-item="{itemId}" data-comment="{c.id}">melden</span>]
+                        <span class="comment-report action" data-item="{itemId}"
+                              data-comment="{c.id}"><span class="fa fa-exclamation-triangle"></span></span>
                     </div>
                 </div>
                 <?js if( c.children.length ) { recurseComments(c.children, level+1); } ?>
