@@ -1,6 +1,5 @@
 import SimpleBar from 'simplebar';
 import Utils from '../Utils';
-import FilterMarks from './FilterMarks';
 
 export default class WidescreenMode {
     constructor() {
@@ -54,9 +53,32 @@ export default class WidescreenMode {
         };
 
         this.addInputListeners();
+        this.addHeaderListener();
         this.overrideViews();
         this.addNavigation();
         this.modifyLogo();
+    }
+
+
+    addHeaderListener() {
+        let headerLinks = document.querySelectorAll('#head-menu > a');
+        for (let i = 0; i < headerLinks.length; i++) {
+            $(headerLinks[i]).unbind('click');
+            headerLinks[i].addEventListener('click', e => {
+                e.preventDefault();
+
+                let href = headerLinks[i].attributes.href.nodeValue;
+                if (href.charAt(0) === '/') {
+                    href = href.slice(1);
+                }
+
+                if (href === p.location) {
+                    p.reload();
+                } else {
+                    p.navigateTo(href);
+                }
+            });
+        }
     }
 
 
@@ -248,7 +270,7 @@ export default class WidescreenMode {
 
     toggleMove() {
         if (this.resized) {
-            this.img.unbind('click');
+            this.img.off('click');
             this.container.classList.toggle('resized');
             this.isMoveable = !this.container.classList.contains('resized');
             this.img.draggable(this.isMoveable ? 'enable' : 'disable');
@@ -259,6 +281,12 @@ export default class WidescreenMode {
             }
 
             this.img.resizeInit = true;
+        }
+
+        if (!this.isMoveable) {
+            this.img.on('click', () => {
+                p.currentView.hideItem();
+            });
         }
     }
 

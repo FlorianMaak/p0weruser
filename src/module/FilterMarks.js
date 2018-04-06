@@ -43,7 +43,8 @@ export default class FilterMarks {
 
         // Handle stream-view
         p.View.Stream.Main.prototype.buildItem = function (item) {
-            return (`<a class="silent thumb filter ${FilterMarks.getFilter(item)}" id="item-${item.id}" href="${this.baseURL + item.id}"><img src="${item.thumb}"/></a>`);
+            return (`<a class="silent thumb filter ${FilterMarks.getFilter(item)}" id="item-${item.id}" href="${this.baseURL + item.id}"><img src="${item.thumb}"/>` +
+                `<span class="benis-info ${item.up - item.down > 0 ? 'up' : 'down'}">${item.up - item.down}</span></a>`);
         };
 
         // Handle detail-view
