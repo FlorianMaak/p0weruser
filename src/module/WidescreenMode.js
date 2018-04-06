@@ -1,6 +1,5 @@
 import SimpleBar from 'simplebar';
 import Utils from '../Utils';
-import FilterMarks from './FilterMarks';
 
 export default class WidescreenMode {
     constructor() {
@@ -271,7 +270,7 @@ export default class WidescreenMode {
 
     toggleMove() {
         if (this.resized) {
-            this.img.unbind('click');
+            this.img.off('click');
             this.container.classList.toggle('resized');
             this.isMoveable = !this.container.classList.contains('resized');
             this.img.draggable(this.isMoveable ? 'enable' : 'disable');
@@ -282,6 +281,12 @@ export default class WidescreenMode {
             }
 
             this.img.resizeInit = true;
+        }
+
+        if (!this.isMoveable) {
+            this.img.on('click', () => {
+                p.currentView.hideItem();
+            });
         }
     }
 
