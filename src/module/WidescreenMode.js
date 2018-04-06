@@ -54,9 +54,32 @@ export default class WidescreenMode {
         };
 
         this.addInputListeners();
+        this.addHeaderListener();
         this.overrideViews();
         this.addNavigation();
         this.modifyLogo();
+    }
+
+
+    addHeaderListener() {
+        let headerLinks = document.querySelectorAll('#head-menu > a');
+        for (let i = 0; i < headerLinks.length; i++) {
+            $(headerLinks[i]).unbind('click');
+            headerLinks[i].addEventListener('click', e => {
+                e.preventDefault();
+
+                let href = headerLinks[i].attributes.href.nodeValue;
+                if (href.charAt(0) === '/') {
+                    href = href.slice(1);
+                }
+
+                if (href === p.location) {
+                    p.reload();
+                } else {
+                    p.navigateTo(href);
+                }
+            });
+        }
     }
 
 
