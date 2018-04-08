@@ -32,6 +32,30 @@ export default class FilterMarks {
     }
 
 
+    getSettings() {
+        return [
+            {
+                id: 'stream_filters',
+                title: 'Filter in Streams',
+                description: 'Filteecken in Listen anzeigen?',
+                type: 'checkbox',
+            },
+            {
+                id: 'detail_filters',
+                title: 'Filter in Medienansicht',
+                description: 'Filterlabel in der Detailansicht einblenden?',
+                type: 'checkbox',
+            },
+            {
+                id: 'stream_benis',
+                title: 'Benis beim Mouseover',
+                description: 'Benis in der Übersicht einblenden?',
+                type: 'checkbox',
+            }
+        ];
+    }
+
+
     load() {
         this.styles = require('../style/filterMarks.less');
         this.overrideViews();
