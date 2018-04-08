@@ -1,9 +1,14 @@
+import Settings from '../Settings';
 import Utils from '../Utils';
 
 export default class FilterMarks {
     constructor() {
         this.name = 'Filtermarkierung';
-        this.description = 'Markiert Medien entsprechend ihres Filters.'
+        this.description = 'Markiert Medien entsprechend ihres Filters.';
+
+        this.displayLabelDetails = Settings.get('FilterMarks.settings.detail_filters');
+        this.displayLabelStream = Settings.get('FilterMarks.settings.stream_filters');
+        this.displayBenisStream = Settings.get('FilterMarks.settings.stream_benis');
     }
 
 
@@ -37,20 +42,17 @@ export default class FilterMarks {
             {
                 id: 'stream_filters',
                 title: 'Filter in Streams',
-                description: 'Filteecken in Listen anzeigen?',
-                type: 'checkbox',
+                description: 'Filteecken in Listen anzeigen?'
             },
             {
                 id: 'detail_filters',
                 title: 'Filter in Medienansicht',
-                description: 'Filterlabel in der Detailansicht einblenden?',
-                type: 'checkbox',
+                description: 'Filterlabel in der Detailansicht einblenden?'
             },
             {
                 id: 'stream_benis',
                 title: 'Benis beim Mouseover',
-                description: 'Benis in der Übersicht einblenden?',
-                type: 'checkbox',
+                description: 'Benis in der Übersicht einblenden?'
             }
         ];
     }
@@ -67,15 +69,22 @@ export default class FilterMarks {
 
         // Handle stream-view
         p.View.Stream.Main.prototype.buildItem = function (item) {
-            return (`<a class="silent thumb filter ${FilterMarks.getFilter(item)}" id="item-${item.id}" href="${this.baseURL + item.id}"><img src="${item.thumb}"/>` +
-                `<span class="benis-info ${item.up - item.down > 0 ? 'up' : 'down'}">${item.up - item.down}</span></a>`);
+            let content = `<a class="silent thumb filter ${_this.displayLabelStream ? FilterMarks.getFilter(item) : ''}" id="item-${item.id}" href="${this.baseURL + item.id}"><img src="${item.thumb}"/>`;
+
+            if (_this.displayBenisStream) {
+                content += `<span class="benis-info ${item.up - item.down > 0 ? 'up' : 'down'}">${item.up - item.down}</span></a>`;
+            }
+            return content;
         };
 
         // Handle detail-view
         p.View.Stream.Item = p.View.Stream.Item.extend({
             show: function (rowIndex, itemData, defaultHeight, jumpToComment) {
                 this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
-                FilterMarks.displayFilterLabel(itemData, this.$container);
+
+                if (_this.displayLabelDetails) {
+                    FilterMarks.displayFilterLabel(itemData, this.$container);
+                }
             }
         });
 

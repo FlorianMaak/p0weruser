@@ -189,16 +189,8 @@ export default class Settings {
                     let currentValue = Settings.get(id);
                     let container = document.createElement('div');
                     container.className = 'box-from-label';
-                    let content = '';
+                    container.innerHTML = `<input id="${id}" type="checkbox" class="box-from-label" ${currentValue ? 'checked' : ''} /><label for="${id}">${settings[i].title}<span>${settings[i].description}</span></label>`;
 
-                    switch (settings[i].type) {
-                        case 'checkbox':
-                            currentValue = currentValue === 'true';
-                            content = `<input id="${id}" type="checkbox" class="box-from-label" ${currentValue ? 'checked' : ''} /><label for="${id}">${settings[i].title}<span>${settings[i].description}</span></label>`;
-                            break;
-                    }
-
-                    container.innerHTML = content;
                     headline.after(container);
                 }
             }
@@ -209,7 +201,13 @@ export default class Settings {
 
 
     static get(name) {
-        return window.localStorage.getItem(name) || false;
+        const item = window.localStorage.getItem(name);
+
+        if (item === null) {
+            Settings.set(name, true);
+        }
+
+        return (item === 'true');
     }
 
 
