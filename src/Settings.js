@@ -34,7 +34,20 @@ export default class Settings {
         }
         P0weruser.saveActivatedModules(result);
 
+        Settings.saveModuleSettings();
+
         window.location.href = '/settings/site';
+    }
+
+
+    static saveModuleSettings() {
+        const elements = document.querySelectorAll('#module-settings input');
+
+        for (let i = 0; i < elements.length; i++) {
+            if (elements[i].type === 'checkbox') {
+                Settings.set(elements[i].id, elements[i].checked);
+            }
+        }
     }
 
 
@@ -136,6 +149,9 @@ export default class Settings {
         this.tabs.getElementsByClassName('active')[0].classList.remove('active');
         button.classList.add('active');
 
+        // Add module-settings
+        this.addModuleSettings(moduleList);
+
         // Load Versioninfo
         this.loadVersionInfo();
 
@@ -152,6 +168,51 @@ export default class Settings {
         saveButton.addEventListener('click', () => {
             Settings.saveSettings(moduleList);
         })
+    }
+
+    addModuleSettings(beforeElement) {
+        const modules = this.app.modules;
+        let wrapper = document.createElement('div');
+        wrapper.id = 'module-settings';
+
+        Object.keys(modules).forEach((key) => {
+            const module = modules[key];
+
+            if (typeof module.getSettings === 'function') {
+                const settings = modules[key].getSettings();
+                let headline = document.createElement('h3');
+                headline.innerText = key;
+                wrapper.append(headline);
+
+                for (let i = 0; i < settings.length; i++) {
+                    const id = `${key}.settings.${settings[i].id}`;
+                    let currentValue = Settings.get(id);
+                    let container = document.createElement('div');
+                    container.className = 'box-from-label';
+                    container.innerHTML = `<input id="${id}" type="checkbox" class="box-from-label" ${currentValue ? 'checked' : ''} /><label for="${id}">${settings[i].title}<span>${settings[i].description}</span></label>`;
+
+                    headline.after(container);
+                }
+            }
+        });
+
+        beforeElement.after(wrapper);
+    }
+
+
+    static get(name) {
+        const item = window.localStorage.getItem(name);
+
+        if (item === null) {
+            Settings.set(name, true);
+        }
+
+        return (item === 'true');
+    }
+
+
+    static set(name, value) {
+        window.localStorage.setItem(name, value);
     }
 
 
