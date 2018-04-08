@@ -42,7 +42,7 @@ export default class FilterMarks {
             {
                 id: 'stream_filters',
                 title: 'Filter in Streams',
-                description: 'Filteecken in Listen anzeigen?'
+                description: 'Filterecken in Listen anzeigen?'
             },
             {
                 id: 'detail_filters',
