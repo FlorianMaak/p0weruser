@@ -4,6 +4,7 @@ import Utils from '../Utils';
 // https://github.com/mopsalarm/pr0gramm-reposts-userscript
 export default class RepostMarker {
     constructor() {
+        this.id = 'RepostMarker';
         this.name = 'Repost Markierung';
         this.description = 'Markiert Reposts in der Übersicht'
     }

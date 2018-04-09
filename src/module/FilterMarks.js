@@ -3,6 +3,7 @@ import Utils from '../Utils';
 
 export default class FilterMarks {
     constructor() {
+        this.id = 'FilterMarks';
         this.name = 'Filtermarkierung';
         this.description = 'Markiert Medien entsprechend ihres Filters.';
 

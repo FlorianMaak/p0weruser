@@ -3,6 +3,7 @@ import Utils from '../Utils';
 
 export default class NotificationCenter {
     constructor() {
+        this.id = 'NotificationCenter';
         this.name = 'Nachrichten Schnellzugriff';
         this.description = 'Öffnet neue Benachrichtigungen in einem kleinen Menü';
     }

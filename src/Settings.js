@@ -192,7 +192,7 @@ export default class Settings {
                 wrapper.append(headline);
 
                 for (let i = 0; i < settings.length; i++) {
-                    const id = `${module.constructor.name}.settings.${settings[i].id}`;
+                    const id = `${module.id}.settings.${settings[i].id}`;
                     let currentValue = Settings.get(id);
                     let container = document.createElement('div');
                     container.className = 'box-from-label';
