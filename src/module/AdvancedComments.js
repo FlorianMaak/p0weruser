@@ -1,8 +1,8 @@
 import Settings from '../Settings';
-import Utils from '../Utils';
 
 export default class AdvancedComments {
     constructor() {
+        this.id = 'AdvancedComments';
         this.name = 'Erweiterte Kommentare';
         this.description = 'Erweitert die Kommentare um Farben und weitere Funktionen';
         this.displayColors = Settings.get('AdvancedComments.settings.display_colors');

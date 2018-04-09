@@ -4,6 +4,7 @@ import Utils from '../Utils';
 
 export default class WidescreenMode {
     constructor() {
+        this.id = 'WidescreenMode';
         this.name = 'Widescreen Mode';
         this.container = {};
         this.commentsContainer = {};

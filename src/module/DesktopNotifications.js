@@ -2,6 +2,7 @@
 // https://greasyfork.org/de/scripts/9984-pr0gramm-desktop-notification/code
 export default class DesktopNotifications {
     constructor() {
+        this.id = 'DesktopNotifications';
         this.name = 'Desktop Notifications';
         this.description = 'Informiert bei neuen Benachrichtigungen';
         this.notifications = 0;

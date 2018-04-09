@@ -4,6 +4,7 @@ import Utils from '../Utils';
 
 export default class ImageOCR {
     constructor() {
+        this.id = 'ImageOCR';
         this.name = 'Texterkennung';
         this.description = 'Extrahiere Text aus Bildern.'
     }

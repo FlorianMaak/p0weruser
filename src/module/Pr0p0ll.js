@@ -2,6 +2,7 @@ import Settings from '../Settings';
 
 export default class Pr0p0ll {
     constructor() {
+        this.id = 'Pr0p0ll';
         this.name = 'Pr0p0ll Integration';
         this.description = 'Erhalte Benachrichtigungen über neue Umfragen!';
         this.showNotification = Settings.get('Pr0p0ll.settings.show_notification');
@@ -56,7 +57,6 @@ export default class Pr0p0ll {
         return new Promise((resolve, reject) => {
             GM_xmlhttpRequest({
                 url: `https://pr0p0ll.com/?p=notify&token=${this.token}`,
-                responseType: 'json',
                 method: 'GET',
                 onload: (res) => {
                     resolve(JSON.parse(res.responseText));

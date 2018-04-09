@@ -2,6 +2,7 @@ import Utils from '../Utils';
 
 export default class BenisInNavbar {
     constructor() {
+        this.id = 'BenisInNavbar';
         this.name = 'Benis in Navigation';
         this.description = 'Zeigt deinen aktuellen Benis in der Headerleiste an';
     }
