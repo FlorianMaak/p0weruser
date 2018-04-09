@@ -67,6 +67,7 @@ export default class Pr0p0ll {
 
 
     updateCounter(score) {
+        score = parseInt(score) || 0;
         if (this.showNotification && Settings.get('Pr0p0ll.settings.last_count') < score) {
             GM_notification(
                 'Du hast ' + (score === 1 ? 'eine neue Umfrage!' : score + ' neue Umfragen!'),
@@ -80,7 +81,7 @@ export default class Pr0p0ll {
         }
 
         this.target.parentNode.classList.toggle('empty', score === 0 || !score);
-        this.target.innerText = parseInt(score) || 0;
+        this.target.innerText = score;
         Settings.set('Pr0p0ll.settings.last_count', score);
     }
 }
