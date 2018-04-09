@@ -172,20 +172,21 @@ export default class Settings {
 
     addModuleSettings(beforeElement) {
         const modules = this.app.modules;
+        const activated = P0weruser.getActivatedModules();
         let wrapper = document.createElement('div');
         wrapper.id = 'module-settings';
 
-        Object.keys(modules).forEach((key) => {
-            const module = modules[key];
+        for (let i = 0; i < activated.length; i++) {
+            let module = modules[activated[i]];
 
             if (typeof module.getSettings === 'function') {
-                const settings = modules[key].getSettings();
+                const settings = module.getSettings();
                 let headline = document.createElement('h3');
-                headline.innerText = modules[key].name;
+                headline.innerText = module.name;
                 wrapper.append(headline);
 
                 for (let i = 0; i < settings.length; i++) {
-                    const id = `${key}.settings.${settings[i].id}`;
+                    const id = `${activated[i]}.settings.${settings[i].id}`;
                     let currentValue = Settings.get(id);
                     let container = document.createElement('div');
                     container.className = 'box-from-label';
@@ -194,7 +195,7 @@ export default class Settings {
                     headline.after(container);
                 }
             }
-        });
+        }
 
         beforeElement.after(wrapper);
     }
