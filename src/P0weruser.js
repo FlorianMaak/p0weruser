@@ -1,3 +1,4 @@
+import Pr0p0ll from './module/Pr0p0ll';
 import Settings from './Settings';
 import Utils from './Utils';
 import EventHandler from './EventHandler';
@@ -81,7 +82,8 @@ export default class P0weruser {
                 'DesktopNotifications': new DesktopNotifications(),
                 'FilterMarks': new FilterMarks(),
                 'Rep0st': new Rep0st(),
-                'ImageOCR': new ImageOCR()
+                'ImageOCR': new ImageOCR(),
+                'Pr0p0ll': new Pr0p0ll()
             };
         }
 

@@ -44,8 +44,14 @@ export default class Settings {
         const elements = document.querySelectorAll('#module-settings input');
 
         for (let i = 0; i < elements.length; i++) {
-            if (elements[i].type === 'checkbox') {
-                Settings.set(elements[i].id, elements[i].checked);
+            switch (elements[i].type) {
+                case 'text':
+                    Settings.set(elements[i].id, elements[i].value);
+                    break;
+                case 'checkbox':
+                    console.log(elements[i]);
+                    Settings.set(elements[i].id, elements[i].checked);
+                    break;
             }
         }
     }
@@ -186,11 +192,20 @@ export default class Settings {
                 wrapper.append(headline);
 
                 for (let i = 0; i < settings.length; i++) {
-                    const id = `${activated[i]}.settings.${settings[i].id}`;
+                    const id = `${module.constructor.name}.settings.${settings[i].id}`;
                     let currentValue = Settings.get(id);
                     let container = document.createElement('div');
                     container.className = 'box-from-label';
-                    container.innerHTML = `<input id="${id}" type="checkbox" class="box-from-label" ${currentValue ? 'checked' : ''} /><label for="${id}">${settings[i].title}<span>${settings[i].description}</span></label>`;
+
+                    switch (settings[i].type) {
+                        case 'text':
+                            currentValue = (currentValue === true) ? '' : currentValue;
+                            container.innerHTML = `<div class="text-type"><span class="title">${settings[i].title}</span><span class="description">${settings[i].description}</span><input id="${id}" type="text" value="${currentValue}" /></div>`;
+                            break;
+                        default:
+                            container.innerHTML = `<input id="${id}" type="${settings[i].type ? settings[i].type : 'checkbox'}" class="box-from-label" ${currentValue ? 'checked' : ''} /><label for="${id}">${settings[i].title}<span>${settings[i].description}</span></label>`;
+                            break;
+                    }
 
                     headline.after(container);
                 }
@@ -210,12 +225,18 @@ export default class Settings {
             return true;
         }
 
-        return (item === 'true');
+        if (item === 'true' || item === 'false') {
+            return (item === 'true');
+        } else {
+            return item;
+        }
     }
 
 
     static set(name, value) {
         window.localStorage.setItem(name, value);
+
+        return value;
     }
 
 
