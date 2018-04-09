@@ -205,6 +205,8 @@ export default class Settings {
 
         if (item === null) {
             Settings.set(name, true);
+
+            return true;
         }
 
         return (item === 'true');

@@ -70,10 +70,10 @@
                         <span class="pict vote-up">+</span>
                         <span class="pict vote-down">-</span>
                     </div>
+                    <?js if( p.shouldShowScore(item) ) {?>
                     <span class="score<?js if(!p.olderThanMinAge(item)){?> score-young<?js}?>"
-                          title="{item.up} up, {item.down} down">
-                        <?js print(item.up - item.down)?>
-                    </span>
+                          title="{item.up} up, {item.down} down"><?js print(item.up - item.down)?></span> <?js } else { ?>
+                    <span class="score-hidden" title="Score noch unsichtbar">●●●</span> <?js } ?>
                     <?js if( item.user != p.user.name ) {?>
                     <span class="pict vote-fav{p.favClass(item.vote)}">*</span>
                     <?js } ?>
