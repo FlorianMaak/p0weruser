@@ -26,12 +26,12 @@ export default class Pr0p0ll {
             {
                 id: 'show_notification',
                 title: 'Desktopbenachrichtigung',
-                description: 'Zeige eine Desktopbenachrichtigung bei neuen Umfragen!'
+                description: 'Zeige eine Desktopbenachrichtigung bei neuen Umfragen!',
             },
             {
                 id: 'user_token',
-                title: 'Accesstoken',
-                description: 'Damit authentifizierst du dich gegenüber pr0p0ll.',
+                title: '"Token für Notificator"',
+                description: 'Damit authentifizierst du dich gegenüber pr0p0ll. [<a href="https://pr0p0ll.com/?p=tokengen" target="_blank">Token generieren</a>]',
                 type: 'text'
             },
         ];
