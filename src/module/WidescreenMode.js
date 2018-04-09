@@ -1,4 +1,5 @@
 import SimpleBar from 'simplebar';
+import Settings from '../Settings';
 import Utils from '../Utils';
 
 export default class WidescreenMode {
@@ -8,7 +9,9 @@ export default class WidescreenMode {
         this.commentsContainer = {};
         this.resized = false;
         this.listenerAdded = false;
-        this.description = 'Stellt das pr0 im Breitbildmodus dar.'
+        this.description = 'Stellt das pr0 im Breitbildmodus dar.';
+        this.displayBenis = Settings.get('WidescreenMode.settings.display_benis');
+        this.mouseControl = Settings.get('WidescreenMode.settings.mouse_control');
     }
 
 
@@ -52,11 +55,37 @@ export default class WidescreenMode {
             container: document.getElementById('footer-links')
         };
 
+        this.checkScoreDisplay();
         this.addInputListeners();
         this.addHeaderListener();
         this.overrideViews();
         this.addNavigation();
         this.modifyLogo();
+    }
+
+
+    checkScoreDisplay() {
+        if (this.displayBenis) {
+            p.shouldShowScore = () => {
+                return true;
+            };
+        }
+    }
+
+
+    getSettings() {
+        return [
+            {
+                id: 'display_benis',
+                title: 'Benis sofort anzeigen',
+                description: 'Zeigt den Benis direkt ohne Wartezeit an!'
+            },
+            {
+                id: 'mouse_control',
+                title: 'Steuerung mit der Maus',
+                description: 'Wechsle mit dem Mausrad zwischen Medien.'
+            }
+        ];
     }
 
 
@@ -206,11 +235,13 @@ export default class WidescreenMode {
         }
 
         // Handle wheel-change
-        this.container.addEventListener('wheel', (e) => {
-            e.preventDefault();
+        if (this.mouseControl) {
+            this.container.addEventListener('wheel', (e) => {
+                e.preventDefault();
 
-            this.handleWheelChange(e);
-        });
+                this.handleWheelChange(e);
+            });
+        }
 
         if (this.moveLink) {
             this.moveLink.addEventListener('click', (e) => {

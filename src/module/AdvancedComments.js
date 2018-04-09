@@ -1,9 +1,11 @@
+import Settings from '../Settings';
 import Utils from '../Utils';
 
 export default class AdvancedComments {
     constructor() {
         this.name = 'Erweiterte Kommentare';
         this.description = 'Erweitert die Kommentare um Farben und weitere Funktionen';
+        this.displayColors = Settings.get('AdvancedComments.settings.display_colors');
     }
 
 
@@ -20,12 +22,23 @@ export default class AdvancedComments {
     }
 
 
-    prepareComments() {
-        p.shouldShowScore = () => {
-            return true;
-        };
+    getSettings() {
+        return [
+            {
+                id: 'display_colors',
+                title: 'Kommentarfarben',
+                description: 'Färbe Kommentarebenen ein!'
+            }
+        ];
+    }
 
+
+    prepareComments() {
         window.addEventListener('commentsLoaded', () => {
+            if (!this.displayColors) {
+                $('.comments').addClass('no-colors');
+            }
+
             const comments = $('.comments .comment-box .comment');
             comments.tooltip();
             for (let i = 0; i < comments.length; i++) {
