@@ -3,6 +3,7 @@
     <div class="comments-switch fa  fa-chevron-right"></div>
 </div>
 <div class="comments-head">
+    <?js if( p.user.id ) {?>
     <form class="comment-form" method="post">
         <textarea class="comment" name="comment" required
                   placeholder="Kommentar schreiben…"></textarea>
@@ -65,4 +66,5 @@
         <?js }; ?>
         <?js recurseComments(comments, 1); ?>
     </div>
+    <?js } ?>
 </div>
