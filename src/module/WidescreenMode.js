@@ -258,9 +258,11 @@ export default class WidescreenMode {
 
 
     hasUnsentComments() {
-        for (let i = 0; i < this.comments.length; i++) {
-            if (this.comments[i].value !== '') {
-                return true;
+        if (p.user.id) {
+            for (let i = 0; i < this.comments.length; i++) {
+                if (this.comments[i].value !== '') {
+                    return true;
+                }
             }
         }
 

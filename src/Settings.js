@@ -181,7 +181,7 @@ export default class Settings {
             if (typeof module.getSettings === 'function') {
                 const settings = modules[key].getSettings();
                 let headline = document.createElement('h3');
-                headline.innerText = key;
+                headline.innerText = modules[key].name;
                 wrapper.append(headline);
 
                 for (let i = 0; i < settings.length; i++) {
