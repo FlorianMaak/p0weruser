@@ -12,8 +12,9 @@ export default class Pr0p0ll {
     load() {
         this.styles = require('../style/pr0p0ll.less');
         this.inboxLink = document.getElementById('inbox-link');
-        this.template = `<span class="poll-count">0</span>`;
-        this.target = this.inboxLink.appendChild($(this.template)[0]);
+        this.template = `<a href="https://pr0p0ll.com/?p=user" target="_blank" class="empty pr0p0ll-count fa fa-edit head-link"><span>0</span></a>`;
+        this.inboxLink.after($(this.template)[0]);
+        this.target = this.inboxLink.nextSibling.firstChild;
 
         if (this.token !== 'true') {
             this.addListener();
@@ -39,11 +40,15 @@ export default class Pr0p0ll {
 
 
     addListener() {
-        window.addEventListener('userSync', () => {
-            this.fetchCounter().then(res => {
-                this.updateCounter(res.openPolls);
+        if (this.token) {
+            window.addEventListener('userSync', () => {
+                this.fetchCounter().then(res => {
+                    this.updateCounter(res.openPolls);
+                });
             });
-        });
+        } else {
+            window.alert('Bitte öffne die Einstellungen um das Pr0p0ll-Modul zu konfigurieren.');
+        }
     }
 
 
@@ -74,6 +79,7 @@ export default class Pr0p0ll {
             );
         }
 
+        this.target.parentNode.classList.toggle('empty', score === 0 || !score);
         this.target.innerText = parseInt(score) || 0;
         Settings.set('Pr0p0ll.settings.last_count', score);
     }
