@@ -66,7 +66,7 @@ export default class Pr0p0ll {
             });
 
             window.addEventListener('commentsLoaded', e => {
-                let links = e.data.find('a[href*="pr0p0ll"][href*="pollid="]');
+                let links = e.data.find('a[href*="pr0p0ll"][href*="id="]');
                 this.addLinks(links);
             });
         } else {
@@ -77,11 +77,14 @@ export default class Pr0p0ll {
 
     addLinks(links) {
         for (let i = 0; i < links.length; i++) {
+            const url = new URL(links[i].href);
             let icon = document.createElement('a');
             icon.className = 'fa fa-bar-chart pr0p0ll-link';
 
             icon.addEventListener('click', () => {
-                const id = parseInt(new URL(links[i].href).searchParams.get('pollid'));
+                const pollId = url.searchParams.get('pollid');
+                const id = parseInt(pollId ? pollId : url.searchParams.get('id'));
+
                 this.showDiagramm(id);
             });
 
