@@ -1,6 +1,6 @@
 import Settings from '../Settings';
 import SimpleBar from 'simplebar';
-import moment from 'Moment';
+import moment from 'moment';
 import Pr0p0llDiagramm from '../lib/Pr0p0llDiagramm';
 
 export default class Pr0p0ll {
@@ -10,6 +10,7 @@ export default class Pr0p0ll {
         this.description = 'Erhalte Benachrichtigungen über neue Umfragen!';
         this.showNotification = Settings.get('Pr0p0ll.settings.show_notification');
         this.token = Settings.get('Pr0p0ll.settings.user_token');
+        this.showDiagramms = Settings.get('Pr0p0ll.settings.show_diagramms');
         this.apiUrl = 'https://pr0p0ll.com/?p=viewjson&id=';
 
         moment.locale('de');
@@ -48,6 +49,11 @@ export default class Pr0p0ll {
                 description: 'Zeige eine Desktopbenachrichtigung bei neuen Umfragen!',
             },
             {
+                id: 'show_diagramms',
+                title: 'Diagramme anzeigen',
+                description: 'Diagramme hinter pr0p0ll-links verlinken'
+            },
+            {
                 id: 'user_token',
                 title: '"Token für Notificator"',
                 description: 'Damit authentifizierst du dich gegenüber pr0p0ll. [<a href="https://pr0p0ll.com/?p=tokengen" target="_blank">Token generieren</a>]',
@@ -58,17 +64,19 @@ export default class Pr0p0ll {
 
 
     addListener() {
-        if (this.token) {
+        if (this.token !== true && this.token.length > 0) {
             window.addEventListener('userSync', () => {
                 this.fetchCounter().then(res => {
                     this.updateCounter(res.openPolls);
                 });
             });
 
-            window.addEventListener('commentsLoaded', e => {
-                let links = e.data.find('a[href*="pr0p0ll"][href*="id="]');
-                this.addLinks(links);
-            });
+            if (this.showDiagramms) {
+                window.addEventListener('commentsLoaded', e => {
+                    let links = e.data.find('a[href*="pr0p0ll"][href*="id="]');
+                    this.addLinks(links);
+                });
+            }
         } else {
             window.alert('Bitte öffne die Einstellungen um das Pr0p0ll-Modul zu konfigurieren.');
         }

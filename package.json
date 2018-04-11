@@ -11,7 +11,7 @@
     "TaperMonkey",
     "pr0gramm"
   ],
-  "version":         "0.9.4",
+  "version":         "0.9.5",
   "license":         "GPL-3.0",
   "dependencies":    {
     "chart.js":     "^2.7.2",
