@@ -1,6 +1,6 @@
 import Settings from '../Settings';
 import SimpleBar from 'simplebar';
-import moment from 'Moment';
+import moment from 'moment';
 import Pr0p0llDiagramm from '../lib/Pr0p0llDiagramm';
 
 export default class Pr0p0ll {
