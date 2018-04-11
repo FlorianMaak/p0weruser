@@ -4,7 +4,6 @@ export default class Pr0p0llDiagramm {
         this.target = document.getElementById('container');
         this.link = document.createElement('a');
         this.textLength = 30;
-
         this.wordings = {
             country: {
                 de: 'Deutschland',
@@ -13,7 +12,6 @@ export default class Pr0p0llDiagramm {
                 other: 'Andere'
             }
         };
-
         this.colors = [
             '#ee4d2e',
             '#1db992',
@@ -25,8 +23,6 @@ export default class Pr0p0llDiagramm {
             '#d9534f',
             '#75c0c7'
         ];
-
-        moment.locale('de');
 
         this.init();
     }
@@ -181,7 +177,7 @@ export default class Pr0p0llDiagramm {
                         },
                         ticks: {
                             fontColor: '#888',
-                            fontSize: 16
+                            fontSize: 14
                         }
                     }],
                     xAxes: [{
@@ -193,7 +189,7 @@ export default class Pr0p0llDiagramm {
                             minRotation: 0,
                             maxRotation: 0,
                             fontColor: '#888',
-                            fontSize: 16
+                            fontSize: 14
                         }
                     }]
                 },

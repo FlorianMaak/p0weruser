@@ -1,5 +1,6 @@
 import Settings from '../Settings';
 import SimpleBar from 'simplebar';
+import moment from 'Moment';
 import Pr0p0llDiagramm from '../lib/Pr0p0llDiagramm';
 
 export default class Pr0p0ll {
@@ -10,6 +11,8 @@ export default class Pr0p0ll {
         this.showNotification = Settings.get('Pr0p0ll.settings.show_notification');
         this.token = Settings.get('Pr0p0ll.settings.user_token');
         this.apiUrl = 'https://pr0p0ll.com/?p=viewjson&id=';
+
+        moment.locale('de');
     }
 
 
@@ -28,8 +31,9 @@ export default class Pr0p0ll {
             template: require('../template/pr0p0llOverlay.html'),
             init: function (container, parent, params) {
                 this.data.p0ll = params.data;
+                this.data.dateTo = moment(params.data.info.endedOn, 'X').format('LL');
+                this.data.dateFrom = moment(params.data.info.endedOn - params.data.info.duration, 'X').format('LL');
                 container[0].classList.add('pr0p0ll-overlay');
-
                 this.parent(container, parent);
             }
         });
@@ -94,7 +98,7 @@ export default class Pr0p0ll {
                     method: 'GET',
                     onload: (res) => {
                         const response = JSON.parse(res.responseText);
-
+                        console.log(response);
                         if (response.error) {
                             reject(response.error);
                         }
@@ -112,6 +116,7 @@ export default class Pr0p0ll {
                 });
 
                 const diag = new Pr0p0llDiagramm(result);
+                new SimpleBar(document.getElementById('overlay-box'));
             },
             error => {
                 window.alert(error);

@@ -32,6 +32,21 @@
 #overlay-box.pr0p0ll-overlay {
   width: 80%;
   bottom: 15%;
+  overflow-x: hidden;
+
+  .simplebar-scrollbar {
+    background: #161618;
+    border-radius: 0;
+    right: 0;
+
+    &.visible {
+      opacity: 1;
+    }
+  }
+
+  .simplebar-content {
+    outline: none;
+  }
 
   #container {
     max-width: 1052px;
@@ -61,6 +76,13 @@
 
   h2 {
     text-align: center;
+
+    span {
+      display: block;
+      text-transform: none;
+      color: #888;
+      font-size: 18px;
+    }
   }
 
   h3 {
@@ -69,7 +91,12 @@
       color: #888;
       margin: 0 10px;
       font-style: italic;
-      float: left;
+    }
+
+    &.center {
+      text-align: center;
+      text-transform: none;
+      color: #888;
     }
 
     small {
