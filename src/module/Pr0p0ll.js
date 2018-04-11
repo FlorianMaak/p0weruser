@@ -64,7 +64,7 @@ export default class Pr0p0ll {
 
 
     addListener() {
-        if (this.token) {
+        if (this.token !== true && this.token.length > 0) {
             window.addEventListener('userSync', () => {
                 this.fetchCounter().then(res => {
                     this.updateCounter(res.openPolls);
