@@ -152,10 +152,12 @@ export default class Pr0p0llDiagramm {
                             let global = 0;
                             let total = 0;
                             for (let i = 0; i < data.datasets.length; i++) {
-                                total += data.datasets[i].data[tooltipItem.index];
-                                global += data.datasets[i].data.reduce(function (previousValue, currentValue, currentIndex, array) {
-                                    return previousValue + currentValue;
-                                });
+                                if (typeof data.datasets[i].data === 'object') {
+                                    total += data.datasets[i].data[tooltipItem.index];
+                                    global += data.datasets[i].data.reduce(function (previousValue, currentValue, currentIndex, array) {
+                                        return previousValue + currentValue;
+                                    });
+                                }
                             }
 
                             let percentage = Math.floor(((currentValue / total) * 100) + 0.5) || 0;
