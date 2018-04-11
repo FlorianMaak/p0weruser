@@ -1,4 +1,7 @@
 import Settings from '../Settings';
+import SimpleBar from 'simplebar';
+import moment from 'Moment';
+import Pr0p0llDiagramm from '../lib/Pr0p0llDiagramm';
 
 export default class Pr0p0ll {
     constructor() {
@@ -7,6 +10,9 @@ export default class Pr0p0ll {
         this.description = 'Erhalte Benachrichtigungen über neue Umfragen!';
         this.showNotification = Settings.get('Pr0p0ll.settings.show_notification');
         this.token = Settings.get('Pr0p0ll.settings.user_token');
+        this.apiUrl = 'https://pr0p0ll.com/?p=viewjson&id=';
+
+        moment.locale('de');
     }
 
 
@@ -20,6 +26,17 @@ export default class Pr0p0ll {
         if (this.token !== 'true') {
             this.addListener();
         }
+
+        p.View.Overlay.Pr0p0llDiagramm = p.View.Base.extend({
+            template: require('../template/pr0p0llOverlay.html'),
+            init: function (container, parent, params) {
+                this.data.p0ll = params.data;
+                this.data.dateTo = moment(params.data.info.endedOn, 'X').format('LL');
+                this.data.dateFrom = moment(params.data.info.endedOn - params.data.info.duration, 'X').format('LL');
+                container[0].classList.add('pr0p0ll-overlay');
+                this.parent(container, parent);
+            }
+        });
     }
 
 
@@ -47,9 +64,64 @@ export default class Pr0p0ll {
                     this.updateCounter(res.openPolls);
                 });
             });
+
+            window.addEventListener('commentsLoaded', e => {
+                let links = e.data.find('a[href*="pr0p0ll"][href*="pollid="]');
+                this.addLinks(links);
+            });
         } else {
             window.alert('Bitte öffne die Einstellungen um das Pr0p0ll-Modul zu konfigurieren.');
         }
+    }
+
+
+    addLinks(links) {
+        for (let i = 0; i < links.length; i++) {
+            let icon = document.createElement('a');
+            icon.className = 'fa fa-bar-chart pr0p0ll-link';
+
+            icon.addEventListener('click', () => {
+                const id = parseInt(new URL(links[i].href).searchParams.get('pollid'));
+                this.showDiagramm(id);
+            });
+
+            links[i].after(icon);
+        }
+    }
+
+
+    showDiagramm(id) {
+        let getDiagramm = () => {
+            return new Promise((resolve, reject) => {
+                GM_xmlhttpRequest({
+                    url: this.apiUrl + id,
+                    method: 'GET',
+                    onload: (res) => {
+                        const response = JSON.parse(res.responseText);
+                        console.log(response);
+                        if (response.error) {
+                            reject(response.error);
+                        }
+
+                        resolve(response);
+                    }
+                });
+            });
+        };
+
+        getDiagramm().then(
+            result => {
+                p.mainView.showOverlay(p.View.Overlay.Pr0p0llDiagramm, {
+                    data: result
+                });
+
+                const diag = new Pr0p0llDiagramm(result);
+                new SimpleBar(document.getElementById('overlay-box'));
+            },
+            error => {
+                window.alert(error);
+            }
+        );
     }
 
 
