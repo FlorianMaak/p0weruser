@@ -1,4 +1,6 @@
 import Settings from '../Settings';
+import SimpleBar from 'simplebar';
+import Pr0p0llDiagramm from '../lib/Pr0p0llDiagramm';
 
 export default class Pr0p0ll {
     constructor() {
@@ -26,8 +28,10 @@ export default class Pr0p0ll {
             template: require('../template/pr0p0llOverlay.html'),
             init: function (container, parent, params) {
                 this.data.p0ll = params.data;
+                container[0].classList.add('pr0p0ll-overlay');
+
                 this.parent(container, parent);
-            },
+            }
         });
     }
 
@@ -103,10 +107,11 @@ export default class Pr0p0ll {
 
         getDiagramm().then(
             result => {
-                console.log(result);
                 p.mainView.showOverlay(p.View.Overlay.Pr0p0llDiagramm, {
                     data: result
                 });
+
+                const diag = new Pr0p0llDiagramm(result);
             },
             error => {
                 window.alert(error);
