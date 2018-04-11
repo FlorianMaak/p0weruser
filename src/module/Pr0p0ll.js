@@ -21,6 +21,14 @@ export default class Pr0p0ll {
         if (this.token !== 'true') {
             this.addListener();
         }
+
+        p.View.Overlay.Pr0p0llDiagramm = p.View.Base.extend({
+            template: require('../template/pr0p0llOverlay.html'),
+            init: function (container, parent, params) {
+                this.data.p0ll = params.data;
+                this.parent(container, parent);
+            },
+        });
     }
 
 
@@ -82,6 +90,7 @@ export default class Pr0p0ll {
                     method: 'GET',
                     onload: (res) => {
                         const response = JSON.parse(res.responseText);
+
                         if (response.error) {
                             reject(response.error);
                         }
@@ -95,6 +104,9 @@ export default class Pr0p0ll {
         getDiagramm().then(
             result => {
                 console.log(result);
+                p.mainView.showOverlay(p.View.Overlay.Pr0p0llDiagramm, {
+                    data: result
+                });
             },
             error => {
                 window.alert(error);
