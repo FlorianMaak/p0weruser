@@ -8,6 +8,9 @@ module.exports = {
         filename: 'p0weruser.user.js',
         path: path.resolve(__dirname, 'dist')
     },
+    performance: {
+        hints: false
+    },
     plugins: [
         new WebpackAutoInject({
             NAME: 'p0weruser',
