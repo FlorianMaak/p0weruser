@@ -39,6 +39,7 @@ export default class EventHandler {
         (function (render) {
             p.View.Stream.Comments.prototype.render = function () {
                 render.call(this);
+                _this.commentsLoaded.data = this.$container;
                 window.dispatchEvent(_this.commentsLoaded);
 
             };

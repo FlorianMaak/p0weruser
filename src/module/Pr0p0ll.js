@@ -7,6 +7,7 @@ export default class Pr0p0ll {
         this.description = 'Erhalte Benachrichtigungen über neue Umfragen!';
         this.showNotification = Settings.get('Pr0p0ll.settings.show_notification');
         this.token = Settings.get('Pr0p0ll.settings.user_token');
+        this.apiUrl = 'https://pr0p0ll.com/?p=viewjson&id=';
     }
 
 
@@ -47,9 +48,58 @@ export default class Pr0p0ll {
                     this.updateCounter(res.openPolls);
                 });
             });
+
+            window.addEventListener('commentsLoaded', e => {
+                let links = e.data.find('a[href*="pr0p0ll"][href*="pollid="]');
+                this.addLinks(links);
+            });
         } else {
             window.alert('Bitte öffne die Einstellungen um das Pr0p0ll-Modul zu konfigurieren.');
         }
+    }
+
+
+    addLinks(links) {
+        for (let i = 0; i < links.length; i++) {
+            let icon = document.createElement('a');
+            icon.className = 'fa fa-bar-chart pr0p0ll-link';
+
+            icon.addEventListener('click', () => {
+                const id = parseInt(new URL(links[i].href).searchParams.get('pollid'));
+                this.showDiagramm(id);
+            });
+
+            links[i].after(icon);
+        }
+    }
+
+
+    showDiagramm(id) {
+        let getDiagramm = () => {
+            return new Promise((resolve, reject) => {
+                GM_xmlhttpRequest({
+                    url: this.apiUrl + id,
+                    method: 'GET',
+                    onload: (res) => {
+                        const response = JSON.parse(res.responseText);
+                        if (response.error) {
+                            reject(response.error);
+                        }
+
+                        resolve(response);
+                    }
+                });
+            });
+        };
+
+        getDiagramm().then(
+            result => {
+                console.log(result);
+            },
+            error => {
+                window.alert(error);
+            }
+        );
     }
 
 
