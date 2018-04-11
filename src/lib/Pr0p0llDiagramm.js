@@ -1,3 +1,5 @@
+import Chart from 'chart.js';
+
 export default class Pr0p0llDiagramm {
     constructor(data) {
         this.data = data;
