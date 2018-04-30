@@ -5,7 +5,6 @@
 // @description	Erweitert pr0gramm.com um weitere Funktionen
 // @license     GPL-3.0; http://www.gnu.org/licenses/gpl-3.0.txt
 // @include		/^https?://pr0gramm.com/.*$/
-// @include		/^https://prep0st.rene8888.at.*$/
 // @icon		https://pr0gramm.com/media/pr0gramm-favicon.png
 // @connect     rep0st.rene8888.at
 // @connect     github.com

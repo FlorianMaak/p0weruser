@@ -109,7 +109,7 @@ export default class Pr0p0ll {
                     method: 'GET',
                     onload: (res) => {
                         const response = JSON.parse(res.responseText);
-                        console.log(response);
+
                         if (response.error) {
                             reject(response.error);
                         }
