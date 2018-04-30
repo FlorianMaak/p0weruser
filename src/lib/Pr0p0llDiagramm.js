@@ -227,19 +227,21 @@ export default class Pr0p0llDiagramm {
 
         let count = 0;
         for (let key in resultData) {
-            let label = key;
+            if (resultData.hasOwnProperty(key)) {
+                let label = key;
 
-            if (this.wordings[resultKey]) {
-                label = this.wordings[resultKey][key];
+                if (this.wordings[resultKey]) {
+                    label = this.wordings[resultKey][key];
+                }
+
+                result.push({
+                    label: Pr0p0llDiagramm.htmlDecode(label),
+                    data: resultData[key],
+                    backgroundColor: this.colors[count]
+                });
+
+                count++;
             }
-
-            result.push({
-                label: Pr0p0llDiagramm.htmlDecode(label),
-                data: resultData[key],
-                backgroundColor: this.colors[count]
-            });
-
-            count++;
         }
     }
 
