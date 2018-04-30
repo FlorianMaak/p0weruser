@@ -9,8 +9,13 @@
                title="Zur Umfrage" target="_blank">Zur Umfrage</a>
         </span>
         <span>
-            Author: <a href="//pr0gramm.com/user/<?js print(p0ll.info.author)?>"
-                       target="_blank"><?js print(p0ll.info.author)?></a>
+            Author:
+            <?js if (p0ll.info.author) { ?>
+            <a href="//pr0gramm.com/user/<?js print(p0ll.info.author)?>"
+               target="_blank"><?js print(p0ll.info.author)?></a>
+            <?js } else { ?>
+            <span class="white">Anonym</span>
+            <?js } ?>
         </span>
         <span>Zeitraum: <?js print(dateFrom)?> - <?js print(dateTo)?></span>
     </h3>
