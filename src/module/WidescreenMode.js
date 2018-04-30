@@ -250,6 +250,12 @@ export default class WidescreenMode {
                 this.toggleMove();
             });
         }
+
+        this.container.addEventListener('click', e => {
+            if (e.target === this.container) {
+                p.currentView.hideItem();
+            }
+        });
     }
 
 
