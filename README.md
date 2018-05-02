@@ -31,7 +31,7 @@ click on one of the following urls:
 [https://github.com/FlorianMaak/p0weruser/raw/develop/dist/p0weruser.user.js](https://github.com/FlorianMaak/p0weruser/raw/develop/dist/p0weruser.user.js)
 
 ## Missing Feature or found a bug?
-Just open an issue and describe your request as accurately as possible. If you like to do script it on your own, feel free to fork and open a Pull Request.
+Just open an issue and describe your request as accurately as possible. If you like to script it on your own, feel free to fork this repository and open a Pull Request.
 
 ## Contribution
 Feel free to fork this project. If you like to contribute, please use [git-flow](https://github.com/nvie/gitflow)
