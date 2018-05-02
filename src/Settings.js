@@ -112,7 +112,7 @@ export default class Settings {
 
         // Create button-element
         let button = document.createElement('a');
-        button.innerText = 'Addons';
+        button.innerText = 'p0weruser';
         button.href = '/settings/addons';
 
         // Add listener
