@@ -93,6 +93,8 @@ export default class Pr0p0ll {
                 const pollId = url.searchParams.get('pollid');
                 const id = parseInt(pollId ? pollId : url.searchParams.get('id'));
 
+                Settings.set('Pr0p0ll.settings.last_count', 0);
+
                 this.showDiagramm(id);
             });
 
