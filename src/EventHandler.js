@@ -5,6 +5,7 @@ export default class EventHandler {
         this.locationChange = new Event('locationChange');
         this.beforeLocationChange = new Event('beforeLocationChange');
         this.userSync = new Event('userSync');
+        this.locationPattern = new RegExp('\\d+$');
 
         this.addEvents();
     }
@@ -31,6 +32,7 @@ export default class EventHandler {
                 navigate.call(this, location, mode);
 
                 _this.locationChange.mode = mode;
+                _this.locationChange.isPost = _this.locationPattern.test(location);
                 window.dispatchEvent(_this.locationChange);
             };
         }(p.navigateTo));
