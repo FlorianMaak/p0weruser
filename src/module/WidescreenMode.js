@@ -123,7 +123,7 @@ export default class WidescreenMode {
             });
 
             window.addEventListener('locationChange', (e) => {
-                if (e.mode === 0) {
+                if (e.mode === 0 || !e.isPost) {
                     document.body.classList.remove('fixed');
                 }
             })
