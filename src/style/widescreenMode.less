@@ -339,6 +339,20 @@ body[class] {
       padding-top: 30px;
       border-right: 3px solid #2a2e31;
 
+      .vote-cfav {
+        color: #888;
+        font-size: 16px;
+        cursor: pointer;
+        position: relative;
+        padding: 0 5px 0 0;
+        top: 4px;
+
+        &.faved,
+        &:hover {
+          color: var(--theme-main-color);
+        }
+      }
+
       .comment[voted-up] {
         .vote-up {
           color: var(--theme-main-color);

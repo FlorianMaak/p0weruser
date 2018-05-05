@@ -12,6 +12,7 @@ export default class WidescreenMode {
         this.listenerAdded = false;
         this.description = 'Stellt das pr0 im Breitbildmodus dar.';
         this.displayBenis = Settings.get('WidescreenMode.settings.display_benis');
+        this.closeOnBackgroundClick = Settings.get('WidescreenMode.settings.close_on_background');
         this.mouseControl = Settings.get('WidescreenMode.settings.mouse_control');
     }
 
@@ -85,6 +86,11 @@ export default class WidescreenMode {
                 id: 'mouse_control',
                 title: 'Steuerung mit der Maus',
                 description: 'Wechsle mit dem Mausrad zwischen Medien.'
+            },
+            {
+                id: 'close_on_background',
+                title: 'Hintergrund schließt',
+                description: 'Bei Klick auf Hintergrund Medium schließen.'
             }
         ];
     }
@@ -252,7 +258,7 @@ export default class WidescreenMode {
         }
 
         this.container.addEventListener('click', e => {
-            if (e.target === this.container) {
+            if (e.target === this.container && this.closeOnBackgroundClick) {
                 p.currentView.hideItem();
             }
         });
