@@ -14,8 +14,7 @@ it using settings.
 * Integration of [Rene8888s repost-check](https://rep0st.rene8888.at)
 * Automated text recognition 
 * Integration of [pr0p0ll.com](https://pr0p0ll.com)
-* (ToDo) Slideshow mode
-* (ToDo) Improved search
+* Mark viewed posts
 
 ## Instructions / Controls
 Help and instructions can be found on this repositorys [wiki-pages](https://github.com/FlorianMaak/p0weruser/wiki).
