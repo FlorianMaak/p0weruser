@@ -50,7 +50,10 @@ export default class ViewedPostsMarker {
     }
 
     addViewedPost(id) {
-        this.viewedPosts.push(id);
+        if (this.viewedPosts.indexOf(id) === -1) {
+            this.viewedPosts.push(id);
+        }
+
         Settings.set('viewed_posts', JSON.stringify(this.viewedPosts));
     }
 }
