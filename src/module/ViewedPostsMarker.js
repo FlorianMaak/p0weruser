@@ -50,6 +50,10 @@ export default class ViewedPostsMarker {
     }
 
     addViewedPost(id) {
+        if (this.viewedPosts.length >= 10000) {
+            this.viewedPosts = this.viewedPosts.slice(-10000);
+        }
+
         if (this.viewedPosts.indexOf(id) === -1) {
             this.viewedPosts.push(id);
         }
