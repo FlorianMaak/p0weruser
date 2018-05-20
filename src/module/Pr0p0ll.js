@@ -109,6 +109,9 @@ export default class Pr0p0ll {
                 GM_xmlhttpRequest({
                     url: this.apiUrl + id,
                     method: 'GET',
+                    headers: {
+                        'User-Agent': 'p0weruser'
+                    },
                     onload: (res) => {
                         const response = JSON.parse(res.responseText);
 
@@ -143,6 +146,9 @@ export default class Pr0p0ll {
             GM_xmlhttpRequest({
                 url: `https://pr0p0ll.com/?p=notify&token=${this.token}`,
                 method: 'GET',
+                headers: {
+                    'User-Agent': 'p0weruser'
+                },
                 onload: (res) => {
                     resolve(JSON.parse(res.responseText));
                 }

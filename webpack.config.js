@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const WebpackAutoInject = require('webpack-auto-inject-version');
+const webpack = require('webpack');
 
 module.exports = {
     entry: './src/P0weruser.js',
