@@ -1,4 +1,5 @@
 import Pr0p0ll from './module/Pr0p0ll';
+import SaveTheInternet from './module/SaveTheInternet';
 import ViewedPostsMarker from './module/ViewedPostsMarker';
 import Settings from './Settings';
 import Utils from './Utils';
@@ -85,7 +86,8 @@ export default class P0weruser {
                 'Rep0st': new Rep0st(),
                 'ImageOCR': new ImageOCR(),
                 'Pr0p0ll': new Pr0p0ll(),
-                'ViewedPostsMarker': new ViewedPostsMarker()
+                'ViewedPostsMarker': new ViewedPostsMarker(),
+                'SaveTheInternet': new SaveTheInternet()
             };
         }
 
