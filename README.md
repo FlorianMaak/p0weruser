@@ -26,7 +26,7 @@ click on one of the following urls:
 ### Release [![Build Status](https://travis-ci.org/FlorianMaak/p0weruser.svg?branch=master)](https://travis-ci.org/FlorianMaak/p0weruser)
 [https://github.com/FlorianMaak/p0weruser/raw/master/dist/p0weruser.user.js](https://github.com/FlorianMaak/p0weruser/raw/master/dist/p0weruser.user.js)
 
-### Beta [![Build Status](https://travis-ci.org/FlorianMaak/p0weruser.svg?branch=develop)](https://travis-ci.org/FlorianMaak/p0weruser)
+### Beta [![Build Status](https://travis-ci.org/FlorianMaak/p0weruser.svg?branch=develop)](https://travis-ci.org/FlorianMaak/p0weruser) [![Greenkeeper badge](https://badges.greenkeeper.io/FlorianMaak/p0weruser.svg)](https://greenkeeper.io/)
 [https://github.com/FlorianMaak/p0weruser/raw/develop/dist/p0weruser.user.js](https://github.com/FlorianMaak/p0weruser/raw/develop/dist/p0weruser.user.js)
 
 ## Missing Feature or found a bug?
