@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/FlorianMaak/p0weruser.svg?branch=master)](https://github.com/FlorianMaak/p0weruser/raw/master/dist/p0weruser.user.js)
+[![Greenkeeper badge](https://badges.greenkeeper.io/FlorianMaak/p0weruser.svg)](https://greenkeeper.io/)
+[![Known Vulnerabilities](https://snyk.io/test/github/FlorianMaak/p0weruser/badge.svg?targetFile=package.json)](https://snyk.io/test/github/FlorianMaak/p0weruser?targetFile=package.json)
+
 # p0weruser
 Extend pr0gramm.com with some extra functions and improve look and feel. Don't like a special feature? No problem, just disable
 it using settings.
@@ -23,10 +27,10 @@ Help and instructions can be found on this repositorys [wiki-pages](https://gith
 Just install Tapermonkey and install the script by a simple
 click on one of the following urls:
 
-### Release [![Build Status](https://travis-ci.org/FlorianMaak/p0weruser.svg?branch=master)](https://travis-ci.org/FlorianMaak/p0weruser)
+### Release
 [https://github.com/FlorianMaak/p0weruser/raw/master/dist/p0weruser.user.js](https://github.com/FlorianMaak/p0weruser/raw/master/dist/p0weruser.user.js)
 
-### Beta [![Build Status](https://travis-ci.org/FlorianMaak/p0weruser.svg?branch=develop)](https://travis-ci.org/FlorianMaak/p0weruser) [![Greenkeeper badge](https://badges.greenkeeper.io/FlorianMaak/p0weruser.svg)](https://greenkeeper.io/)
+### Beta
 [https://github.com/FlorianMaak/p0weruser/raw/develop/dist/p0weruser.user.js](https://github.com/FlorianMaak/p0weruser/raw/develop/dist/p0weruser.user.js)
 
 ## Missing Feature or found a bug?
