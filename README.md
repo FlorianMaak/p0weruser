@@ -15,16 +15,18 @@ it using settings.
 * Advanced Comments
 * Desktop Notifications
 * Filter-Labels
+* TinEye Imagesearch
 * Integration of [Rene8888s repost-check](https://rep0st.rene8888.at)
-* Automated text recognition 
+* Automated text recognition
 * Integration of [pr0p0ll.com](https://pr0p0ll.com)
 * Mark viewed posts
+* c0mmunityrat notifications
 
 ## Instructions / Controls
 Help and instructions can be found on this repositorys [wiki-pages](https://github.com/FlorianMaak/p0weruser/wiki).
 
 ## Installation
-Just install Tapermonkey and install the script by a simple
+Just install Tampermonkey and install the script by a simple
 click on one of the following urls:
 
 ### Release
