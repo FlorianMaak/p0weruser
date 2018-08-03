@@ -48,6 +48,7 @@ export default class WidescreenMode {
     load() {
         this.comments = [];
         this.commentsWide = window.localStorage.getItem('comments_wide') === 'true';
+        this.commentsClosed = window.localStorage.getItem('comments_closed') === 'true';
         this.styles = require('../style/widescreenMode.less');
         this.header = document.getElementById('head-content');
 
@@ -185,16 +186,25 @@ export default class WidescreenMode {
                 _this.comments = [this.$commentForm.find('textarea')[0]];
                 _this.commentsContainer = this.$container;
                 _this.commentsContainer[0].classList.toggle('wide', _this.commentsWide);
+                _this.commentsContainer[0].classList.toggle('closed', _this.commentsClosed);
+                _this.commentsContainer[0].classList.add('loaded');
                 new SimpleBar(this.$container[0]);
 
                 let commentSwitch = this.$container.find('.comments-switch')[0];
+                let commentsClose = this.$container.find('.comments-toggle')[0];
                 commentSwitch.addEventListener('click', () => {
-                    this.$container[0].classList.add('toggled');
                     this.$container[0].classList.toggle('wide');
                     _this.commentsWide = this.$container[0].classList.contains('wide');
 
                     window.localStorage.setItem('comments_wide', _this.commentsWide);
                 });
+
+                commentsClose.addEventListener('click', () => {
+                    this.$container[0].classList.toggle('closed');
+                    _this.commentsClosed = this.$container[0].classList.contains('closed');
+
+                    window.localStorage.setItem('comments_closed', _this.commentsClosed);
+                })
             },
             focusComment(comment) {
                 let target = this.$container.find('#' + comment);

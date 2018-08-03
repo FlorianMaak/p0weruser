@@ -1,22 +1,20 @@
 import Settings from '../Settings';
 
-export default class SaveTheInternet {
+export default class C0mmunityrat {
     constructor() {
-        this.id = 'SaveTheInternet';
-        this.name = 'SaveTheInternet - Notification';
-        this.description = 'Nicht deaktivierbar!';
+        this.id = 'c0mmunityrat';
+        this.name = 'c0mmunityrat - Notification';
+        this.description = 'Lasse dich über Neuigkeiten informieren.';
         this.lastPost = 0;
         this.elem = null;
         this.loaded = false;
-
-        this.load();
     }
 
 
     load() {
         if (!this.loaded) {
-            this.lastPost = +Settings.get('save_the_internet');
-            this.styles = require('../style/saveTheInternet.less');
+            this.lastPost = +Settings.get('c0mmunityrat');
+            this.styles = require('../style/c0mmunityrat.less');
 
             window.addEventListener('userSync', (e) => {
                 fetch('https://pr0gramm.com/api/items/get?flags=15&user=c0mmunityrat').then(r => r.json()).then(res => {
@@ -30,7 +28,7 @@ export default class SaveTheInternet {
 
     showNotification(postId) {
         let elem = document.createElement('a');
-        elem.innerText = 'SaveTheInternet - Es gibt Neuigkeiten!';
+        elem.innerText = 'c0mmunityrat - Es gibt Neuigkeiten!';
         elem.className = 'news-label';
         elem.href = 'https://pr0gramm.com/top/' + postId;
         elem.target = '_blank';
@@ -44,6 +42,6 @@ export default class SaveTheInternet {
     markAsRead(postId) {
         this.elem.remove();
         this.lastPost = postId;
-        Settings.set('save_the_internet', this.lastPost);
+        Settings.set('c0mmunityrat', this.lastPost);
     }
 }

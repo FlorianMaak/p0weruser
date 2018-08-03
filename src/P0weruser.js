@@ -1,5 +1,5 @@
 import Pr0p0ll from './module/Pr0p0ll';
-import SaveTheInternet from './module/SaveTheInternet';
+import C0mmunityrat from './module/C0mmunityrat';
 import ViewedPostsMarker from './module/ViewedPostsMarker';
 import Settings from './Settings';
 import Utils from './Utils';
@@ -87,7 +87,7 @@ export default class P0weruser {
                 'ImageOCR': new ImageOCR(),
                 'Pr0p0ll': new Pr0p0ll(),
                 'ViewedPostsMarker': new ViewedPostsMarker(),
-                'SaveTheInternet': new SaveTheInternet()
+                'C0mmunityrat': new C0mmunityrat()
             };
         }
 

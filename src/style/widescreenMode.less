@@ -337,11 +337,30 @@ body[class] {
 
     .item-comments {
       background: #161618;
-      width: 30vw;
       flex-grow: 0;
       flex-shrink: 0;
       padding-top: 30px;
       border-right: 3px solid #2a2e31;
+      transition: width 0.2s ease-out;
+
+      &.loaded {
+        width: 30vw;
+      }
+
+      &.closed {
+        width: 60px !important;
+
+        .comment-count {
+          width: 60px !important;
+        }
+
+        .count,
+        .comments-head,
+        .simplebar-track,
+        .comments-switch {
+          display: none;
+        }
+      }
 
       .vote-cfav {
         color: #888;
@@ -399,6 +418,8 @@ body[class] {
 
       .comments-head {
         padding: 10px 10px 10px 30px;
+        opacity: 1;
+        transition: opacity .2s;
 
         .comment-content,
         .comment-foot,
@@ -427,8 +448,12 @@ body[class] {
           flex-grow: 1;
         }
 
-        .comments-switch {
+        .fa {
           cursor: pointer;
+
+          &:not(:last-child) {
+            margin-right: 10px;
+          }
         }
       }
 
