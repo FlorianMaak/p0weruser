@@ -44,7 +44,7 @@ export default class RepostMarker {
             if (!params.tags) {
                 params.tags = 'repost';
             } else {
-                params.tags += ' repost';
+                params.tags = 'repost ' + params.tags;
             }
 
             // Send manipulated request
