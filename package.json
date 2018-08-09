@@ -8,10 +8,10 @@
   },
   "keywords":        [
     "UserScript",
-    "TaperMonkey",
+    "TamperMonkey",
     "pr0gramm"
   ],
-  "version":         "1.0.4",
+  "version":         "1.0.5",
   "license":         "GPL-3.0",
   "dependencies":    {
     "chart.js":     "^2.7.2",
@@ -25,7 +25,7 @@
     "html-loader":                 "^0.5.5",
     "less":                        "^3.8.0",
     "less-loader":                 "^4.1.0",
-    "style-loader":                "^0.21.0",
+    "style-loader":                "^0.22.1",
     "webpack":                     "^4.16.2",
     "webpack-auto-inject-version": "^1.1.0",
     "webpack-cli":                 "^3.1.0"
