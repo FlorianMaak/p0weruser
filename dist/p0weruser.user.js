@@ -12,11 +12,10 @@
 // @connect     pr0gramm.com
 // @connect     pr0p0ll.com
 // @run-at      document-end
-// @version		1.0.5
+// @version		1.0.6
 // @grant		GM_notification
 // @grant       GM_xmlhttpRequest
 // @require     https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
-// @require     https://gist.githubusercontent.com/arantius/3123124/raw/grant-none-shim.js
 // @updateURL	https://github.com/FlorianMaak/p0weruser/raw/master/dist/p0weruser.js
 // ==/UserScript==
   
