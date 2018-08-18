@@ -166,6 +166,11 @@ export default class WidescreenMode {
                 this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
                 this.syncVotes(p.user.voteCache.votes);
 
+                let benisbar = document.getElementsByClassName('benisbar')[0];
+                let percentage = itemData.up / (itemData.up + itemData.down);
+                benisbar.setAttribute('style', `background-image: -webkit-gradient(linear, 0% 0%, 100% 0%, from(green), to(rgb(238, 238, 238)),` +
+                    ` color-stop(${percentage}, green), color-stop(${percentage}, rgb(238, 238, 238)));`);
+
                 _this.addItemListener(this.$image, itemData);
                 document.body.classList.add('fixed');
             },
