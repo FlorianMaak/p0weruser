@@ -202,7 +202,7 @@ body[class] {
         display: flex;
         align-items: center;
         justify-content: center;
-        min-height: 100px;
+        min-height: 120px;
 
         > div {
           position: relative;
@@ -228,19 +228,48 @@ body[class] {
             top: 0;
             position: relative;
 
-            .vote-fav {
+            > div {
+              display: flex;
+              align-items: center;
               position: relative;
-              margin-left: 20px;
-              font-size: 32px;
-              left: 0;
-              top: 0;
-            }
+              min-width: 80px;
 
-            .score,
-            .score-hidden {
-              position: relative;
-              top: 0;
-              left: 10px;
+              .vote-fav {
+                position: relative;
+                margin-left: 20px;
+                font-size: 32px;
+                left: 0;
+                top: 0;
+              }
+
+              .score,
+              .score-hidden {
+                position: relative;
+                top: 0;
+                left: 10px;
+              }
+
+              .benisbar {
+                height: 3px;
+                display: none;
+                position: absolute;
+                bottom: -5px;
+                left: 0;
+                right: 0;
+                background-color: #5cb85c;
+
+                &.show {
+                  display: block;
+                }
+
+                &:after {
+                  content: attr(data-after-text);
+                  bottom: -20px;
+                  position: absolute;
+                  color: #bbb;
+                  white-space: nowrap;
+                }
+              }
             }
           }
         }

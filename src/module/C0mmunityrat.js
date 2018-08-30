@@ -26,6 +26,7 @@ export default class C0mmunityrat {
         }
     }
 
+
     showNotification(postId) {
         let elem = document.createElement('a');
         elem.innerText = 'c0mmunityrat - Es gibt Neuigkeiten!';
