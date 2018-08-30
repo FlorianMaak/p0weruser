@@ -14,6 +14,7 @@ export default class WidescreenMode {
         this.displayBenis = Settings.get('WidescreenMode.settings.display_benis');
         this.closeOnBackgroundClick = Settings.get('WidescreenMode.settings.close_on_background');
         this.mouseControl = Settings.get('WidescreenMode.settings.mouse_control');
+        this.displayBenisbar = Settings.get('WidescreenMode.settings.display_benisbar');
     }
 
 
@@ -92,7 +93,12 @@ export default class WidescreenMode {
                 id: 'close_on_background',
                 title: 'Hintergrund schließt',
                 description: 'Bei Klick auf Hintergrund Medium schließen.'
-            }
+            },
+            {
+                id: 'display_benisbar',
+                title: 'Benisleiste anzeigen',
+                description: 'Zeigt die Benisverteilung als Leiste an.'
+            },
         ];
     }
 
@@ -166,11 +172,15 @@ export default class WidescreenMode {
                 this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
                 this.syncVotes(p.user.voteCache.votes);
 
-                if (itemData.down > 0) {
-                    let benisbar = document.getElementsByClassName('benisbar')[0];
-                    let percentage = itemData.up / (itemData.up + itemData.down);
-                    benisbar.setAttribute('style', `background-image: -webkit-gradient(linear, 0% 0%, 100% 0%, from(#5cb85c), to(#888),` +
-                        ` color-stop(${percentage}, #5cb85c), color-stop(${percentage}, #888));`);
+                let benisbar = document.getElementsByClassName('benisbar')[0];
+                if (_this.displayBenisbar) {
+                    if (itemData.down > 0) {
+                        let percentage = itemData.up / (itemData.up + itemData.down);
+                        benisbar.setAttribute('style', `background-image: -webkit-gradient(linear, 0% 0%, 100% 0%, from(#5cb85c), to(#888),` +
+                            ` color-stop(${percentage}, #5cb85c), color-stop(${percentage}, #888));`);
+                    }
+
+                    benisbar.classList.add('show', _this.displayBenisbar);
                 }
 
                 _this.addItemListener(this.$image, itemData);

@@ -251,11 +251,16 @@ body[class] {
 
               .benisbar {
                 height: 3px;
+                display: none;
                 position: absolute;
                 bottom: -5px;
                 left: 0;
                 right: 0;
                 background-color: #5cb85c;
+
+                &.show {
+                  display: block;
+                }
 
                 &:after {
                   content: attr(data-after-text);
