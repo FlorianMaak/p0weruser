@@ -168,8 +168,8 @@ export default class WidescreenMode {
 
         p.View.Stream.Item = p.View.Stream.Item.extend({
             template: require('../template/streamItem.html'),
-            show: function (rowIndex, itemData, defaultHeight, jumpToComment) {
-                this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
+            show: function (rowIndex, itemData, defaultHeight, jumpToComment, cacheBust) {
+                this.parent(rowIndex, itemData, defaultHeight, jumpToComment, cacheBust);
                 this.syncVotes(p.user.voteCache.votes);
 
                 let benisbar = document.getElementsByClassName('benisbar')[0];
