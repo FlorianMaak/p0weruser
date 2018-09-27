@@ -357,9 +357,14 @@ body[class] {
         }
 
         .item-image {
-          height: auto !important;
-          width: auto !important;
           outline: none;
+
+          .item-image-actual {
+            height: auto !important;
+            width: auto !important;
+            max-width: 100%;
+            max-height: 100%;
+          }
         }
       }
     }
