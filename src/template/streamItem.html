@@ -10,7 +10,6 @@
         <div class="item-image-wrapper">
             <?js if( item.video ) { ?>
             <div class="item-image">
-                <div class="item-image-thumb" style="background-image: url({item.thumb})"></div>
                 <?js if(supportsAutoplay) {?>
                 <video class="item-image-actual" src="{item.image}" type="video/mp4" loop autoplay
                        preload="auto"></video>
@@ -62,7 +61,6 @@
             </div>
             <?js } else { ?>
             <div class="item-image">
-                <div class="item-image-thumb" style="background-image: url({item.thumb})"></div>
                 <img class="item-image-actual" src="{item.image}"/></div>
             <?js if(item.fullsize) { ?>
             <a href="{item.fullsize}" target="_blank" class="item-fullsize-link">+</a>
