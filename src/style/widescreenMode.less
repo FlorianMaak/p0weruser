@@ -281,7 +281,6 @@ body[class] {
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 40px;
 
         .move-link {
           position: absolute;
@@ -359,12 +358,21 @@ body[class] {
         .item-image {
           outline: none;
           display: flex;
+          flex-grow: 1;
+          align-items: center;
+          justify-content: center;
+          max-width: 100%;
+          max-height: 100%;
+          padding: 40px;
+          width: auto !important;
 
           .item-image-actual {
             height: auto !important;
             width: auto !important;
             max-width: 100%;
             max-height: 100%;
+            position: relative;
+            margin: 0 auto;
           }
         }
       }
