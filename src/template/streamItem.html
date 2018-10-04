@@ -82,7 +82,10 @@
                 </div>
                 <?js } ?> </div>
             <?js } else { ?>
-            <img class="item-image" src="{item.image}"/>
+            <div class="item-image">
+                <img class="item-image-actual" src="{item.image}"/>
+            </div>
+
             <?js if(item.fullsize) { ?>
             <a href="{item.fullsize}" target="_blank" class="item-fullsize-link">+</a>
             <?js } ?>
