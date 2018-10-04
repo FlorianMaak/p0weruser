@@ -8,7 +8,7 @@
     <div class="item-comments" data-simplebar></div>
     <div class="image-main">
         <div class="item-image-wrapper">
-            <?js if( item.video ) { ?> <?js if(supportsAutoplay) {?>
+            <?js if( item.video ) { ?>
             <div class="item-image">
                 <?js if(supportsAutoplay) {?>
                 <video class="item-image-actual" src="{item.image}" type="video/mp4" loop autoplay
@@ -26,8 +26,19 @@
                 <div class="video-position-bar-background">
                     <div class="video-position"></div>
                 </div>
+                <div class="video-pause-controls" title="Pausieren [p]">
+                    <svg class="video-state video-state-playing" viewBox="20 20 160 160">
+                        <g class="video-state-play-button">
+                            <polygon points="70,50 70,150 150,100" fill="#fff"></polygon>
+                        </g>
+                        <g class="video-state-pause-button">
+                            <polygon points="70,50 70,150 90,150 90,50" fill="#fff"></polygon>
+                            <polygon points="110,50 110,150 130,150 130,50" fill="#fff"></polygon>
+                        </g>
+                    </svg>
+                </div>
                 <?js if(item.audio) {?>
-                <div class="audio-controls">
+                <div class="audio-controls" title="Stumm [q]">
                     <svg class="audio-state" viewBox="0 0 75 75">
                         <polygon class="audio-speaker"
                                  points="39.389,13.769 22.235,28.606 6,28.606 6,47.699 21.989,47.699 39.389,62.75 39.389,13.769"/>
@@ -49,61 +60,19 @@
                 <?js } ?>
             </div>
             <?js } else { ?>
-            <video class="item-image" webkit-playsinline playsinline poster="{item.thumb}" src="{item.image}"
-                   type="video/mp4" loop preload="metadata"></video>
-            <svg class="video-play-button" viewBox="0 0 200 200">
-                <circle cx="100" cy="100" r="90" fill="none" stroke-width="15" stroke="#fff"></circle>
-                <polygon points="70, 55 70, 145 145, 100" fill="#fff"></polygon>
-            </svg>
-            <?js } ?>
-            <div class="video-controls<?js if(item.audio){?> has-audio<?js}?>">
-                <div class="video-position-bar-background">
-                    <div class="video-position"></div>
-                </div>
-                <?js if(item.audio) {?>
-                <div class="audio-controls">
-                    <svg class="audio-state" viewBox="0 0 75 75">
-                        <polygon class="audio-speaker"
-                                 points="39.389,13.769 22.235,28.606 6,28.606 6,47.699 21.989,47.699 39.389,62.75 39.389,13.769"/>
-                        <g class="audio-x">
-                            <path d="M 49,50 69,26"/>
-                            <path d="M 69,50 49,26"/>
-                        </g>
-                        <g class="audio-wave">
-                            <path class="audio-wave-1" d="M 48,49 C 50,46 51,42 51,38 C 51,34 50,31 48,28"/>
-                            <path class="audio-wave-2" d="M 55,21 C 59,26 61,32 61,38 C 61,45 59,51 55,56"/>
-                            <path class="audio-wave-3" d="M 62,63 C 67,56 70,48 70,38 C 70,29 67,21 62,14"/>
-                        </g>
-                    </svg>
-                    <div class="audio-volume-controls">
-                        <div class="audio-volume-bar"></div>
-                        <div class="audio-volume-slider"></div>
-                    </div>
-                </div>
-                <?js } ?> </div>
-            <?js } else { ?>
             <div class="item-image">
-                <img class="item-image-actual" src="{item.image}"/>
-            </div>
-
+                <img class="item-image-actual" src="{item.image}"/></div>
             <?js if(item.fullsize) { ?>
             <a href="{item.fullsize}" target="_blank" class="item-fullsize-link">+</a>
             <?js } ?>
-
             <a class="fa fa-arrows move-link"></a>
-            <?js } ?>
-            <?js if( p.user.showAds ) { ?>
-            <div class="stream-prev" title="Neuer">
-                <span class="fa fa-angle-left"></span>
-            </div>
-            <div class="stream-next" title="Älter">
-                <span class="fa fa-angle-right"></span>
-            </div>
+            <?js } ?> <?js if( p.user.showAds ) { ?>
+            <div class="stream-prev" title="Neuer [⭠, a]"><span class="stream-prev-icon"></span></div>
+            <div class="stream-next" title="Älter [⭢, d]"><span class="stream-next-icon"></span></div>
             <?js } else { ?>
-            <div class="stream-prev arrow pict" title="Neuer">&lt;</div>
-            <div class="stream-next arrow pict" title="Älter">&gt;</div>
-            <?js } ?>
-        </div>
+            <div class="stream-prev arrow pict" title="Neuer [⭠, a]">&lt;</div>
+            <div class="stream-next arrow pict" title="Älter [⭢, d]">&gt;</div>
+            <?js } ?> </div>
         <div class="item-info">
             <div>
                 <div class="item-vote{p.voteClass(item.vote)}">
