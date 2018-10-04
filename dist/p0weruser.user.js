@@ -12,7 +12,7 @@
 // @connect     pr0gramm.com
 // @connect     pr0p0ll.com
 // @run-at      document-end
-// @version		1.0.12
+// @version		1.0.13
 // @grant		GM_notification
 // @grant       GM_xmlhttpRequest
 // @require     https://code.jquery.com/ui/1.12.1/jquery-ui.min.js
