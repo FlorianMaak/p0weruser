@@ -33,7 +33,7 @@ export default class Rep0st {
 
 
     addButton(container) {
-        const imgElement = container.find('.item-image:not([src*=".gif"])');
+        const imgElement = container.find('.item-image-actual:not([src*=".gif"])');
         this.loader = $(`<span class="fa fa-spinner fa-spin loader"></span>`);
 
         if (imgElement[0] && imgElement[0].tagName !== 'VIDEO') {
