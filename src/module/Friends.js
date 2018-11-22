@@ -27,6 +27,8 @@ export default class Friends {
     }
 
     addListeners() {
+        let _this = this;
+
         window.addEventListener('profileLoaded', e => {
             if (e.username !== p.user.name) {
                 let isFriend = this.isFriend(e.username);
@@ -53,6 +55,26 @@ export default class Friends {
                 }
             });
         }
+
+        p.View.Stream.Item = p.View.Stream.Item.extend({
+            show: function (rowIndex, itemData, defaultHeight, jumpToComment) {
+                this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
+
+                let btn = document.createElement('span');
+                btn.className = 'fa fa-share share-button';
+
+                btn.onclick = () => {
+                    _this.showShareModal(itemData);
+                };
+
+                this.$itemVote[0].after(btn);
+            }
+        });
+    }
+
+    showShareModal(itemData) {
+        window.alert('ToDo!');
+        console.log(itemData);
     }
 
     addButton() {
@@ -101,5 +123,9 @@ export default class Friends {
         this.friends[username] = Date.now();
 
         this.updateFriends();
+    }
+
+    showModal(shareMedia) {
+
     }
 }
