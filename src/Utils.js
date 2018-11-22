@@ -18,6 +18,17 @@ export default class Utils {
         });
     }
 
+    static randomColor() {
+        let letters = '0123456789ABCDEF';
+        let color = '#';
+
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+
+        return color;
+    }
+
 
     static escapeHtml(input) {
         return String(input).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');

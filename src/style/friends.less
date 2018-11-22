@@ -53,3 +53,41 @@
     color: var(--theme-main-color);
   }
 }
+
+#friends {
+  padding: 10px;
+  border-bottom: 3px solid #2a2e31;
+  margin: 0;
+  display: flex;
+  flex-shrink: 0;
+
+  &:empty {
+    color: #888;
+    text-align: center;
+
+    &:before {
+      content: 'Du hast keine Freunde!';
+    }
+  }
+
+  li {
+    height: 45px;
+    width: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    border-radius: 50%;
+    border: solid 2px #F5F7F6;
+    cursor: pointer;
+    text-shadow: 1px 1px 1px #000;
+
+    &:not(:first-child) {
+      margin-left: 10px;
+    }
+
+    &:hover {
+      border-color: var(--theme-main-color);
+    }
+  }
+}

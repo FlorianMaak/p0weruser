@@ -1,4 +1,5 @@
 import Settings from '../Settings';
+import Utils from '../Utils';
 
 export default class Friends {
     constructor() {
@@ -31,7 +32,6 @@ export default class Friends {
 
         window.addEventListener('profileLoaded', e => {
             if (e.username !== p.user.name) {
-                let isFriend = this.isFriend(e.username);
                 this.addButton();
                 this.toggleButton(e.username);
 
@@ -40,6 +40,10 @@ export default class Friends {
                     this.toggleFriend(e.username);
                 };
             }
+        });
+
+        window.addEventListener('showNotifications', e => {
+            this.showFriends(e.notificationCenter);
         });
 
         if (Settings.get('Friends.settings.comments')) {
@@ -72,6 +76,24 @@ export default class Friends {
         });
     }
 
+    showFriends(notificationCenter) {
+        let container = document.getElementById('friends');
+        container.innerHTML = '';
+
+        for (let user in this.friends) {
+            let entry = document.createElement('li');
+            entry.style.backgroundColor = this.friends[user];
+            entry.innerText = user.substring(0, 2);
+            entry.title = user;
+            entry.onclick = () => {
+                notificationCenter.toggleMenu();
+                window.open('/user/' + user, '_blank');
+            };
+
+            container.appendChild(entry);
+        }
+    }
+
     showShareModal(itemData) {
         window.alert('ToDo!');
         console.log(itemData);
@@ -93,12 +115,12 @@ export default class Friends {
     }
 
     static getFriends() {
-        let friends = JSON.parse(Settings.get('friends'));
+        let friends = JSON.parse(Settings.get('Friends.settings.friends'));
 
         if (friends === true) {
             friends = {};
 
-            Settings.set('Friends.settings.friends', '{}}');
+            Settings.set('Friends.settings.friends', '{}');
         }
 
         return friends;
@@ -113,19 +135,9 @@ export default class Friends {
     }
 
     toggleFriend(username) {
-        this.friends[username] ? delete this.friends[username] : this.friends[username] = Date.now();
+        this.friends[username] ? delete this.friends[username] : this.friends[username] = Utils.randomColor();
         this.toggleButton(username);
 
         this.updateFriends();
-    }
-
-    updateFriend(username) {
-        this.friends[username] = Date.now();
-
-        this.updateFriends();
-    }
-
-    showModal(shareMedia) {
-
     }
 }

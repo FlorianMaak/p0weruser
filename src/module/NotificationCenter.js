@@ -1,5 +1,6 @@
 import SimpleBar from 'simplebar';
 import Utils from '../Utils';
+import Settings from '../Settings';
 
 export default class NotificationCenter {
     constructor() {
@@ -15,13 +16,15 @@ export default class NotificationCenter {
 
 
     load() {
+        this.showFriends = Settings.moduleIsLoaded('Friends');
         this.menuOpen = false;
         this.template = require('../template/notificationCenter.html');
         this.templateEntry = require('../template/notificationEntry.html');
+        this.friendsContainer = require('../template/notificationFriends.html');
         this.style = require('../style/notificationCenter.less');
         this.icon = $('#inbox-link');
         this.elem = document.createElement('div');
-        this.elem.innerHTML = this.template;
+        this.elem.innerHTML = this.showFriends ? this.friendsContainer + this.template : this.template;
 
         this.elem.id = 'notification-center';
         document.querySelectorAll('.user-info.user-only')[0].appendChild(this.elem);
@@ -56,6 +59,13 @@ export default class NotificationCenter {
         this.elem.classList.toggle('visible');
         this.messageContainer.innerHTML = '<span class="fa fa-spinner fa-spin"></span>';
         this.messageContainer.classList.add('loading');
+
+        // Show friends
+        if (this.showFriends) {
+            let event = new Event('showNotifications');
+            event.notificationCenter = this;
+            window.dispatchEvent(event);
+        }
 
         this.getNotifications(true).then((notifications) => {
             let messages = notifications.messages;
