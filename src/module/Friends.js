@@ -11,15 +11,19 @@ export default class Friends {
 
     load() {
         this.styles = require('../style/friends.less');
-        this.friends = JSON.parse(Settings.get('friends'));
 
-        if (this.friends === true) {
-            this.friends = {};
-
-            Settings.set('friends', '{}}');
-        }
-
+        this.friends = Friends.getFriends();
         this.addListeners();
+    }
+
+    getSettings() {
+        return [
+            {
+                id: 'comments',
+                title: 'Kommentarfarben',
+                description: 'Färbe Kommentare deiner Freunde ein!'
+            }
+        ];
     }
 
     addListeners() {
@@ -28,13 +32,27 @@ export default class Friends {
                 let isFriend = this.isFriend(e.username);
                 this.addButton();
                 this.toggleButton(e.username);
-                
+
                 this.button.onclick = () => {
                     this.toggleButton(e.username);
                     this.toggleFriend(e.username);
                 };
             }
         });
+
+        if (Settings.get('Friends.settings.comments')) {
+            window.addEventListener('commentsLoaded', () => {
+                const comments = $('.comments .comment-box .comment');
+
+                for (let i = 0; i < comments.length; i++) {
+                    let container = $(comments[i]);
+                    const userHref = container.find('.comment-foot > a.user')[0].href;
+                    const username = userHref.substr(userHref.lastIndexOf('/') + 1);
+
+                    container[0].classList.toggle('friend', !!this.friends[username]);
+                }
+            });
+        }
     }
 
     addButton() {
@@ -52,8 +70,20 @@ export default class Friends {
         this.button.appendChild(document.createTextNode(isFriend ? 'Als Freund entfernen' : 'Als Freund hinzufügen'));
     }
 
+    static getFriends() {
+        let friends = JSON.parse(Settings.get('friends'));
+
+        if (friends === true) {
+            friends = {};
+
+            Settings.set('Friends.settings.friends', '{}}');
+        }
+
+        return friends;
+    }
+
     updateFriends() {
-        Settings.set('friends', JSON.stringify(this.friends));
+        Settings.set('Friends.settings.friends', JSON.stringify(this.friends));
     }
 
     isFriend(username) {

@@ -23,6 +23,11 @@ export default class Settings {
         p.reload();
     }
 
+    static moduleIsLoaded(name) {
+        let modules = JSON.parse(window.localStorage.getItem('activated_modules'));
+
+        return modules.indexOf(name) !== -1
+    }
 
     static saveSettings(moduleList) {
         let result = [];

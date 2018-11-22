@@ -1,4 +1,5 @@
 import Settings from '../Settings';
+import Friends from './Friends';
 
 export default class AdvancedComments {
     constructor() {
@@ -42,7 +43,7 @@ export default class AdvancedComments {
             const comments = $('.comments .comment-box .comment');
             comments.tooltip();
             for (let i = 0; i < comments.length; i++) {
-                const container = $(comments[i]);
+                let container = $(comments[i]);
                 const comment = $(container.parents('.comment-box')[0]).prev('.comment');
                 const userHref = container.find('.comment-foot > a.user')[0].href;
                 const isOwnComment = userHref.substr(userHref.lastIndexOf('/') + 1) === p.user.name;
