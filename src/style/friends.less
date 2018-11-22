@@ -1,0 +1,38 @@
+.action {
+  &.user-friend,
+  &.user-unfriend {
+    display: inline-block;
+    font-size: 12px;
+    color: #fff;
+    background-color: var(--theme-main-color);
+    padding: 3px 12px;
+    vertical-align: 8px;
+    margin-left: 0;
+
+    .fa {
+      margin-right: 5px;
+      line-height: 1;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      font-size: 14px;
+    }
+  }
+
+  &.user-friend {
+    background-color: var(--theme-main-color);
+
+    &:hover {
+      color: #555;
+      background-color: #F5F7F6;
+    }
+  }
+
+  &.user-unfriend {
+    background-color: #555;
+
+    &:hover {
+      color: #555;
+      background-color: #F5F7F6;
+    }
+  }
+}

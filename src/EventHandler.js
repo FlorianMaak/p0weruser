@@ -1,6 +1,7 @@
 export default class EventHandler {
     constructor() {
         this.settingsLoaded = new Event('settingsLoaded');
+        this.profileLoaded = new Event('profileLoaded');
         this.commentsLoaded = new Event('commentsLoaded');
         this.locationChange = new Event('locationChange');
         this.beforeLocationChange = new Event('beforeLocationChange');
@@ -13,6 +14,16 @@ export default class EventHandler {
 
     addEvents() {
         let _this = this;
+
+        // Add profile-event
+        (function (render) {
+            p.View.User.prototype.render = function (params) {
+                render.call(this, params);
+                _this.profileLoaded.username = p.currentView.data.user.name;
+
+                window.dispatchEvent(_this.profileLoaded);
+            };
+        }(p.View.User.prototype.render));
 
         // Add settings-event
         (function (render) {

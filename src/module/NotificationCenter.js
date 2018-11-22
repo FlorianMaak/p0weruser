@@ -68,6 +68,7 @@ export default class NotificationCenter {
                 elem.innerText = 'Keine neuen Benachrichtigungen!';
                 elem.className = 'no-notifications';
                 this.messageContainer.appendChild(elem);
+
                 return false;
             }
 
