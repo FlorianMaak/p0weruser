@@ -11,7 +11,7 @@
     "TamperMonkey",
     "pr0gramm"
   ],
-  "version":         "1.0.16",
+  "version":         "1.0.17",
   "license":         "GPL-3.0",
   "dependencies":    {
     "chart.js":     "^2.7.2",

@@ -61,7 +61,11 @@ export default class NotificationCenter {
             let messages = notifications.messages;
             this.messageContainer.innerHTML = '';
             this.messageContainer.classList.remove('loading');
-            p.user.setInboxLink(0);
+            p.user.setInboxLink({
+                comments: 0,
+                mentions: 0,
+                messages: 0
+            });
 
             if (messages.length <= 0) {
                 let elem = document.createElement('li');
@@ -112,7 +116,7 @@ export default class NotificationCenter {
         let elem = document.createElement('li');
         elem.id = `notification-${cId}`;
         let img = '<img src="//thumb.pr0gramm.com/##THUMB##" class="comment-thumb">';
-        let url = image ? `/new/${id}:comment${cId}` : `/inbox/messages`;
+        let url = image ? `/new/${id}:comment${cId}` : `/inbox/messages/${user}`;
 
         if (!image) {
             img = '<span class="message fa fa-envelope-open"></span>';
