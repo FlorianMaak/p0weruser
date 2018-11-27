@@ -576,6 +576,7 @@ body[class] {
 
       .message {
         padding: 10px;
+        margin: 0 0 48px 0;
         background-color: #2a2e31;
 
         .comment-content,
@@ -586,18 +587,25 @@ body[class] {
         }
 
         .comment-foot {
-          margin-top: 10px;
+          position: absolute;
+          margin-top: 20px;
+          white-space: nowrap;
+          left: 0;
         }
 
         &.message-own {
           background-color: var(--theme-main-color);
           color: #fff;
 
-          a {
-            color: #ddd;
+          .comment-foot {
+            position: absolute;
+            margin-top: 20px;
+            white-space: nowrap;
+            right: 0;
+            left: unset;
           }
 
-          .time {
+          a {
             color: #ddd;
           }
         }
