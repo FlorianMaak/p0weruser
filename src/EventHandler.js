@@ -37,6 +37,14 @@ export default class EventHandler {
             };
         }(p.navigateTo));
 
+        // Add locationchange event
+        window.onpopstate = function (e) {
+            _this.locationChange.mode = 0;
+            _this.locationChange.isPost = _this.locationPattern.test(e.currentTarget.location.pathname);
+
+            window.dispatchEvent(_this.locationChange);
+        };
+
         // Add commentsloaded-event
         (function (render) {
             p.View.Stream.Comments.prototype.render = function () {

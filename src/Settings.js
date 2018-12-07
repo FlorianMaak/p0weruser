@@ -48,6 +48,9 @@ export default class Settings {
                 case 'text':
                     Settings.set(elements[i].id, elements[i].value);
                     break;
+                case 'number':
+                    Settings.set(elements[i].id, parseInt(elements[i].value) || 1);
+                    break;
                 case 'checkbox':
                     console.log(elements[i]);
                     Settings.set(elements[i].id, elements[i].checked);
@@ -198,6 +201,10 @@ export default class Settings {
                     container.className = 'box-from-label';
 
                     switch (settings[i].type) {
+                        case 'number':
+                            currentValue = (currentValue === true) ? 1 : currentValue;
+                            container.innerHTML = `<div class="text-type"><span class="title">${settings[i].title}</span><span class="description">${settings[i].description}</span><input id="${id}" type="number" value="${currentValue}" /></div>`;
+                            break;
                         case 'text':
                             currentValue = (currentValue === true) ? '' : currentValue;
                             container.innerHTML = `<div class="text-type"><span class="title">${settings[i].title}</span><span class="description">${settings[i].description}</span><input id="${id}" type="text" value="${currentValue}" /></div>`;
