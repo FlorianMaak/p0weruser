@@ -15,13 +15,14 @@ export default class WidescreenMode {
         this.closeOnBackgroundClick = Settings.get('WidescreenMode.settings.close_on_background');
         this.mouseControl = Settings.get('WidescreenMode.settings.mouse_control');
         this.displayBenisbar = Settings.get('WidescreenMode.settings.display_benisbar');
+        this.scrollMultiplicator = parseInt(Settings.get('WidescreenMode.settings.scroll_speed')) || 1;
     }
 
 
     handleWheelChange(e) {
         if (this.isMoveable) {
             this.img.animate({
-                top: e.deltaY > 0 ? '-=20' : '+=20'
+                top: (e.deltaY > 0 ? '-=' : '+=') + (20 * this.scrollMultiplicator)
             }, 0);
 
             return false;
@@ -98,6 +99,12 @@ export default class WidescreenMode {
                 id: 'display_benisbar',
                 title: 'Benisleiste anzeigen',
                 description: 'Zeigt die Benisverteilung als Leiste an.'
+            },
+            {
+                id: 'scroll_speed',
+                title: 'Scrollgeschwindigkeit',
+                description: 'Definiere, wie schnell im Zoom gescrollt werden soll.',
+                type: 'number'
             },
         ];
     }
