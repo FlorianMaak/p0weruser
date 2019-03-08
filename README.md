@@ -21,6 +21,7 @@ it using settings.
 * Integration of [pr0p0ll.com](https://pr0p0ll.com)
 * Mark viewed posts
 * c0mmunityrat notifications
+* Anonymous Title
 
 ## Instructions / Controls
 Help and instructions can be found on this repositorys [wiki-pages](https://github.com/FlorianMaak/p0weruser/wiki).
