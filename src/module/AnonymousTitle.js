@@ -5,39 +5,23 @@ export default class AnonymousTitle {
         this.id = 'AnonymousTitle';
         this.name = 'Anonymous Title';
         this.description = 'Entfernt den Top Tag aus dem Titel oder wähle einen eigenen Titel.';
-        this.listenerAdded = false;
         this.customTitle = Settings.get('AnonymousTitle.settings.custom_title');
     }
 
     load() {
         this.addListeners();
-
     }
 
     addListeners() {
-        if (!this.listenerAdded) {
-            this.listenerAdded = true;
-            window.addEventListener('locationChange', (e) => {
-                if (this.customTitle) {
-                    this.changeTitle(this.customTitle);
-                }
-                else if(e.isPost) {
-                    this.changeTitle(document.title.substring(document.title.indexOf("–") + 2));
-                }
-            });
-            $(document).ajaxComplete((event, request, settings) => {
-                if (this.customTitle) {
-                    this.changeTitle(this.customTitle);
-                }
-                else if(document.title[0] === '"') {
-                    this.changeTitle(document.title.substring(document.title.indexOf("–") + 2));
-                }
-            });
-        }
+        p.mainView.setTitle = () => this.changeTitle();
     }
 
-    changeTitle(title) {
-        document.title = title;
+    changeTitle() {
+        if (this.customTitle !== true && this.customTitle !== '') {
+            document.title = this.customTitle;
+        } else {
+            document.title = 'pr0gramm.com – Die Datingplattform für Kellerkinder';
+        }
     }
 
     getSettings() {
