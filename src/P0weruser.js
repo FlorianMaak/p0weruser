@@ -15,6 +15,7 @@ import DesktopNotifications from './module/DesktopNotifications';
 import FilterMarks from './module/FilterMarks';
 import Rep0st from './module/Rep0st';
 import ImageOCR from './module/ImageOCR';
+import AnonymousTitle from './module/AnonymousTitle';
 
 export default class P0weruser {
     constructor() {
@@ -89,10 +90,10 @@ export default class P0weruser {
                 'Pr0p0ll': new Pr0p0ll(),
                 'ViewedPostsMarker': new ViewedPostsMarker(),
                 'C0mmunityrat': new C0mmunityrat(),
-                'Chat': new Chat()
+                'Chat': new Chat(),
+                'AnonymousTitle': new AnonymousTitle()
             };
         }
-
         return this.modules;
     }
 }
