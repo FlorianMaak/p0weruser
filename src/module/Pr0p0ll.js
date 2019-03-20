@@ -65,17 +65,25 @@ export default class Pr0p0ll {
 
     addListener() {
         if (this.token !== true && this.token.length > 0) {
-            window.addEventListener('userSync', () => {
-                this.fetchCounter().then(res => {
-                    this.updateCounter(res.openPolls);
-                });
-            });
+            if (RegExp("^([0-9a-f]{64})$").test(this.token.trim())) {
+                this.token = this.token.trim().match("^([0-9a-f]{64})$")[0];
+                Settings.set('Pr0p0ll.settings.user_token', this.token);
 
-            if (this.showDiagramms) {
-                window.addEventListener('commentsLoaded', e => {
-                    let links = e.data.find('a[href*="pr0p0ll"][href*="id="]');
-                    this.addLinks(links);
+                window.addEventListener('userSync', () => {
+                    this.fetchCounter().then(res => {
+                        this.updateCounter(res.openPolls);
+                    });
                 });
+
+                if (this.showDiagramms) {
+                    window.addEventListener('commentsLoaded', e => {
+                        let links = e.data.find('a[href*="pr0p0ll"][href*="id="]');
+                        this.addLinks(links);
+                    });
+                }
+            }
+            else {
+                window.alert("Bitte öffne die Einstellungen, um einen korrekten Pr0po0ll-Token einzugeben.")
             }
         } else {
             window.alert('Bitte öffne die Einstellungen um das Pr0p0ll-Modul zu konfigurieren.');
