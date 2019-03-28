@@ -11,25 +11,25 @@
     "TamperMonkey",
     "pr0gramm"
   ],
-  "version":         "1.0.23",
+  "version":         "1.0.25",
   "license":         "GPL-3.0",
   "dependencies":    {
-    "core-js":      "^2.5.7",
-    "chart.js":     "^2.7.3",
-    "moment":       "^2.22.2",
+    "chart.js":     "^2.8.0",
+    "core-js":      "^2.6.5",
+    "moment":       "^2.24.0",
     "simplebar":    "^2.6.1",
     "tesseract.js": "^1.0.14"
   },
   "devDependencies": {
-    "ajv":                         "^6.5.5",
+    "ajv":                         "^6.10.0",
     "css-loader":                  "^2.0.0",
     "html-loader":                 "^0.5.5",
-    "less":                        "^3.8.1",
+    "less":                        "^3.9.0",
     "less-loader":                 "^4.1.0",
     "style-loader":                "^0.23.1",
-    "webpack":                     "^4.26.1",
+    "webpack":                     "^4.29.6",
     "webpack-auto-inject-version": "^1.2.2",
-    "webpack-cli":                 "^3.1.2"
+    "webpack-cli":                 "^3.3.0"
   },
   "bugs":            {
     "url":   "https://github.com/FlorianMaak/p0weruser/issues",
