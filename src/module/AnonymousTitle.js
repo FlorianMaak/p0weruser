@@ -18,9 +18,9 @@ export default class AnonymousTitle {
 
     changeTitle() {
         if (this.customTitle !== true && this.customTitle !== '') {
-            document.title = this.customTitle;
+            document.title = p.user.inboxCount > 0 ? '[' + p.user.inboxCount + '] ' + this.customTitle : this.customTitle;
         } else {
-            document.title = 'pr0gramm.com – Die Datingplattform für Kellerkinder';
+            document.title = `${p.user.inboxCount > 0 ? '[' + p.user.inboxCount + ']' : ''} pr0gramm.com – Die Datingplattform für Kellerkinder`;
         }
     }
 
