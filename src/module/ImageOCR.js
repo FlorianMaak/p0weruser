@@ -32,7 +32,7 @@ export default class ImageOCR {
             show: function (rowIndex, itemData, defaultHeight, jumpToComment) {
                 this.parent(rowIndex, itemData, defaultHeight, jumpToComment);
 
-                if (this.$image[0].tagName !== 'VIDEO') {
+                if (itemData.video === false) {
                     let container = this.$image.parent();
                     let button = document.createElement('span');
                     button.innerHTML = `<span class="fa fa-search ocr-button"></span>`;
@@ -57,7 +57,7 @@ export default class ImageOCR {
 
 
     checkImage() {
-        let image = document.getElementsByClassName('item-image')[0];
+        let image = document.getElementsByClassName('item-image-actual')[0];
         this.textbox.innerText = this.searchWording;
         this.popup.classList.add('visible');
 
