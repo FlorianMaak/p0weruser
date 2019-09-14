@@ -6,6 +6,8 @@
 Extend pr0gramm.com with some extra functions and improve look and feel. Don't like a special feature? No problem, just disable
 it using settings.
 
+# !!! Development will continue at the beginning of october !!!
+
 ## Features
 * Addon-Settings
 * Repost-Highlight
