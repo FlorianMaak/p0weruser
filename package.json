@@ -17,7 +17,7 @@
     "chart.js":     "^2.8.0",
     "core-js":      "^2.6.5",
     "moment":       "^2.24.0",
-    "simplebar":    "^2.6.1",
+    "simplebar":    "^5.0.5",
     "tesseract.js": "^1.0.14"
   },
   "devDependencies": {
