@@ -50,7 +50,7 @@ export default class AdvancedComments {
                 if (comment[0]) {
                     const pId = comment[0].id;
                     let elem = document.createElement('a');
-                    elem.href = `#${pId}`;
+                    elem.href = comment.find('.permalink').attr('href');
                     elem.className = 'fa fa-level-up action preview-link';
                     container.find('.comment-foot').append(elem);
 
