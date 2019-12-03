@@ -263,6 +263,7 @@ export default class WidescreenMode {
 
     addItemListener(image, itemData) {
         this.img = image;
+        this.video = this.img.find('video');
         this.container = this.img[0].parentNode;
         this.resized = (itemData.height > this.container.offsetHeight || itemData.width > this.container.offsetWidth);
         this.container.classList.toggle('resized', this.resized);
@@ -310,7 +311,14 @@ export default class WidescreenMode {
             switch (e.code) {
                 case 'Space':
                     e.preventDefault();
-                    this.toggleMove();
+
+                    if (this.video.length > 0) {
+                        this.togglePause();
+                    } 
+                    else {
+                        this.toggleMove();
+                    }
+
                     break;
                 case 'Escape':
                     if (this.resized && p.currentView.$itemContainer) {
@@ -347,6 +355,15 @@ export default class WidescreenMode {
         return false;
     }
 
+    togglePause() {
+        const video = this.video[0];
+        if (video.paused) {
+            video.play();
+        } 
+        else {
+            video.pause();
+        }
+    }
 
     toggleMove() {
         if (this.resized) {
