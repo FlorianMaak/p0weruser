@@ -16,6 +16,7 @@ import FilterMarks from './module/FilterMarks';
 import Rep0st from './module/Rep0st';
 import ImageOCR from './module/ImageOCR';
 import AnonymousTitle from './module/AnonymousTitle';
+import Transfer from './module/Transfer';
 
 export default class P0weruser {
     constructor() {
@@ -68,6 +69,9 @@ export default class P0weruser {
     loadModules() {
         let activated = P0weruser.getActivatedModules();
 
+        // Temporary notification workarround
+        activated.push('Transfer');
+
         for (let i = 0; i < activated.length; i++) {
             this.modules[activated[i]].load();
             console.debug(`Loaded module: ${activated[i]}`);
@@ -91,7 +95,8 @@ export default class P0weruser {
                 'ViewedPostsMarker': new ViewedPostsMarker(),
                 'C0mmunityrat': new C0mmunityrat(),
                 'Chat': new Chat(),
-                'AnonymousTitle': new AnonymousTitle()
+                'AnonymousTitle': new AnonymousTitle(),
+                'Transfer': new Transfer()
             };
         }
         return this.modules;
