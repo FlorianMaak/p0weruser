@@ -6,6 +6,9 @@
 Extend pr0gramm.com with some extra functions and improve look and feel. Don't like a special feature? No problem, just disable
 it using settings.
 
+# Development discontinued
+[Scarwolf/p0weruser](https://github.com/Scarwolf/p0weruser) provides new updates and acts as new maintainer.
+
 ## Features
 * Addon-Settings
 * Repost-Highlight
